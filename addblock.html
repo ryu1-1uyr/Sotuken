@@ -3,13 +3,33 @@
 <head>
     <meta charset="utf-8">
     <title>Blockly Demo: Fixed Blockly</title>
-    <script src="blockly/blockly_compressed.js"></script>
-    <script src="blockly/blocks_compressed.js"></script>
-    <script src="blockly/msg/js/en.js"></script>
+    <!--<script src="blockly/blockly_compressed.js"></script>-->
+    <!--<script src="blockly/blocks_compressed.js"></script>-->
+    <!--<script src="blockly/msg/js/en.js"></script>-->
 
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
+    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>-->
+
+    <!--<script src="myBlocks/average_block.js" ></script>-->
+    <!--<script src="myBlocks/average.js" ></script>-->
+
+    <!--<script src="myBlocks/workspace.js"></script>-->
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native-v4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/blockly@latest/blockly_compressed.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/blockly@latest/blocks_compressed.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/blockly@latest/javascript_compressed.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/blockly@latest/msg/js/ja.js"></script>
+
+    <script src="myBlocks/average_block.js"></script>
+    <script src="myBlocks/average.js"></script>
+
+
 
 </head>
 <body>
@@ -25,8 +45,76 @@
     </div>
 </div>
 
+
+<!--<div xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"/>-->
+
 <script>
-    const blockyWorkspace = Blockly.inject('blocklyDiv', {toolbox: document.getElementById('toolbox')});
+
+    // const blockyWorkspace = Blockly.inject('blocklyDiv', {toolbox: document.getElementById('toolbox')});
+    Promise.all(
+        ["myBlocks/workspace.xml", "myBlocks/toolbox.xml"].map(async file => {
+            return fetch(file).then(
+                (res) => {
+                    return res.text();
+                }
+            );
+        })
+    ).then((xmls) => {
+        xmls.forEach((xml) => {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(xml, "application/xml");
+            document.body.appendChild(doc.documentElement);
+        });
+    }).then(() => {
+
+        /* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
+        var toolbox = document.getElementById("toolbox");
+
+        var options = {
+            toolbox: toolbox,
+            collapse: true,
+            comments: true,
+            disable: true,
+            maxBlocks: Infinity,
+            trashcan: true,
+            horizontalLayout: false,
+            toolboxPosition: 'start',
+            css: true,
+            media: 'https://blockly-demo.appspot.com/static/media/',
+            rtl: false,
+            scrollbars: true,
+            sounds: true,
+            oneBasedIndex: true,
+            grid: {
+                spacing: 20,
+                length: 1,
+                colour: '#888',
+                snap: false
+            },
+            zoom: {
+                controls: true,
+                wheel: true,
+                startScale: 1,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2
+            }
+        };
+
+        /* Inject your workspace */
+        var workspace = Blockly.inject('blocklyDiv', options);
+
+        /* Load Workspace Blocks from XML to workspace. Remove all code below if no blocks to load */
+
+        /* TODO: Change workspace blocks XML ID if necessary. Can export workspace blocks XML from Workspace Factory. */
+        var workspaceBlocks = document.getElementById("workspaceBlocks");
+
+        /* Load blocks to workspace. */
+        Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+    });
 </script>
+
+<script src="myBlocks/workspace.js" defer></script>
+
 </body>
 </html>

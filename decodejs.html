@@ -31,7 +31,9 @@
 <script>
     const blockyWorkspace = Blockly.inject('blocklyDiv',
         {toolbox: document.getElementById('toolbox')});
+
     const dartButton = document.getElementById("dartButton");
+
     dartButton.addEventListener("click", function(){
         const code = Blockly.Dart.workspaceToCode(blockyWorkspace);
         alert(code);
