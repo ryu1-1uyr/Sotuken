@@ -52,6 +52,7 @@
                 default:
 
             }
+            stringCode += 'if (x == x_2) {console.log(\'いたーい\')};'
         })
         stringCode += '};'
         return stringCode + 'evalfunction()'
@@ -67,77 +68,114 @@
     const canvas = document.getElementById('board');
 
     const ctx = canvas.getContext("2d");
+    const ctx2 = canvas.getContext("2d");
 
 
-    let movement = 50
+    let movement = 100
 
     let x = 100
-    let y = 50;
+    let y = 100;
+
+    let x_2 = 100
+    let y_2 = 400;
 
     ctx.fillStyle = "rgb(200,0,0)";
-    ctx.fillRect(x, y, 50, 50);
+    ctx.fillRect(x, y, 100, 100);
 
+    ctx2.fillStyle = "rgb(200,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+
+    //todo 引数でctxとかctx2とかをとって両方の移動に対応させると幸せになる
     function moveright() {
         console.log('right')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (x < 900) {
+        if (x == x_2-100 && y == y_2) {
+            console.log('いたーい')
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 100, 100);
+        }
+        else if (x <= 300) {
             x += movement
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 50, 50);
+            ctx.fillRect(x, y, 100, 100);
 
 
         } else {
-            // ctx.fillStyle = "rgb(200,0,0)";
-            // ctx.fillRect(x, y, 50, 50);
+            console.log('out of range ',x)
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 100, 100);
             // y += movement
         }
+        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+
     }
     function moveleft() {
+
         console.log('left')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (x > 0) {
+        if (x == x_2+100 && y == y_2) {
+            console.log('いたーい')
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 100, 100);
+        }
+        else if (x > 0) {
             x -= movement
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 50, 50);
+            ctx.fillRect(x, y, 100, 100);
 
 
         } else {
-            // ctx.fillStyle = "rgb(200,0,0)";
-            // ctx.fillRect(x, y, 50, 50);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 100, 100);
             // y += movement
         }
+        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+
     }
     function moveup() {
         console.log('up')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (y >= 0) {
+        if (x == x_2 && y == y_2 + 100 ) {
+            console.log('いたーい')
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 100, 100);
+        }
+        else if (y > 0) {
             ctx.fillStyle = "rgb(200,0,0)";
             y -= movement
-            ctx.fillRect(x, y, 50, 50);
+            ctx.fillRect(x, y, 100, 100);
 
 
         } else {
             console.log('out of range ',y)
 
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 50, 50);
+            ctx.fillRect(x, y, 100, 100);
         }
+        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+
     }
     function movedown() {
         console.log('down')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (y < 800) {
+        if (x == x_2 && y == y_2 - 100) {
+            console.log('いたーい')
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 100, 100);
+        }
+        else if (y < 400) {
             ctx.fillStyle = "rgb(200,0,0)";
             y += movement
-            ctx.fillRect(x, y, 50, 50);
+            ctx.fillRect(x, y, 100, 100);
 
 
         } else {
             console.log('out of range', y)
 
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 50, 50);
+            ctx.fillRect(x, y, 100, 100);
         }
+        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+
     }
 
     // async function start() {
@@ -162,19 +200,19 @@
 
     async function 非同期処理存在() {
 
-        await sleep(400).then(() => {
+        await sleep(500).then(() => {
             moveright()
         })
 
-        await sleep(400).then(()=>{
+        await sleep(500).then(()=>{
             moveright()
         })
 
-        await sleep(400).then(()=>{
+        await sleep(500).then(()=>{
             moveright()
         })
 
-        await sleep(400).then(()=>{
+        await sleep(500).then(()=>{
             moveleft()
         })
 
