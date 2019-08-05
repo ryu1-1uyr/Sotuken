@@ -14,34 +14,191 @@
 <canvas id="board" width="1000" height="800"></canvas>
 
 <script>
-    const canvas = document.getElementById('board')
+    // const sleep1 = (sleepTime) => {
+    //     let counter = 0
+    //     let time = setInterval(()=>{
+    //         console.log(counter)
+    //         counter++
+    //         if (sleepTime < counter) {
+    //             console.log('sleeped')
+    //             draw()
+    //             clearInterval(time)
+    //         }
+    //     })
+    // }
+
+    function sleep(waitSec) {
+        return new Promise(function (resolve) {
+            setTimeout(function() { resolve() }, waitSec);
+        });
+    }
+
+
+
+    // start();
+
+    const canvas = document.getElementById('board');
 
     const ctx = canvas.getContext("2d");
 
-    let movement = 2
 
-    let x = 10
-    let y = 10;
+    let movement = 50
 
+    let x = 100
+    let y = 50;
 
+    ctx.fillStyle = "rgb(200,0,0)";
+    ctx.fillRect(x, y, 50, 50);
 
-    // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-    // ctx.fillRect (30, 30, 50, 50);
-    `function draw () {
+    function moveright() {
+        console.log('right')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (x < 900) {
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 50, 50);
             x += movement
-        } else {
             ctx.fillStyle = "rgb(200,0,0)";
             ctx.fillRect(x, y, 50, 50);
-            y += movement
-        }
 
+
+        } else {
+            // ctx.fillStyle = "rgb(200,0,0)";
+            // ctx.fillRect(x, y, 50, 50);
+            // y += movement
+        }
+    }
+    function moveleft() {
+        console.log('left')
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (x > 0) {
+            x -= movement
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 50, 50);
+
+
+        } else {
+            // ctx.fillStyle = "rgb(200,0,0)";
+            // ctx.fillRect(x, y, 50, 50);
+            // y += movement
+        }
+    }
+    function moveup() {
+        console.log('up')
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (y  < 750) {
+            ctx.fillStyle = "rgb(200,0,0)";
+            y += movement
+            ctx.fillRect(x, y, 50, 50);
+
+
+        } else {
+            // ctx.fillStyle = "rgb(200,0,0)";
+            // ctx.fillRect(x, y, 50, 50);
+            // y += movement
+        }
+    }
+    function movedown() {
+        console.log('down')
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (y > 0) {
+            ctx.fillStyle = "rgb(200,0,0)";
+            y -= movement
+            ctx.fillRect(x, y, 50, 50);
+
+
+        } else {
+            // ctx.fillStyle = "rgb(200,0,0)";
+            // ctx.fillRect(x, y, 50, 50);
+            // y += movement
+        }
     }
 
-    setInterval(draw , 10) `
+    // async function start() {
+    //     await sleep(2000);
+    //     console.log('2秒経過しました');
+    //     draw()
+    //
+    //     // await sleep(1000);
+    //     // console.log('1秒経過しました');
+    //     //
+    //     // await sleep(3000);
+    //     // console.log('3秒経過しました');
+    // }
+
+    // .then(() => {
+    //     sleep(1000).then(() => {
+    //         console.log('i')
+    //         draw()
+    //         //2つ目の命令
+    //     })
+    // })
+
+    async function 非同期処理存在() {
+
+        await sleep(400).then(() => {
+            console.log('a')
+            moveright()
+            // 1つ目の命令 await から})まで自動生成できるクロージャーみたいなの作ると良さそう
+        })
+
+        await sleep(400).then(()=>{
+            console.log('i')
+            moveright()
+            // 2つめ
+        })
+
+        await sleep(400).then(()=>{
+            console.log('i')
+            moveright()
+            // 2つめ
+        })
+
+        await sleep(400).then(()=>{
+            console.log('i')
+            moveleft()
+            // 2つめ
+        })
+
+
+
+    }
+    非同期処理存在();
+
+    // async function 非同期まとめ上げ存在() {
+    //     await 非同期処理存在()
+    //     await 非同期処理存在()
+    //     await 非同期処理存在()
+    //     await 非同期処理存在()
+    // }
+    //
+    // async function 非同期顧問存在() {
+    //     await 非同期まとめ上げ存在()
+    //     await 非同期まとめ上げ存在()
+    //     await 非同期まとめ上げ存在()
+    //     await 非同期まとめ上げ存在()
+    // }
+    //
+    // async function 非同期PTA存在() {
+    //     await 非同期顧問存在()
+    //     await 非同期顧問存在()
+    //     await 非同期顧問存在()
+    //     await 非同期顧問存在()
+    // }
+    //
+    // async function 非同期教育委員会存在() {
+    //     await 非同期PTA存在()
+    //     await 非同期PTA存在()
+    //     await 非同期PTA存在()
+    //     await 非同期PTA存在()
+    // }
+    //
+    // 非同期教育委員会存在()
+
+    // for (let o = 0 ; o < 4 ; o++ ){
+    //     非同期まとめ上げ存在()
+    // }
+
+
+
+    // setInterval(sleep1 , 10)
 
     window.addEventListener('keydown', event => {
         switch (event.key) {
