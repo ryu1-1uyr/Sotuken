@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<section id="display">
+    <span id="label">Score:</span>
+    <div id="score">0</div>
+</section>
+
+<canvas id="board" width="1000" height="800"></canvas>
+
+<script>
+    const canvas = document.getElementById('board')
+
+    const ctx = canvas.getContext("2d");
+
+    let movement = 2
+
+    let x = 10
+    let y = 10;
+
+
+
+    // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+    // ctx.fillRect (30, 30, 50, 50);
+    `function draw () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (x < 900) {
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 50, 50);
+            x += movement
+        } else {
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 50, 50);
+            y += movement
+        }
+
+    }
+
+    setInterval(draw , 10) `
+
+    window.addEventListener('keydown', event => {
+        switch (event.key) {
+            // console.log(event)
+
+            case 'w':
+                ctx.moveTo(x,y+=movement)
+
+                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                // ctx.fillRect(10 , 10, x += movement , y );
+                //
+                // ctx.fillStyle = "rgb(256,256,256)";
+                // ctx.fillRect(10 , 10 , x - movement , y )
+                break
+            case 'a':
+                ctx.moveTo(x-=movement,y)
+
+                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                // ctx.fillRect(10 , 10 , x , y += movement);
+                //
+                // ctx.fillStyle = "rgb(256,256,256)";
+                // ctx.fillRect(10 , 10 , x , y - movement);
+
+                break
+            case 's':
+                ctx.moveTo(x,y-=movement)
+
+                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                // ctx.fillRect(10 , 10 , x -= movement, y);
+                //
+                // ctx.fillStyle = "rgb(256,256,256)";
+                // ctx.fillRect(10 , 10 , 1000 - movement , y)
+                break
+            case 'd':
+
+                ctx.moveTo(x+=movement,y)
+
+
+                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                // ctx.fillRect(10, 10, x , y -= movement);
+                //
+                // ctx.fillStyle = "rgb(256,256,256)";
+                // ctx.fillRect(10, 10, x , y + movement);
+
+                break
+            default :
+            console.log(event)
+        }
+
+    })
+
+
+    // function draw() {
+    //     let canvas = document.getElementById("board");
+    //     if (canvas.getContext) {
+    //         let ctx = canvas.getContext("2d");
+    //
+    //         ctx.fillStyle = "rgb(200,0,0)";
+    //         ctx.fillRect (10, 10, 50, 50);
+    //
+    //         ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+    //         ctx.fillRect (30, 30, 50, 50);
+    //     }
+    // }
+
+
+    // window.addEventListener('keydown',(event) => {
+    //
+    //     switch (event.key) {
+    //         case "q" :
+    //             console.log("pushed Q and playsound ")
+    //             // initsound()
+    //             // osc.start()
+    //             sampleSound1.play()
+    //
+    //
+    //             break
+    //         case "w" :
+    //             console.log("pushed W")
+    //             sampleSound2.play()
+    //             // initsound()
+    //             break
+    //         case "e" :
+    //             console.log("pushed E")
+    //             sampleSound3.play()
+    //             // initsound()
+    //             // playSound()
+    //             break
+    //         default :
+    //         // console.log(event)
+    //     }
+    // })
+
+</script>
+
+</body>
+</html>
