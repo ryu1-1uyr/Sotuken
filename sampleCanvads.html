@@ -6,36 +6,78 @@
 </head>
 <body>
 
-<section id="display">
-    <span id="label">Score:</span>
-    <div id="score">0</div>
+<section >
+    <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center" onclick="addList('W')"><br>
+    <input id="button_A" type="button" value="A" onclick="addList('A')">
+    <input id="button_S" type="button" value="S" onclick="addList('S')">
+    <input id="button_D" type="button" value="D" onclick="addList('D')"><br>
+    <input type="button" value="move" onclick="console.log(makeCode(commands))">
 </section>
 
 <canvas id="board" width="1000" height="800"></canvas>
 
 <script>
-    // const sleep1 = (sleepTime) => {
-    //     let counter = 0
-    //     let time = setInterval(()=>{
-    //         console.log(counter)
-    //         counter++
-    //         if (sleepTime < counter) {
-    //             console.log('sleeped')
-    //             draw()
-    //             clearInterval(time)
-    //         }
+    const commands = []
+
+    const addList = (value) => {
+        commands.push(value)
+        console.log(commands)
+    }
+
+    // async function 非同期処理存在() {
+    //
+    //     await sleep(400).then(() => {
+    //         moveright()
     //     })
+    //
+    //     await sleep(400).then(()=>{
+    //         moveright()
+    //     })
+    //
+    //     await sleep(400).then(()=>{
+    //         moveright()
+    //     })
+    //
+    //     await sleep(400).then(()=>{
+    //         moveleft()
+    //     })
+    //
     // }
+
+    const makeCode = (commands) => {
+        let stringCode = 'async function evalfunction () {'
+        commands.map((command)=>{
+            switch (command) {
+                case 'W':
+                    stringCode += 'await sleep(400).then(() => {'
+                    stringCode += 'moveup();});'
+                    break
+                case 'A':
+                    stringCode += 'await sleep(400).then(() => {'
+                    stringCode += 'moveleft();});'
+                    break
+                case 'S':
+                    stringCode += 'await sleep(400).then(() => {'
+                    stringCode += 'movedown();});'
+                    break
+                case 'D':
+                    stringCode += 'await sleep(400).then(() => {'
+                    stringCode += 'moveright();});'
+                    break
+                default:
+
+            }
+        })
+        stringCode += '};'
+        return stringCode + 'evalfunction()'
+    }
+
 
     function sleep(waitSec) {
         return new Promise(function (resolve) {
             setTimeout(function() { resolve() }, waitSec);
         });
     }
-
-
-
-    // start();
 
     const canvas = document.getElementById('board');
 
@@ -83,31 +125,33 @@
     function moveup() {
         console.log('up')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (y  < 750) {
-            ctx.fillStyle = "rgb(200,0,0)";
-            y += movement
-            ctx.fillRect(x, y, 50, 50);
-
-
-        } else {
-            // ctx.fillStyle = "rgb(200,0,0)";
-            // ctx.fillRect(x, y, 50, 50);
-            // y += movement
-        }
-    }
-    function movedown() {
-        console.log('down')
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (y > 0) {
+        if (y >= 0) {
             ctx.fillStyle = "rgb(200,0,0)";
             y -= movement
             ctx.fillRect(x, y, 50, 50);
 
 
         } else {
-            // ctx.fillStyle = "rgb(200,0,0)";
-            // ctx.fillRect(x, y, 50, 50);
-            // y += movement
+            console.log('out of range ',y)
+
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 50, 50);
+        }
+    }
+    function movedown() {
+        console.log('down')
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (y < 800) {
+            ctx.fillStyle = "rgb(200,0,0)";
+            y += movement
+            ctx.fillRect(x, y, 50, 50);
+
+
+        } else {
+            console.log('out of range', y)
+
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.fillRect(x, y, 50, 50);
         }
     }
 
@@ -134,30 +178,20 @@
     async function 非同期処理存在() {
 
         await sleep(400).then(() => {
-            console.log('a')
             moveright()
-            // 1つ目の命令 await から})まで自動生成できるクロージャーみたいなの作ると良さそう
         })
 
         await sleep(400).then(()=>{
-            console.log('i')
             moveright()
-            // 2つめ
         })
 
         await sleep(400).then(()=>{
-            console.log('i')
             moveright()
-            // 2つめ
         })
 
         await sleep(400).then(()=>{
-            console.log('i')
             moveleft()
-            // 2つめ
         })
-
-
 
     }
     非同期処理存在();
@@ -202,46 +236,21 @@
 
     window.addEventListener('keydown', event => {
         switch (event.key) {
-            // console.log(event)
-
             case 'w':
-                ctx.moveTo(x,y+=movement)
+                moveup()
 
-                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-                // ctx.fillRect(10 , 10, x += movement , y );
-                //
-                // ctx.fillStyle = "rgb(256,256,256)";
-                // ctx.fillRect(10 , 10 , x - movement , y )
                 break
             case 'a':
-                ctx.moveTo(x-=movement,y)
-
-                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-                // ctx.fillRect(10 , 10 , x , y += movement);
-                //
-                // ctx.fillStyle = "rgb(256,256,256)";
-                // ctx.fillRect(10 , 10 , x , y - movement);
+                moveleft()
 
                 break
             case 's':
-                ctx.moveTo(x,y-=movement)
+                movedown()
 
-                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-                // ctx.fillRect(10 , 10 , x -= movement, y);
-                //
-                // ctx.fillStyle = "rgb(256,256,256)";
-                // ctx.fillRect(10 , 10 , 1000 - movement , y)
                 break
             case 'd':
 
-                ctx.moveTo(x+=movement,y)
-
-
-                // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-                // ctx.fillRect(10, 10, x , y -= movement);
-                //
-                // ctx.fillStyle = "rgb(256,256,256)";
-                // ctx.fillRect(10, 10, x , y + movement);
+                moveright()
 
                 break
             default :
@@ -249,48 +258,6 @@
         }
 
     })
-
-
-    // function draw() {
-    //     let canvas = document.getElementById("board");
-    //     if (canvas.getContext) {
-    //         let ctx = canvas.getContext("2d");
-    //
-    //         ctx.fillStyle = "rgb(200,0,0)";
-    //         ctx.fillRect (10, 10, 50, 50);
-    //
-    //         ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-    //         ctx.fillRect (30, 30, 50, 50);
-    //     }
-    // }
-
-
-    // window.addEventListener('keydown',(event) => {
-    //
-    //     switch (event.key) {
-    //         case "q" :
-    //             console.log("pushed Q and playsound ")
-    //             // initsound()
-    //             // osc.start()
-    //             sampleSound1.play()
-    //
-    //
-    //             break
-    //         case "w" :
-    //             console.log("pushed W")
-    //             sampleSound2.play()
-    //             // initsound()
-    //             break
-    //         case "e" :
-    //             console.log("pushed E")
-    //             sampleSound3.play()
-    //             // initsound()
-    //             // playSound()
-    //             break
-    //         default :
-    //         // console.log(event)
-    //     }
-    // })
 
 </script>
 
