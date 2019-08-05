@@ -14,10 +14,12 @@
     <input type="button" value="move" onclick="eval(makeCode(commands));commands=[]">
 </section>
 
-<canvas id="board" width="1000" height="800" style="  background-color: #888;
-  background-image: linear-gradient(45deg, #444 25%, transparent 25%, transparent 75%, #444 75%, #444), linear-gradient(45deg, #444 25%, transparent 25%, transparent 75%, #444 75%, #444);
-  background-position: 0 0, 50px 50px;
-  background-size: 100px 100px;"></canvas>
+<canvas id="board" width="500" height="500" style="  background-color: #888;
+  background-image: linear-gradient(45deg, #444 25%, transparent 25%,
+  transparent 75%, #444 75%, #444), linear-gradient(45deg, #444 25%,
+  transparent 25%, transparent 75%, #444 75%, #444);
+  background-position: 0 0, 100px 100px;
+  background-size: 200px 200px;"></canvas>
 
 <script>
     let commands = []
