@@ -55,7 +55,7 @@
                 default:
 
             }
-            stringCode += 'if (x == x_2) {console.log(\'いたーい\')};'//ダメージなどの処理
+            stringCode += 'if (x == p2.x) {console.log(\'いたーい\')};'//ダメージなどの処理
         })
         stringCode += '};'
         return stringCode + 'evalfunction()'
@@ -76,124 +76,139 @@
 
     let movement = 100
 
+    const sigeru = new Image();
+    sigeru.src = 'sigeru.png'
+
+    let fukuoka = new Image();
+    fukuoka.src = "asdsd.gif";
+
+    const p1 = {
+        name:'p1.image',
+        x:0,
+        y:400,
+        image: sigeru
+    }
+
+    const p2 ={
+        name: 'kumasan',
+        x:400,
+        y:0,
+        image:fukuoka
+    }
+
     let x = 0
     let y = 400;
 
     let x_2 = 400
     let y_2 = 0;
 
-    const sigeru = new Image();
-    sigeru.src = 'sigeru.png'
+
 
     // ctx.fillStyle = "rgb(200,0,0)";
-    ctx.drawImage(sigeru,x, y, 100, 100);
+    ctx.drawImage(p1.image,p1.x, p1.y, 100, 100);
 
     // ctx2.fillStyle = "rgb(200,0,200)";
 
 
-    let img = new Image();
-    img.src = "uv.jpg";
-    ctx2.drawImage(img,x_2, y_2, 100, 100);
+
+    ctx.drawImage(p2.image,p2.x, p2.y, 100, 100);
 
     //todo 引数でctxとかctx2とかをとって両方の移動に対応させると幸せになる
 
-    function moveright(content,content2) {
+    function moveright(target,target2) {
         console.log('right')
-        content.clearRect(0, 0, canvas.width, canvas.height)
-        if (x == x_2-100 && y == y_2) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (target.x == target2.x-100 && target.y == target2.y) {
             console.log('いたーい')
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
         }
-        else if (x <= 300) {
-            x += movement
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+        else if (target.x <= 300) {
+            target.x += movement
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
 
 
         } else {
-            console.log('out of range ',x)
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
-            // y += movement
+            console.log('out of range ',target.x)
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
         }
-        content2.fillStyle = "rgb(0,0,200)";
-        content2.drawImage(img,x_2, y_2, 100, 100);
+        ctx.fillStyle = "rgb(0,0,200)";
+        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
 
     }
-    function moveleft(content,content2) {
+    function moveleft(target,target2) {
 
         console.log('left')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (x == x_2+100 && y == y_2) {
+        if (target.x == target2.x+100 && target.y == target2.y) {
             console.log('いたーい')
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
         }
-        else if (x > 0) {
-            x -= movement
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+        else if (target.x > 0) {
+            target.x -= movement
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
 
 
         } else {
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
             // y += movement
         }
-        content2.fillStyle = "rgb(0,0,200)";
-        content2.drawImage(img,x_2, y_2, 100, 100);
+        ctx.fillStyle = "rgb(0,0,200)";
+        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
 
     }
-    function moveup(content,content2) {
+    function moveup(target,target2) {
         console.log('up')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (x == x_2 && y == y_2 + 100 ) {
+        if (target.x == target2.x && target.y == target2.y + 100 ) {
             console.log('いたーい')
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
         }
-        else if (y > 0) {
-            content.fillStyle = "rgb(200,0,0)";
-            y -= movement
-            content.drawImage(sigeru,x, y, 100, 100);
+        else if (target.y > 0) {
+            ctx.fillStyle = "rgb(200,0,0)";
+            target.y -= movement
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
 
 
         } else {
-            console.log('out of range ',y)
+            console.log('out of range ',target.y)
 
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
         }
-        content2.fillStyle = "rgb(0,0,200)";
-        content2.drawImage(img,x_2, y_2, 100, 100);
+        ctx.fillStyle = "rgb(0,0,200)";
+        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
 
     }
-    function movedown(content,content2) {
-        console.log(content+''==content2+'')
+    function movedown(target,target2) {
+        console.log('down')
 
-
-
-        content.clearRect(0, 0, canvas.width, canvas.height)
-        if (x == x_2 && y == y_2 - 100) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (target.x == target2.x && target.y == target2.y - 100) {
             console.log('いたーい')
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
         }
-        else if (y < 400) {
-            content.fillStyle = "rgb(200,0,0)";
-            y += movement
-            content.drawImage(sigeru,x, y, 100, 100);
+        else if (target.y < 400) {
+            ctx.fillStyle = "rgb(200,0,0)";
+            target.y += movement
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
 
 
         } else {
-            console.log('out of range', y)
+            console.log('out of range', target.y)
 
-            content.fillStyle = "rgb(200,0,0)";
-            content.drawImage(sigeru,x, y, 100, 100);
+            ctx.fillStyle = "rgb(200,0,0)";
+            ctx.drawImage(target.image,target.x, target.y, 100, 100);
         }
-        content2.fillStyle = "rgb(0,0,200)";
-        content2.drawImage(img,x_2, y_2, 100, 100);
+        ctx.fillStyle = "rgb(0,0,200)";
+        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
 
     }
 
@@ -276,27 +291,41 @@
 
     // setInterval(sleep1 , 10)
 
+    // if (target == 'sigeru'){
+    //     moveup(p1,p2)
+    // } else if (target == 'kumasan') {
+    //     moveup(p2,p1)
+    // }
+    const switchTarget = func => {
+        if (target == p1.name){
+            func(p1,p2)
+        } else if (target == p2.name) {
+            func(p2,p1)
+        }
+    }
+
     window.addEventListener('keydown', event => {
         switch (event.key) {
             case 'w':
-                moveup(ctx,ctx2)
+                switchTarget(moveup)
+                // moveup(p1,p2)
 
                 break
             case 'a':
-                moveleft(ctx,ctx2)
-
+                // moveleft(p1,p2)
+                switchTarget(moveleft)
                 break
             case 's':
-                movedown(ctx,ctx2)
-
+                // movedown(p1,p2)
+                switchTarget(movedown)
                 break
             case 'd':
 
-                moveright(ctx,ctx2)
-
+                // moveright(p1,p2)
+                switchTarget(moveright)
                 break
             default :
-            console.log(event)
+                console.log(event)
         }
 
     })
