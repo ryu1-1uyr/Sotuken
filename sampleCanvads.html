@@ -6,13 +6,20 @@
 </head>
 <body>
 
-<section >
-    <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center" onclick="addList('W')"><br>
+<section>
+    <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center"
+           onclick="addList('W')"><br>
     <input id="button_A" type="button" value="A" onclick="addList('A')">
     <input id="button_S" type="button" value="S" onclick="addList('S')">
     <input id="button_D" type="button" value="D" onclick="addList('D')"><br>
-    <input type="button" value="move" onclick="eval(makeCode(commands)('p1')('p2'));commands=[]"><br>
-    <input type="button" value="target at shigeru " onclick="target='sigeru'"><input type="button" value="target at kumasan"onclick="target='kumasan'">
+    <input type="button" value="rotate 90 migi"
+           onclick="switchTarget(selectRotation,90);switchTarget(drawRotatedImage)">
+    <input type="button" value="rotate 90 hidari"
+           onclick="switchTarget(selectRotation,-90);switchTarget(drawRotatedImage)"><br>
+    <input type="button" value="move" onclick="eval(makeCode(commands));commands=[]"><br>
+    <input type="button" value="target at shigeru " onclick="target='sigeru'"><input type="button"
+                                                                                     value="target at kumasan"
+                                                                                     onclick="target='kumasan'">
 </section>
 
 <canvas id="board" width="500" height="500" style="  background-color: #888;
@@ -32,39 +39,40 @@
         console.log(commands)
     }
 
-    const makeCode = (commands) => (target) => (subtarget) => {
+    const makeCode = (commands) => {
         let stringCode = 'async function evalfunction () {'
-        commands.map((command)=>{
+        commands.map((command) => {
             switch (command) {
                 case 'W':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `moveup(${target},${subtarget});});`
+                    stringCode += `switchTarget(moveup);});`
                     break
                 case 'A':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `moveleft(${target},${subtarget});});`
+                    stringCode += `switchTarget(moveleft);});`
                     break
                 case 'S':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `movedown(${target},${subtarget});});`
+                    stringCode += `switchTarget(movedown);});`
                     break
                 case 'D':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `moveright(${target},${subtarget});});`
+                    stringCode += `switchTarget(moveright);});`
                     break
                 default:
 
             }
-            stringCode += 'if (x == p2.x) {console.log(\'いたーい\')};'//ダメージなどの処理
+            //stringCode += 'if (x == p2.x) {console.log(\'いたーい\')};'//ダメージなどの処理
         })
         stringCode += '};'
         return stringCode + 'evalfunction()'
     }
 
-
     function sleep(waitSec) {
         return new Promise(function (resolve) {
-            setTimeout(function() { resolve() }, waitSec);
+            setTimeout(function () {
+                resolve()
+            }, waitSec);
         });
     }
 
@@ -83,17 +91,138 @@
     fukuoka.src = "asdsd.gif";
 
     const p1 = {
-        name:'p1.image',
-        x:0,
-        y:400,
-        image: sigeru
+        name: 'sigeru',
+        x: 0,
+        y: 400,
+        image: sigeru,
+        direction: 0,
     }
 
-    const p2 ={
+    const p2 = {
         name: 'kumasan',
-        x:400,
-        y:0,
-        image:fukuoka
+        x: 400,
+        y: 0,
+        image: fukuoka,
+        direction: 0,
+    }
+
+    //drawRotatedImage(p2.image,p2.x,p2.y,90)
+
+    const selectRotation = target => radius => {
+        target.direction += radius
+    }
+
+    const TO_RADIANS = Math.PI / 180;
+    /**
+     * 回転させた画像を表示する
+     * @param {object} image - Imageオブジェクト
+     * @param {number} x - 画像の中心となるX座標
+     * @param {number} y - 画像の中心となるY座標
+     * @param {number} angle - 回転する角度[度]
+     */
+    const drawRotatedImage = (target, target2) => {
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        // コンテキストを保存する
+        ctx.save();
+        // 回転の中心に原点を移動する
+        ctx.translate(target.x + 100, target.y);
+        // ctx.translate(target2.x , target2.y);
+
+        // canvasを回転する
+        ctx.rotate((target.direction) * TO_RADIANS);
+
+        console.log(target.direction)
+        console.log((
+            Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
+                Math.floor(target.direction / 90) - 4 :
+                Math.floor(target.direction / 90) < 0
+                    ? 360 + Math.floor(target.direction)
+                    : Math.floor(target.direction / 90)
+        ))
+
+        if (target.direction < 0) {
+            target.direction = Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
+                Math.floor(target.direction / 90) - 4 :
+                Math.floor(target.direction / 90) < 0
+                    ? 360 + Math.floor(target.direction)
+                    : Math.floor(target.direction / 90)
+        } else if (target.direction >= 360){
+            target.direction = 0
+        }
+
+        // console.log(Math.floor(target.direction / 90) >= 4 ? Math.floor(target.direction / 90) -4: Math.floor(target.direction / 90) )
+        switch (
+            Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
+                Math.floor(target.direction / 90) - 4 :
+                Math.floor(target.direction / 90) < 0 ?
+                    360 + Math.floor(target.direction) :
+                    Math.floor(target.direction / 90)
+            ) {
+            case 1://90
+                ctx.drawImage(target.image, -(0), -(0), 100, 100);
+                // ctx.drawImage(target2.image, -(0), -(0), 100, 100);
+                break
+            case 2://180
+                ctx.drawImage(target.image, -(0), -(100), 100, 100);
+                // ctx.drawImage(target2.image, -(0), -(100), 100, 100);
+                break
+            case 3://270
+                ctx.drawImage(target.image, -(100), -(100), 100, 100);
+                // ctx.drawImage(target2.image, -(100), -(100), 100, 100);
+                break
+            case 0://0
+                ctx.drawImage(target.image, -(100), -(0), 100, 100);
+                // ctx.drawImage(target2.image, -(100), -(0), 100, 100);
+                break
+            default:
+
+        }
+        // コンテキストを元に戻す
+        ctx.restore();
+console.log(target2.direction,'2p')
+        if (target2.direction === 0){
+            ctx.drawImage(target2.image, target2.x, target2.y, 100, 100);
+        } else {
+            // コンテキストを保存する
+            ctx.save();
+            // 回転の中心に原点を移動する
+            ctx.translate(target2.x + 100, target2.y);
+
+            // canvasを回転する
+            ctx.rotate((target2.direction) * TO_RADIANS);
+
+            switch (
+                Math.floor(target2.direction / 90) >= 4 && Math.floor(target2.direction / 90) >= 0 ?
+                    Math.floor(target2.direction / 90) - 4 :
+                    Math.floor(target2.direction / 90) < 0 ?
+                        360 + Math.floor(target2.direction) :
+                        Math.floor(target2.direction / 90)
+                ) {
+                case 1://90
+                    ctx.drawImage(target2.image, -(0), -(0), 100, 100);
+                    // ctx.drawImage(target2.image, -(0), -(0), 100, 100);
+                    break
+                case 2://180
+                    ctx.drawImage(target2.image, -(0), -(100), 100, 100);
+                    // ctx.drawImage(target2.image, -(0), -(100), 100, 100);
+                    break
+                case 3://270
+                    ctx.drawImage(target2.image, -(100), -(100), 100, 100);
+                    // ctx.drawImage(target2.image, -(100), -(100), 100, 100);
+                    break
+                case 0://0
+                    ctx.drawImage(target2.image, -(100), -(0), 100, 100);
+                    // ctx.drawImage(target2.image, -(100), -(0), 100, 100);
+                    break
+                default:
+
+            }
+        }
+        ctx.restore();
+
+
     }
 
     let x = 0
@@ -103,112 +232,110 @@
     let y_2 = 0;
 
 
-
     // ctx.fillStyle = "rgb(200,0,0)";
-    ctx.drawImage(p1.image,p1.x, p1.y, 100, 100);
+    ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
 
     // ctx2.fillStyle = "rgb(200,0,200)";
 
 
+    ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
 
-    ctx.drawImage(p2.image,p2.x, p2.y, 100, 100);
+    //
 
-    //todo 引数でctxとかctx2とかをとって両方の移動に対応させると幸せになる
-
-    function moveright(target,target2) {
+    function moveright(target, target2) {
         console.log('right')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (target.x == target2.x-100 && target.y == target2.y) {
+        if (target.x == target2.x - 100 && target.y == target2.y) {
             console.log('いたーい')
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
-        }
-        else if (target.x <= 300) {
+            drawRotatedImage(target,target2)
+        } else if (target.x <= 300) {
             target.x += movement
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
+            drawRotatedImage(target,target2)
 
 
         } else {
-            console.log('out of range ',target.x)
+            console.log('out of range ', target.x)
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
+            drawRotatedImage(target,target2)
         }
         ctx.fillStyle = "rgb(0,0,200)";
-        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
+        // drawRotatedImage(target2,target)
 
     }
-    function moveleft(target,target2) {
+
+    function moveleft(target, target2) {
 
         console.log('left')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (target.x == target2.x+100 && target.y == target2.y) {
+        if (target.x == target2.x + 100 && target.y == target2.y) {
             console.log('いたーい')
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
-        }
-        else if (target.x > 0) {
+            drawRotatedImage(target,target2)
+
+        } else if (target.x > 0) {
             target.x -= movement
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
-
+            drawRotatedImage(target,target2)
 
         } else {
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
+            ctx.drawImage(target.image, target.x, target.y, 100, 100);
             // y += movement
         }
         ctx.fillStyle = "rgb(0,0,200)";
-        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
+        // drawRotatedImage(target2,target)
 
     }
-    function moveup(target,target2) {
+
+    function moveup(target, target2) {
         console.log('up')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        if (target.x == target2.x && target.y == target2.y + 100 ) {
+        if (target.x == target2.x && target.y == target2.y + 100) {
             console.log('いたーい')
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
-        }
-        else if (target.y > 0) {
+            drawRotatedImage(target,target2)
+        } else if (target.y > 0) {
             ctx.fillStyle = "rgb(200,0,0)";
             target.y -= movement
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
+            drawRotatedImage(target,target2)
 
 
         } else {
-            console.log('out of range ',target.y)
+            console.log('out of range ', target.y)
 
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
+            drawRotatedImage(target,target2)
         }
         ctx.fillStyle = "rgb(0,0,200)";
-        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
+        // drawRotatedImage(target2,target)
 
     }
-    function movedown(target,target2) {
+
+    function movedown(target, target2) {
         console.log('down')
 
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x && target.y == target2.y - 100) {
             console.log('いたーい')
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
-        }
-        else if (target.y < 400) {
+            ctx.drawImage(target.image, target.x, target.y, 100, 100);
+        } else if (target.y < 400) {
+
             ctx.fillStyle = "rgb(200,0,0)";
             target.y += movement
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
 
+            drawRotatedImage(target,target2)
 
         } else {
             console.log('out of range', target.y)
 
             ctx.fillStyle = "rgb(200,0,0)";
-            ctx.drawImage(target.image,target.x, target.y, 100, 100);
+            drawRotatedImage(target,target2)
         }
         ctx.fillStyle = "rgb(0,0,200)";
-        ctx.drawImage(target2.image,target2.x, target2.y, 100, 100);
+        // drawRotatedImage(target2,target)
 
     }
 
@@ -238,19 +365,20 @@
             moveright()
         })
 
-        await sleep(500).then(()=>{
+        await sleep(500).then(() => {
             moveright()
         })
 
-        await sleep(500).then(()=>{
+        await sleep(500).then(() => {
             moveright()
         })
 
-        await sleep(500).then(()=>{
+        await sleep(500).then(() => {
             moveleft()
         })
 
     }
+
     // 非同期処理存在();
 
     // async function 非同期まとめ上げ存在() {
@@ -288,7 +416,6 @@
     // }
 
 
-
     // setInterval(sleep1 , 10)
 
     // if (target == 'sigeru'){
@@ -296,11 +423,19 @@
     // } else if (target == 'kumasan') {
     //     moveup(p2,p1)
     // }
-    const switchTarget = func => {
-        if (target == p1.name){
-            func(p1,p2)
+    const switchTarget = (func, sub = null) => {
+        if (target == p1.name) {
+            if (sub) {
+                func(p1, p2)(sub)
+            } else {
+                func(p1, p2)
+            }
         } else if (target == p2.name) {
-            func(p2,p1)
+            if (sub) {
+                func(p2, p1)(sub)
+            } else {
+                func(p2, p1)
+            }
         }
     }
 
@@ -308,20 +443,14 @@
         switch (event.key) {
             case 'w':
                 switchTarget(moveup)
-                // moveup(p1,p2)
-
                 break
             case 'a':
-                // moveleft(p1,p2)
                 switchTarget(moveleft)
                 break
             case 's':
-                // movedown(p1,p2)
                 switchTarget(movedown)
                 break
             case 'd':
-
-                // moveright(p1,p2)
                 switchTarget(moveright)
                 break
             default :
