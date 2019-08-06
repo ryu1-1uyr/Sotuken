@@ -11,7 +11,7 @@
     <input id="button_A" type="button" value="A" onclick="addList('A')">
     <input id="button_S" type="button" value="S" onclick="addList('S')">
     <input id="button_D" type="button" value="D" onclick="addList('D')"><br>
-    <input type="button" value="move" onclick="eval(makeCode(commands));commands=[]">
+    <input type="button" value="move" onclick="eval(makeCode(commands)('ctx')('ctx2'));commands=[]">
 </section>
 
 <canvas id="board" width="500" height="500" style="  background-color: #888;
@@ -29,30 +29,30 @@
         console.log(commands)
     }
 
-    const makeCode = (commands) => {
+    const makeCode = (commands) => (target) => (subtarget) => {
         let stringCode = 'async function evalfunction () {'
         commands.map((command)=>{
             switch (command) {
                 case 'W':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += 'moveup();});'
+                    stringCode += `moveup(${target},${subtarget});});`
                     break
                 case 'A':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += 'moveleft();});'
+                    stringCode += `moveleft(${target},${subtarget});});`
                     break
                 case 'S':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += 'movedown();});'
+                    stringCode += `movedown(${target},${subtarget});});`
                     break
                 case 'D':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += 'moveright();});'
+                    stringCode += `moveright(${target},${subtarget});});`
                     break
                 default:
 
             }
-            stringCode += 'if (x == x_2) {console.log(\'いたーい\')};'
+            stringCode += 'if (x == x_2) {console.log(\'いたーい\')};'//ダメージなどの処理
         })
         stringCode += '};'
         return stringCode + 'evalfunction()'
@@ -73,108 +73,124 @@
 
     let movement = 100
 
-    let x = 100
-    let y = 100;
+    let x = 0
+    let y = 400;
 
-    let x_2 = 100
-    let y_2 = 400;
+    let x_2 = 400
+    let y_2 = 0;
 
-    ctx.fillStyle = "rgb(200,0,0)";
-    ctx.fillRect(x, y, 100, 100);
+    const sigeru = new Image();
+    sigeru.src = 'sigeru.png'
 
-    ctx2.fillStyle = "rgb(200,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+    // ctx.fillStyle = "rgb(200,0,0)";
+    ctx.drawImage(sigeru,x, y, 100, 100);
+
+    // ctx2.fillStyle = "rgb(200,0,200)";
+
+
+    let img = new Image();
+    img.src = "uv.jpg";
+    ctx2.drawImage(img,x_2, y_2, 100, 100);
 
     //todo 引数でctxとかctx2とかをとって両方の移動に対応させると幸せになる
-    function moveright() {
+
+    function moveright(content,content2) {
         console.log('right')
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        content.clearRect(0, 0, canvas.width, canvas.height)
         if (x == x_2-100 && y == y_2) {
             console.log('いたーい')
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
         }
         else if (x <= 300) {
             x += movement
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
 
 
         } else {
             console.log('out of range ',x)
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
             // y += movement
         }
-        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+        content2.fillStyle = "rgb(0,0,200)";
+        content2.drawImage(img,x_2, y_2, 100, 100);
 
     }
-    function moveleft() {
+    function moveleft(content,content2) {
 
         console.log('left')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (x == x_2+100 && y == y_2) {
             console.log('いたーい')
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
         }
         else if (x > 0) {
             x -= movement
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
 
 
         } else {
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
             // y += movement
         }
-        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+        content2.fillStyle = "rgb(0,0,200)";
+        content2.drawImage(img,x_2, y_2, 100, 100);
 
     }
-    function moveup() {
+    function moveup(content,content2) {
         console.log('up')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (x == x_2 && y == y_2 + 100 ) {
             console.log('いたーい')
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
         }
         else if (y > 0) {
-            ctx.fillStyle = "rgb(200,0,0)";
+            content.fillStyle = "rgb(200,0,0)";
             y -= movement
-            ctx.fillRect(x, y, 100, 100);
+            content.drawImage(sigeru,x, y, 100, 100);
 
 
         } else {
             console.log('out of range ',y)
 
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
         }
-        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+        content2.fillStyle = "rgb(0,0,200)";
+        content2.drawImage(img,x_2, y_2, 100, 100);
 
     }
-    function movedown() {
-        console.log('down')
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+    function movedown(content,content2) {
+        console.log(content+''==content2+'')
+
+
+
+        content.clearRect(0, 0, canvas.width, canvas.height)
         if (x == x_2 && y == y_2 - 100) {
             console.log('いたーい')
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
         }
         else if (y < 400) {
-            ctx.fillStyle = "rgb(200,0,0)";
+            content.fillStyle = "rgb(200,0,0)";
             y += movement
-            ctx.fillRect(x, y, 100, 100);
+            content.drawImage(sigeru,x, y, 100, 100);
 
 
         } else {
             console.log('out of range', y)
 
-            ctx.fillStyle = "rgb(200,0,0)";
-            ctx.fillRect(x, y, 100, 100);
+            content.fillStyle = "rgb(200,0,0)";
+            content.drawImage(sigeru,x, y, 100, 100);
         }
-        ctx2.fillStyle = "rgb(0,0,200)";ctx2.fillRect(x_2, y_2, 100, 100);
+        content2.fillStyle = "rgb(0,0,200)";
+        content2.drawImage(img,x_2, y_2, 100, 100);
 
     }
 
@@ -217,7 +233,7 @@
         })
 
     }
-    非同期処理存在();
+    // 非同期処理存在();
 
     // async function 非同期まとめ上げ存在() {
     //     await 非同期処理存在()
@@ -260,20 +276,20 @@
     window.addEventListener('keydown', event => {
         switch (event.key) {
             case 'w':
-                moveup()
+                moveup(ctx,ctx2)
 
                 break
             case 'a':
-                moveleft()
+                moveleft(ctx,ctx2)
 
                 break
             case 's':
-                movedown()
+                movedown(ctx,ctx2)
 
                 break
             case 'd':
 
-                moveright()
+                moveright(ctx,ctx2)
 
                 break
             default :
