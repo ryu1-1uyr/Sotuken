@@ -105,6 +105,7 @@ const sleep = (waitSec) => {
     });
 }
 
+// FIXME 何となくターン数の描画はここじゃなくて別で切り分けて作ったほうがいい気がする
 const setStatusValue = (target,target2) => {
     HP.innerText = `${target.name} : HP : ${target.HP} , MP : ${target.MP}`
     HP2.innerText = `${target2.name} : HP : ${target2.HP} , MP : ${target2.MP}`
