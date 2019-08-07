@@ -17,6 +17,9 @@ sigeru.src = 'sigeru.png'
 const fukuoka = new Image();
 fukuoka.src = "asdsd.gif";
 
+const attacksample = new Image();
+attacksample.src = 'attacksample.png'
+
 const p1 = {
     name: 'sigeru',
     x: 0,
@@ -211,7 +214,7 @@ const drawRotatedImage = (target, target2) => {
     console.log(target2.direction,target2.name)
 }
 
-const takeDamage = target => target2 => {
+const giveDamage = target => target2 => {
     console.log(target.name + 'の攻撃！ ' + target2.name + 'は20ダメージうけた！')
     target2.HP -= 20
     setStatusValue(target,target2)
@@ -228,7 +231,7 @@ const moveup = (target, target2) => {
         case 180:
             if (target.x === target2.x && target.y === target2.y - 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 ctx.drawImage(target.image, target.x, target.y, 100, 100);
             } else if (target.y < 400) {
                 target.y += movement
@@ -245,7 +248,7 @@ const moveup = (target, target2) => {
 
             if (target.x === target2.x && target.y === target2.y + 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 drawRotatedImage(target, target2)
             } else if (target.y > 0) {
                 target.y -= movement
@@ -274,7 +277,7 @@ const movedown = (target, target2) => {
         case 180:
             if (target.x === target2.x && target.y === target2.y + 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 drawRotatedImage(target, target2)
             } else if (target.y > 0) {
                 target.y -= movement
@@ -291,7 +294,7 @@ const movedown = (target, target2) => {
 
             if (target.x === target2.x && target.y === target2.y - 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 ctx.drawImage(target.image, target.x, target.y, 100, 100);
             } else if (target.y < 400) {
                 target.y += movement
@@ -313,7 +316,7 @@ const moveright = (target, target2) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     if (target.x === target2.x - 100 && target.y === target2.y) {
         console.log('いたーい')
-        takeDamage(target)(target2)
+        giveDamage(target)(target2)
         drawRotatedImage(target, target2)
     } else if (target.x <= 300) {
         target.x += movement
@@ -329,7 +332,7 @@ const moveleft = (target, target2) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     if (target.x === target2.x + 100 && target.y == target2.y) {
         console.log('いたーい')
-        takeDamage(target)(target2)
+        giveDamage(target)(target2)
         drawRotatedImage(target, target2)
     } else if (target.x > 0) {
         target.x -= movement
@@ -340,14 +343,45 @@ const moveleft = (target, target2) => {
     }
 }
 
-//main
-window.addEventListener('keydown', event => {
-    switch (event.key) {
+const attack = (target, target2) => {
+    //向いてる方向を見る => なんかそれっぽい画像の描画
+    switch (target.direction) {
+        case 90:
+            ctx.drawImage(attacksample,target.x+100,target.y,100,100)
+            if (target.x+100 === target2.x && target.y === target2.y) {
+                giveDamage(target)(target2)
+            }
+            break
+        case 180:
+            ctx.drawImage(attacksample,target.x,target.y+100,100,100)
+            if (target.x === target2.x && target.y+100 === target2.y) {
+                giveDamage(target)(target2)
+            }
+            break
+        case 270:
+            ctx.drawImage(attacksample,target.x-100,target.y,100,100)
+            if (target.x-100 === target2.x && target.y === target2.y) {
+                giveDamage(target)(target2)
+            }
+            break
+        case 0:
+            ctx.drawImage(attacksample,target.x,target.y-100,100,100)
+            if (target.x === target2.x && target.y-100 === target2.y) {
+                giveDamage(target)(target2)
+            }
+
+            break
+        default:
+            console.error('何かがおかしい…事件に違いない…')
+    }
+}
+
+const debug = (action) => {
+    switch (action.key) {
         case 'w':
             switchTarget(moveup)
             break
         case 'a':
-            // switchTarget(moveleft)
             switchTarget(selectRotation,-90)
             switchTarget(drawRotatedImage)
             break
@@ -355,7 +389,6 @@ window.addEventListener('keydown', event => {
             switchTarget(movedown)
             break
         case 'd':
-            // switchTarget(moveright)
             switchTarget(selectRotation,90)
             switchTarget(drawRotatedImage)
             break
@@ -367,10 +400,17 @@ window.addEventListener('keydown', event => {
             switchTarget(selectRotation,90)
             switchTarget(drawRotatedImage)
             break
+        case 'f':
+            switchTarget(attack)
+            break
         default :
             console.log(event)
     }
-})
+}
+
+//main
+
+window.addEventListener('keydown', event=>debug(event))
 
 sleep(500).then(()=>{
     console.log('sleepnow')
