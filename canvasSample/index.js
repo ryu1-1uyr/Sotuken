@@ -349,7 +349,6 @@ const attack = (target, target2) => {
         case 90:
             ctx.drawImage(attacksample,target.x+100,target.y,100,100)
             if (target.x+100 === target2.x && target.y === target2.y) {
-                console.log(123)
                 giveDamage(target)(target2)
             }
             break
