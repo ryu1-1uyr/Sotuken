@@ -74,6 +74,10 @@ const makeCode = (commands) => {
                 stringCode += 'await sleep(400).then(() => {'
                 stringCode += 'switchTarget(selectRotation,90);switchTarget(drawRotatedImage);});'
                 break
+            case 'F':
+                stringCode += 'await sleep(400).then(() => {'
+                stringCode += 'switchTarget(attack);});'
+                break
             default:
                 console.error('親に向かって何だその値は')
         }
