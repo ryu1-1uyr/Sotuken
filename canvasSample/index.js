@@ -232,88 +232,100 @@ const giveDamage = target => target2 => {
 const moveup = (target, target2) => {
     console.log('up')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
 
-    switch (target.direction) {
-        case 90:
-            moveright(target, target2)
-            break
-        case 180:
-            if (target.x === target2.x && target.y === target2.y - 100) {
-                console.log('いたーい')
-                ctx.drawImage(target.image, target.x, target.y, 100, 100);
-            } else if (target.y < 400) {
-                target.y += movement
-                drawRotatedImage(target, target2)
-            } else {
-                console.log('out of range', target.y)
-                drawRotatedImage(target, target2)
-            }
-            break
-        case 270:
-            moveleft(target,target2)
-            break
-        case 0:
+    console.log(target.MP)
+    if (target.MP <= 0) {
+        console.log('mp0!')
+        drawRotatedImage(target, target2)
+    } else {
+        target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
 
-            if (target.x === target2.x && target.y === target2.y + 100) {
-                console.log('いたーい')
-                drawRotatedImage(target, target2)
-            } else if (target.y > 0) {
-                target.y -= movement
-                drawRotatedImage(target, target2)
-            } else {
-                console.log('out of range ', target.y)
-                drawRotatedImage(target, target2)
-            }
+        switch (target.direction) {
+            case 90:
+                moveright(target, target2)
+                break
+            case 180:
+                if (target.x === target2.x && target.y === target2.y - 100) {
+                    console.log('いたーい')
+                    ctx.drawImage(target.image, target.x, target.y, 100, 100);
+                } else if (target.y < 400) {
+                    target.y += movement
+                    drawRotatedImage(target, target2)
+                } else {
+                    console.log('out of range', target.y)
+                    drawRotatedImage(target, target2)
+                }
+                break
+            case 270:
+                moveleft(target, target2)
+                break
+            case 0:
 
-            break
-        default:
-            console.error('何かがおかしい…事件に違いない…')
+                if (target.x === target2.x && target.y === target2.y + 100) {
+                    console.log('いたーい')
+                    drawRotatedImage(target, target2)
+                } else if (target.y > 0) {
+                    target.y -= movement
+                    drawRotatedImage(target, target2)
+                } else {
+                    console.log('out of range ', target.y)
+                    drawRotatedImage(target, target2)
+                }
+
+                break
+            default:
+                console.error('何かがおかしい…事件に違いない…')
+        }
     }
-
 
 }
 
 const movedown = (target, target2) => {
     console.log('down')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
 
-    switch (target.direction) {
-        case 90:
-            moveleft(target,target2)
-            break
-        case 180:
-            if (target.x === target2.x && target.y === target2.y + 100) {
-                console.log('いたーい')
-                drawRotatedImage(target, target2)
-            } else if (target.y > 0) {
-                target.y -= movement
-                drawRotatedImage(target, target2)
-            } else {
-                console.log('out of range ', target.y)
-                drawRotatedImage(target, target2)
-            }
-            break
-        case 270:
-            moveright(target, target2)
-            break
-        case 0:
+    if (target.MP <= 0) {
+        console.log('mp0!')
+        drawRotatedImage(target, target2)
+    } else {
+        target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
+        
+        switch (target.direction) {
+            case 90:
+                moveleft(target, target2)
+                break
+            case 180:
+                if (target.x === target2.x && target.y === target2.y + 100) {
+                    console.log('いたーい')
+                    drawRotatedImage(target, target2)
+                } else if (target.y > 0) {
+                    target.y -= movement
+                    drawRotatedImage(target, target2)
+                } else {
+                    console.log('out of range ', target.y)
+                    drawRotatedImage(target, target2)
+                }
+                break
+            case 270:
+                moveright(target, target2)
+                break
+            case 0:
 
-            if (target.x === target2.x && target.y === target2.y - 100) {
-                console.log('いたーい')
-                ctx.drawImage(target.image, target.x, target.y, 100, 100);
-            } else if (target.y < 400) {
-                target.y += movement
-                drawRotatedImage(target, target2)
-            } else {
-                console.log('out of range', target.y)
-                drawRotatedImage(target, target2)
-            }
+                if (target.x === target2.x && target.y === target2.y - 100) {
+                    console.log('いたーい')
+                    ctx.drawImage(target.image, target.x, target.y, 100, 100);
+                } else if (target.y < 400) {
+                    target.y += movement
+                    drawRotatedImage(target, target2)
+                } else {
+                    console.log('out of range', target.y)
+                    drawRotatedImage(target, target2)
+                }
 
-            break
-        default:
-            console.error('何かがおかしい…事件に違いない…')
+                break
+            default:
+                console.error('何かがおかしい…事件に違いない…')
+        }
     }
 
 }
@@ -350,34 +362,47 @@ const moveleft = (target, target2) => {
 
 const attack = (target, target2) => {
     //向いてる方向を見る => なんかそれっぽい画像の描画
-    switch (target.direction) {
-        case 90:
-            ctx.drawImage(attacksample,target.x+100,target.y,100,100)
-            if (target.x+100 === target2.x && target.y === target2.y) {
-                giveDamage(target)(target2)
-            }
-            break
-        case 180:
-            ctx.drawImage(attacksample,target.x,target.y+100,100,100)
-            if (target.x === target2.x && target.y+100 === target2.y) {
-                giveDamage(target)(target2)
-            }
-            break
-        case 270:
-            ctx.drawImage(attacksample,target.x-100,target.y,100,100)
-            if (target.x-100 === target2.x && target.y === target2.y) {
-                giveDamage(target)(target2)
-            }
-            break
-        case 0:
-            ctx.drawImage(attacksample,target.x,target.y-100,100,100)
-            if (target.x === target2.x && target.y-100 === target2.y) {
-                giveDamage(target)(target2)
-            }
+    if (target.MP <= 0) {
+        console.log('mp0!')
+        drawRotatedImage(target, target2)
+    } else {
+        switch (target.direction) {
+            case 90:
+                ctx.drawImage(attacksample, target.x + 100, target.y, 100, 100)
+                if (target.x + 100 === target2.x && target.y === target2.y) {
+                    giveDamage(target)(target2)
+                } else {
+                    target.MP -= consumptionMP.attack
+                }
+                break
+            case 180:
+                ctx.drawImage(attacksample, target.x, target.y + 100, 100, 100)
+                if (target.x === target2.x && target.y + 100 === target2.y) {
+                    giveDamage(target)(target2)
+                } else {
+                    target.MP -= consumptionMP.attack
+                }
+                break
+            case 270:
+                ctx.drawImage(attacksample, target.x - 100, target.y, 100, 100)
+                if (target.x - 100 === target2.x && target.y === target2.y) {
+                    giveDamage(target)(target2)
+                } else {
+                    target.MP -= consumptionMP.attack
+                }
+                break
+            case 0:
+                ctx.drawImage(attacksample, target.x, target.y - 100, 100, 100)
+                if (target.x === target2.x && target.y - 100 === target2.y) {
+                    giveDamage(target)(target2)
+                } else {
+                    target.MP -= consumptionMP.attack
+                }
 
-            break
-        default:
-            console.error('何かがおかしい…事件に違いない…')
+                break
+            default:
+                console.error('何かがおかしい…事件に違いない…')
+        }
     }
 }
 
