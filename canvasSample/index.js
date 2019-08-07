@@ -3,11 +3,13 @@ let target = 'sigeru'
 const commands = []
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
+const turn = document.getElementById('turn')
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext("2d");
 const TO_RADIANS = Math.PI / 180;
 
 const movement = 100
+let nowTurn = 0
 
 const sigeru = new Image();
 sigeru.src = 'sigeru.png'
@@ -72,6 +74,7 @@ const makeCode = (commands) => {
             default:
                 console.error('親に向かって何だその値は')
         }
+        stringCode += 'nowTurn+=1;switchTarget(setStatusValue);'
     })
     stringCode += '};'
     console.log(stringCode + 'evalfunction()')
@@ -105,6 +108,7 @@ const sleep = (waitSec) => {
 const setStatusValue = (target,target2) => {
     HP.innerText = `${target.name} : HP : ${target.HP} , MP : ${target.MP}`
     HP2.innerText = `${target2.name} : HP : ${target2.HP} , MP : ${target2.MP}`
+    turn.innerText = `現在${nowTurn}ターン目です`
 
 }
 
