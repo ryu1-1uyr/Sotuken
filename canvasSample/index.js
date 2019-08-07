@@ -376,8 +376,8 @@ const attack = (target, target2) => {
     }
 }
 
-const debug = event => {
-    switch (event.key) {
+const debug = (action) => {
+    switch (action.key) {
         case 'w':
             switchTarget(moveup)
             break
@@ -410,7 +410,7 @@ const debug = event => {
 
 //main
 
-window.addEventListener('keydown', debug(event))
+window.addEventListener('keydown', event=>debug(event))
 
 sleep(500).then(()=>{
     console.log('sleepnow')
