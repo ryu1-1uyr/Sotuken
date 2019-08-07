@@ -348,15 +348,28 @@ const attack = (target, target2) => {
     switch (target.direction) {
         case 90:
             ctx.drawImage(attacksample,target.x+100,target.y,100,100)
+            if (target.x+100 === target2.x && target.y === target2.y) {
+                console.log(123)
+                giveDamage(target)(target2)
+            }
             break
         case 180:
             ctx.drawImage(attacksample,target.x,target.y+100,100,100)
+            if (target.x === target2.x && target.y+100 === target2.y) {
+                giveDamage(target)(target2)
+            }
             break
         case 270:
             ctx.drawImage(attacksample,target.x-100,target.y,100,100)
+            if (target.x-100 === target2.x && target.y === target2.y) {
+                giveDamage(target)(target2)
+            }
             break
         case 0:
             ctx.drawImage(attacksample,target.x,target.y-100,100,100)
+            if (target.x === target2.x && target.y-100 === target2.y) {
+                giveDamage(target)(target2)
+            }
 
             break
         default:
