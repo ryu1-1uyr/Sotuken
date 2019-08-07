@@ -61,7 +61,14 @@ const makeCode = (commands) => {
                 stringCode += 'await sleep(400).then(() => {'
                 stringCode += `switchTarget(moveright);});`
                 break
+            case 'Q':
+                //インド人を左に
+                break
+            case 'E':
+                //インド人を右に
+                break
             default:
+                console.error('親に向かって何だその値は')
         }
     })
     stringCode += '};'
