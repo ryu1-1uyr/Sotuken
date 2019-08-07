@@ -224,6 +224,7 @@ const drawRotatedImage = (target, target2) => {
 
 const giveDamage = target => target2 => {
     console.log(target.name + 'の攻撃！ ' + target2.name + 'は20ダメージうけた！')
+    target.MP -= consumptionMP.attack // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
     target2.HP -= 20
     setStatusValue(target,target2)
 }
@@ -231,6 +232,7 @@ const giveDamage = target => target2 => {
 const moveup = (target, target2) => {
     console.log('up')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
 
     switch (target.direction) {
         case 90:
@@ -277,6 +279,7 @@ const moveup = (target, target2) => {
 const movedown = (target, target2) => {
     console.log('down')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
 
     switch (target.direction) {
         case 90:
