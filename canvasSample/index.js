@@ -62,7 +62,8 @@ const makeCode = (commands) => {
                 stringCode += `switchTarget(moveright);});`
                 break
             case 'Q':
-                //インド人を左に
+                stringCode += 'await sleep(400).then(() => {'
+                stringCode += 'switchTarget(selectRotation,-90);switchTarget(drawRotatedImage);'
                 break
             case 'E':
                 //インド人を右に
