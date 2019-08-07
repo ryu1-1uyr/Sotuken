@@ -192,6 +192,8 @@ const drawRotatedImage = (target, target2) => {
         }
     }
     ctx.restore();
+    console.log(target.direction,target.name)
+    console.log(target2.direction,target2.name)
 }
 
 const takeDamage = target => target2 => {
