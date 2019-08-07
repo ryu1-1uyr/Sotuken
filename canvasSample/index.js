@@ -7,6 +7,10 @@ const turn = document.getElementById('turn')
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext("2d");
 const TO_RADIANS = Math.PI / 180;
+const consumptionMP = {
+    attack: 10,
+    move: 2
+}
 
 const movement = 100
 let nowTurn = 0
