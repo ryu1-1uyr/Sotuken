@@ -7,15 +7,14 @@
 <body>
 
 <section>
-    <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center"
-           onclick="addList('W')(commands)"><br>
-    <input id="button_A" type="button" value="A" onclick="addList('A')(commands)">
-    <input id="button_S" type="button" value="S" onclick="addList('S')(commands)">
-    <input id="button_D" type="button" value="D" onclick="addList('D')(commands)"><br>
+    <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center" onclick="addList('W')(commands)"><br>
     <input type="button" value="rotate 90 hidari"
            onclick="addList('Q')(commands)">
+    <input id="button_S" type="button" value="S" style="padding-left: 64px;text-align: center" onclick="addList('S')(commands)">
     <input type="button" value="rotate 90 migi"
-           onclick="addList('E')(commands)"><br>
+           onclick="addList('E')(commands)">
+    <br>
+
     <input type="button" value="move" onclick="eval(makeCode(commands));commands.length = 0"><br>
     <input type="button" value="target at shigeru " onclick="target='sigeru'">
     <input type="button" value="target at kumasan" onclick="target='kumasan'">
