@@ -415,9 +415,13 @@ const debug = (action) => {
 
 //main
 
-window.addEventListener('keydown', event=>debug(event))
+try {
+    window.addEventListener('keydown', event=>debug(event))
 
-sleep(500).then(()=>{
-    console.log('sleepnow')
-    initfunc()
-})
+    sleep(500).then(()=>{
+        console.log('sleepnow')
+        initfunc()
+    })
+} catch (e) {
+    console.error(e,"\nえらーおきてるよーーーりゅうくんきがついてーーーかんかんかんかんかんかんかんかんかんかんかんかん")
+}
