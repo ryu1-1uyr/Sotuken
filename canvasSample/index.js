@@ -63,11 +63,11 @@ const makeCode = (commands) => {
                 break
             case 'Q':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += 'switchTarget(selectRotation,-90);switchTarget(drawRotatedImage);'
+                stringCode += 'switchTarget(selectRotation,-90);switchTarget(drawRotatedImage);});'
                 break
             case 'E':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += 'switchTarget(selectRotation,90);switchTarget(drawRotatedImage);'
+                stringCode += 'switchTarget(selectRotation,90);switchTarget(drawRotatedImage);});'
                 break
             default:
                 console.error('親に向かって何だその値は')
