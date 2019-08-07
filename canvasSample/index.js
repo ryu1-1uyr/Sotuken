@@ -376,14 +376,12 @@ const attack = (target, target2) => {
     }
 }
 
-//main
-window.addEventListener('keydown', event => {
+const debug = event => {
     switch (event.key) {
         case 'w':
             switchTarget(moveup)
             break
         case 'a':
-            // switchTarget(moveleft)
             switchTarget(selectRotation,-90)
             switchTarget(drawRotatedImage)
             break
@@ -391,7 +389,6 @@ window.addEventListener('keydown', event => {
             switchTarget(movedown)
             break
         case 'd':
-            // switchTarget(moveright)
             switchTarget(selectRotation,90)
             switchTarget(drawRotatedImage)
             break
@@ -409,7 +406,11 @@ window.addEventListener('keydown', event => {
         default :
             console.log(event)
     }
-})
+}
+
+//main
+
+window.addEventListener('keydown', debug(event))
 
 sleep(500).then(()=>{
     console.log('sleepnow')
