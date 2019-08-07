@@ -121,7 +121,7 @@
 
     const sleep = (waitSec) => {
         return new Promise( (resolve) => {
-            setTimeout( () => {
+            setTimeout(() => {
                 resolve()
             }, waitSec);
         });
@@ -133,7 +133,7 @@
 
     }
 
-    const initfunc = ()=>{
+    const initfunc = () => {
         ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
         ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
 
@@ -159,14 +159,7 @@
         // ctx.translate(target2.x , target2.y);
         // canvasを回転する
         ctx.rotate((target.direction) * TO_RADIANS);
-        console.log(target.direction)
-        console.log((
-            Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
-                Math.floor(target.direction / 90) - 4 :
-                Math.floor(target.direction / 90) < 0
-                    ? 360 + Math.floor(target.direction)
-                    : Math.floor(target.direction / 90)
-        ))
+
         if (target.direction < 0) {
             target.direction = Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
                 Math.floor(target.direction / 90) - 4 :
@@ -204,7 +197,6 @@
         }
         // コンテキストを元に戻す
         ctx.restore();
-        console.log(target2.direction, '2p')
         if (target2.direction === 0) {
             ctx.drawImage(target2.image, target2.x, target2.y, 100, 100);
         } else {
