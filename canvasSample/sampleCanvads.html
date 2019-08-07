@@ -103,7 +103,23 @@
         return stringCode + 'evalfunction()'
     }
 
-    function sleep(waitSec) {
+    const switchTarget = (func, sub = null) => {
+        if (target == p1.name) {
+            if (sub) {
+                func(p1, p2)(sub)
+            } else {
+                func(p1, p2)
+            }
+        } else if (target == p2.name) {
+            if (sub) {
+                func(p2, p1)(sub)
+            } else {
+                func(p2, p1)
+            }
+        }
+    }
+
+    const sleep = function (waitSec) {
         return new Promise(function (resolve) {
             setTimeout(function () {
                 resolve()
@@ -115,6 +131,13 @@
         HP.innerText = `${target.name} : HP : ${target.HP} , MP : ${target.MP}`
         HP2.innerText = `${target2.name} : HP : ${target2.HP} , MP : ${target2.MP}`
 
+    }
+
+    const initfunc = ()=>{
+        ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
+        ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
+
+        switchTarget(setStatusValue)
     }
 
     const selectRotation = target => radius => {
@@ -220,7 +243,7 @@
         ctx.restore();
     }
 
-    function moveright(target, target2) {
+    const moveright = function (target, target2) {
         console.log('right')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x - 100 && target.y == target2.y) {
@@ -235,7 +258,7 @@
         }
     }
 
-    function moveleft(target, target2) {
+    const moveleft = function (target, target2) {
         console.log('left')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x + 100 && target.y == target2.y) {
@@ -250,7 +273,7 @@
         }
     }
 
-    function moveup(target, target2) {
+    const moveup = function (target, target2) {
         console.log('up')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x && target.y == target2.y + 100) {
@@ -265,7 +288,7 @@
         }
     }
 
-    function movedown(target, target2) {
+    const movedown = function (target, target2) {
         console.log('down')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x && target.y == target2.y - 100) {
@@ -277,22 +300,6 @@
         } else {
             console.log('out of range', target.y)
             drawRotatedImage(target, target2)
-        }
-    }
-
-    const switchTarget = (func, sub = null) => {
-        if (target == p1.name) {
-            if (sub) {
-                func(p1, p2)(sub)
-            } else {
-                func(p1, p2)
-            }
-        } else if (target == p2.name) {
-            if (sub) {
-                func(p2, p1)(sub)
-            } else {
-                func(p2, p1)
-            }
         }
     }
 
@@ -314,13 +321,6 @@
                 console.log(event)
         }
     })
-
-    const initfunc = ()=>{
-        ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
-        ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
-
-        switchTarget(setStatusValue)
-    }
 
     sleep(1000).then(()=>{
         console.log('sleepnow')
