@@ -202,6 +202,97 @@ const takeDamage = target => target2 => {
     setStatusValue(target,target2)
 }
 
+const moveup = (target, target2) => {
+    console.log('up')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    switch (target.direction) {
+        case 90:
+            moveright(target, target2)
+            break
+        case 180:
+            if (target.x === target2.x && target.y === target2.y - 100) {
+                console.log('いたーい')
+                takeDamage(target)(target2)
+                ctx.drawImage(target.image, target.x, target.y, 100, 100);
+            } else if (target.y < 400) {
+                target.y += movement
+                drawRotatedImage(target, target2)
+            } else {
+                console.log('out of range', target.y)
+                drawRotatedImage(target, target2)
+            }
+            break
+        case 270:
+            moveleft(target,target2)
+            break
+        case 0:
+
+            if (target.x === target2.x && target.y === target2.y + 100) {
+                console.log('いたーい')
+                takeDamage(target)(target2)
+                drawRotatedImage(target, target2)
+            } else if (target.y > 0) {
+                target.y -= movement
+                drawRotatedImage(target, target2)
+            } else {
+                console.log('out of range ', target.y)
+                drawRotatedImage(target, target2)
+            }
+
+            break
+        default:
+            console.error('何かがおかしい…事件に違いない…')
+    }
+
+
+}
+
+const movedown = (target, target2) => {
+    console.log('down')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    switch (target.direction) {
+        case 90:
+            moveleft(target,target2)
+            break
+        case 180:
+            if (target.x === target2.x && target.y === target2.y + 100) {
+                console.log('いたーい')
+                takeDamage(target)(target2)
+                drawRotatedImage(target, target2)
+            } else if (target.y > 0) {
+                target.y -= movement
+                drawRotatedImage(target, target2)
+            } else {
+                console.log('out of range ', target.y)
+                drawRotatedImage(target, target2)
+            }
+            break
+        case 270:
+            moveright(target, target2)
+            break
+        case 0:
+
+            if (target.x == target2.x && target.y == target2.y - 100) {
+                console.log('いたーい')
+                takeDamage(target)(target2)
+                ctx.drawImage(target.image, target.x, target.y, 100, 100);
+            } else if (target.y < 400) {
+                target.y += movement
+                drawRotatedImage(target, target2)
+            } else {
+                console.log('out of range', target.y)
+                drawRotatedImage(target, target2)
+            }
+
+            break
+        default:
+            console.error('何かがおかしい…事件に違いない…')
+    }
+
+}
+
 const moveright = (target, target2) => {
     console.log('right')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -231,38 +322,6 @@ const moveleft = (target, target2) => {
     } else {
         ctx.drawImage(target.image, target.x, target.y, 100, 100);
         // y += movement
-    }
-}
-
-const moveup = (target, target2) => {
-    console.log('up')
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    if (target.x == target2.x && target.y == target2.y + 100) {
-        console.log('いたーい')
-        takeDamage(target)(target2)
-        drawRotatedImage(target, target2)
-    } else if (target.y > 0) {
-        target.y -= movement
-        drawRotatedImage(target, target2)
-    } else {
-        console.log('out of range ', target.y)
-        drawRotatedImage(target, target2)
-    }
-}
-
-const movedown = (target, target2) => {
-    console.log('down')
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    if (target.x == target2.x && target.y == target2.y - 100) {
-        console.log('いたーい')
-        takeDamage(target)(target2)
-        ctx.drawImage(target.image, target.x, target.y, 100, 100);
-    } else if (target.y < 400) {
-        target.y += movement
-        drawRotatedImage(target, target2)
-    } else {
-        console.log('out of range', target.y)
-        drawRotatedImage(target, target2)
     }
 }
 
