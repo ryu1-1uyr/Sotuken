@@ -30,8 +30,8 @@ const p1 = {
     y: 400,
     image: sigeru,
     direction: 0,
-    HP:100,
-    MP:100
+    HP: 100,
+    MP: 100
 }
 
 const p2 = {
@@ -40,8 +40,8 @@ const p2 = {
     y: 0,
     image: fukuoka,
     direction: 0,
-    HP:100,
-    MP:100
+    HP: 100,
+    MP: 100
 };
 
 // function
@@ -109,7 +109,7 @@ const switchTarget = (func, sub = null) => {
 }
 
 const sleep = (waitSec) => {
-    return new Promise( (resolve) => {
+    return new Promise((resolve) => {
         setTimeout(() => {
             resolve()
         }, waitSec);
@@ -117,7 +117,7 @@ const sleep = (waitSec) => {
 }
 
 // FIXME 何となくターン数の描画はここじゃなくて別で切り分けて作ったほうがいい気がする
-const setStatusValue = (target,target2) => {
+const setStatusValue = (target, target2) => {
     HP.innerText = `${target.name} : HP : ${target.HP} , MP : ${target.MP}`
     HP2.innerText = `${target2.name} : HP : ${target2.HP} , MP : ${target2.MP}`
     turn.innerText = `現在${nowTurn}ターン目です`
@@ -387,22 +387,22 @@ const debug = (action) => {
             switchTarget(moveup)
             break
         case 'a':
-            switchTarget(selectRotation,-90)
+            switchTarget(selectRotation, -90)
             switchTarget(drawRotatedImage)
             break
         case 's':
             switchTarget(movedown)
             break
         case 'd':
-            switchTarget(selectRotation,90)
+            switchTarget(selectRotation, 90)
             switchTarget(drawRotatedImage)
             break
         case 'q':
-            switchTarget(selectRotation,-90)
+            switchTarget(selectRotation, -90)
             switchTarget(drawRotatedImage)
             break
         case 'e':
-            switchTarget(selectRotation,90)
+            switchTarget(selectRotation, 90)
             switchTarget(drawRotatedImage)
             break
         case 'f':
@@ -416,12 +416,12 @@ const debug = (action) => {
 //main
 
 try {
-    window.addEventListener('keydown', event=>debug(event))
+    window.addEventListener('keydown', event => debug(event))
 
-    sleep(500).then(()=>{
+    sleep(500).then(() => {
         console.log('sleepnow')
         initfunc()
     })
 } catch (e) {
-    console.error(e,"\nえらーおきてるよーーーりゅうくんきがついてーーーかんかんかんかんかんかんかんかんかんかんかんかん")
+    console.error(e, "\nえらーおきてるよーーーりゅうくんきがついてーーーかんかんかんかんかんかんかんかんかんかんかんかん")
 }
