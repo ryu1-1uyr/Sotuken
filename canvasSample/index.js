@@ -231,7 +231,7 @@ const moveup = (target, target2) => {
         case 180:
             if (target.x === target2.x && target.y === target2.y - 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 ctx.drawImage(target.image, target.x, target.y, 100, 100);
             } else if (target.y < 400) {
                 target.y += movement
@@ -248,7 +248,7 @@ const moveup = (target, target2) => {
 
             if (target.x === target2.x && target.y === target2.y + 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 drawRotatedImage(target, target2)
             } else if (target.y > 0) {
                 target.y -= movement
@@ -277,7 +277,7 @@ const movedown = (target, target2) => {
         case 180:
             if (target.x === target2.x && target.y === target2.y + 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 drawRotatedImage(target, target2)
             } else if (target.y > 0) {
                 target.y -= movement
@@ -294,7 +294,7 @@ const movedown = (target, target2) => {
 
             if (target.x === target2.x && target.y === target2.y - 100) {
                 console.log('いたーい')
-                takeDamage(target)(target2)
+                giveDamage(target)(target2)
                 ctx.drawImage(target.image, target.x, target.y, 100, 100);
             } else if (target.y < 400) {
                 target.y += movement
@@ -316,7 +316,7 @@ const moveright = (target, target2) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     if (target.x === target2.x - 100 && target.y === target2.y) {
         console.log('いたーい')
-        takeDamage(target)(target2)
+        giveDamage(target)(target2)
         drawRotatedImage(target, target2)
     } else if (target.x <= 300) {
         target.x += movement
@@ -332,7 +332,7 @@ const moveleft = (target, target2) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     if (target.x === target2.x + 100 && target.y == target2.y) {
         console.log('いたーい')
-        takeDamage(target)(target2)
+        giveDamage(target)(target2)
         drawRotatedImage(target, target2)
     } else if (target.x > 0) {
         target.x -= movement
