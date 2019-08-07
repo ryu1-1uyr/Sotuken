@@ -218,15 +218,15 @@ const drawRotatedImage = (target, target2) => {
         }
     }
     ctx.restore();
-    console.log(target.direction,target.name)
-    console.log(target2.direction,target2.name)
+    console.log(target.direction, target.name)
+    console.log(target2.direction, target2.name)
 }
 
 const giveDamage = target => target2 => {
     console.log(target.name + 'の攻撃！ ' + target2.name + 'は20ダメージうけた！')
     target.MP -= consumptionMP.attack // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
     target2.HP -= 20
-    setStatusValue(target,target2)
+    setStatusValue(target, target2)
 }
 
 const moveup = (target, target2) => {
