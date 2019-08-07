@@ -27,12 +27,48 @@
   transparent 75%, #444 75%, #444), linear-gradient(45deg, #444 25%,
   transparent 25%, transparent 75%, #444 75%, #444);
   background-position: 0 0, 100px 100px;
-  background-size: 200px 200px;"></canvas>
-
+  background-size: 200px 200px;" onload="initfunc()"></canvas>
+<div>
+    <h2 id="HP"></h2>
+    <h2 id="HP2"></h2>
+</div>
 <script>
-    let commands = []
-
     let target = 'sigeru'
+
+    const commands = []
+    const HP = document.getElementById('HP')
+    const HP2 = document.getElementById('HP2')
+    const canvas = document.getElementById('board');
+    const ctx = canvas.getContext("2d");
+    const TO_RADIANS = Math.PI / 180;
+
+    const movement = 100
+
+    const sigeru = new Image();
+    sigeru.src = 'sigeru.png'
+
+    const fukuoka = new Image();
+    fukuoka.src = "asdsd.gif";
+
+    const p1 = {
+        name: 'sigeru',
+        x: 0,
+        y: 400,
+        image: sigeru,
+        direction: 0,
+        HP:100,
+        MP:100
+    }
+
+    const p2 = {
+        name: 'kumasan',
+        x: 400,
+        y: 0,
+        image: fukuoka,
+        direction: 0,
+        HP:100,
+        MP:100
+    }
 
     const addList = (value) => {
         commands.push(value)
@@ -60,7 +96,6 @@
                     stringCode += `switchTarget(moveright);});`
                     break
                 default:
-
             }
             //stringCode += 'if (x == p2.x) {console.log(\'いたーい\')};'//ダメージなどの処理
         })
@@ -76,43 +111,15 @@
         });
     }
 
-    const canvas = document.getElementById('board');
+    const setStatusValue = (target,target2) => {
+        HP.innerText = `${target.name} : HP : ${target.HP} , MP : ${target.MP}`
+        HP2.innerText = `${target2.name} : HP : ${target2.HP} , MP : ${target2.MP}`
 
-    const ctx = canvas.getContext("2d");
-    const ctx2 = canvas.getContext("2d");
-
-
-    let movement = 100
-
-    const sigeru = new Image();
-    sigeru.src = 'sigeru.png'
-
-    let fukuoka = new Image();
-    fukuoka.src = "asdsd.gif";
-
-    const p1 = {
-        name: 'sigeru',
-        x: 0,
-        y: 400,
-        image: sigeru,
-        direction: 0,
     }
-
-    const p2 = {
-        name: 'kumasan',
-        x: 400,
-        y: 0,
-        image: fukuoka,
-        direction: 0,
-    }
-
-    //drawRotatedImage(p2.image,p2.x,p2.y,90)
 
     const selectRotation = target => radius => {
         target.direction += radius
     }
-
-    const TO_RADIANS = Math.PI / 180;
     /**
      * 回転させた画像を表示する
      * @param {object} image - Imageオブジェクト
@@ -121,18 +128,14 @@
      * @param {number} angle - 回転する角度[度]
      */
     const drawRotatedImage = (target, target2) => {
-
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-
         // コンテキストを保存する
         ctx.save();
         // 回転の中心に原点を移動する
         ctx.translate(target.x + 100, target.y);
         // ctx.translate(target2.x , target2.y);
-
         // canvasを回転する
         ctx.rotate((target.direction) * TO_RADIANS);
-
         console.log(target.direction)
         console.log((
             Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
@@ -141,7 +144,6 @@
                     ? 360 + Math.floor(target.direction)
                     : Math.floor(target.direction / 90)
         ))
-
         if (target.direction < 0) {
             target.direction = Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
                 Math.floor(target.direction / 90) - 4 :
@@ -151,7 +153,6 @@
         } else if (target.direction >= 360) {
             target.direction = 0
         }
-
         // console.log(Math.floor(target.direction / 90) >= 4 ? Math.floor(target.direction / 90) -4: Math.floor(target.direction / 90) )
         switch (
             Math.floor(target.direction / 90) >= 4 && Math.floor(target.direction / 90) >= 0 ?
@@ -177,7 +178,6 @@
                 // ctx.drawImage(target2.image, -(100), -(0), 100, 100);
                 break
             default:
-
         }
         // コンテキストを元に戻す
         ctx.restore();
@@ -189,10 +189,8 @@
             ctx.save();
             // 回転の中心に原点を移動する
             ctx.translate(target2.x + 100, target2.y);
-
             // canvasを回転する
             ctx.rotate((target2.direction) * TO_RADIANS);
-
             switch (
                 Math.floor(target2.direction / 90) >= 4 && Math.floor(target2.direction / 90) >= 0 ?
                     Math.floor(target2.direction / 90) - 4 :
@@ -217,26 +215,10 @@
                     // ctx.drawImage(target2.image, -(100), -(0), 100, 100);
                     break
                 default:
-
             }
         }
         ctx.restore();
-
-
     }
-
-    let x = 0
-    let y = 400;
-
-    let x_2 = 400
-    let y_2 = 0;
-
-    // ctx.fillStyle = "rgb(200,0,0)";
-    ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
-
-    // ctx2.fillStyle = "rgb(200,0,200)";
-
-    ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
 
     function moveright(target, target2) {
         console.log('right')
@@ -247,32 +229,25 @@
         } else if (target.x <= 300) {
             target.x += movement
             drawRotatedImage(target, target2)
-
-
         } else {
             console.log('out of range ', target.x)
             drawRotatedImage(target, target2)
         }
-
     }
 
     function moveleft(target, target2) {
-
         console.log('left')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x + 100 && target.y == target2.y) {
             console.log('いたーい')
             drawRotatedImage(target, target2)
-
         } else if (target.x > 0) {
             target.x -= movement
             drawRotatedImage(target, target2)
-
         } else {
             ctx.drawImage(target.image, target.x, target.y, 100, 100);
             // y += movement
         }
-
     }
 
     function moveup(target, target2) {
@@ -284,121 +259,27 @@
         } else if (target.y > 0) {
             target.y -= movement
             drawRotatedImage(target, target2)
-
-
         } else {
             console.log('out of range ', target.y)
-
             drawRotatedImage(target, target2)
         }
-
     }
 
     function movedown(target, target2) {
         console.log('down')
-
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x && target.y == target2.y - 100) {
             console.log('いたーい')
             ctx.drawImage(target.image, target.x, target.y, 100, 100);
         } else if (target.y < 400) {
-
             target.y += movement
-
             drawRotatedImage(target, target2)
-
         } else {
             console.log('out of range', target.y)
-
             drawRotatedImage(target, target2)
         }
-
     }
 
-    // async function start() {
-    //     await sleep(2000);
-    //     console.log('2秒経過しました');
-    //     draw()
-    //
-    //     // await sleep(1000);
-    //     // console.log('1秒経過しました');
-    //     //
-    //     // await sleep(3000);
-    //     // console.log('3秒経過しました');
-    // }
-
-    // .then(() => {
-    //     sleep(1000).then(() => {
-    //         console.log('i')
-    //         draw()
-    //         //2つ目の命令
-    //     })
-    // })
-
-    async function 非同期処理存在() {
-
-        await sleep(500).then(() => {
-            moveright()
-        })
-
-        await sleep(500).then(() => {
-            moveright()
-        })
-
-        await sleep(500).then(() => {
-            moveright()
-        })
-
-        await sleep(500).then(() => {
-            moveleft()
-        })
-
-    }
-
-    // 非同期処理存在();
-
-    // async function 非同期まとめ上げ存在() {
-    //     await 非同期処理存在()
-    //     await 非同期処理存在()
-    //     await 非同期処理存在()
-    //     await 非同期処理存在()
-    // }
-    //
-    // async function 非同期顧問存在() {
-    //     await 非同期まとめ上げ存在()
-    //     await 非同期まとめ上げ存在()
-    //     await 非同期まとめ上げ存在()
-    //     await 非同期まとめ上げ存在()
-    // }
-    //
-    // async function 非同期PTA存在() {
-    //     await 非同期顧問存在()
-    //     await 非同期顧問存在()
-    //     await 非同期顧問存在()
-    //     await 非同期顧問存在()
-    // }
-    //
-    // async function 非同期教育委員会存在() {
-    //     await 非同期PTA存在()
-    //     await 非同期PTA存在()
-    //     await 非同期PTA存在()
-    //     await 非同期PTA存在()
-    // }
-    //
-    // 非同期教育委員会存在()
-
-    // for (let o = 0 ; o < 4 ; o++ ){
-    //     非同期まとめ上げ存在()
-    // }
-
-
-    // setInterval(sleep1 , 10)
-
-    // if (target == 'sigeru'){
-    //     moveup(p1,p2)
-    // } else if (target == 'kumasan') {
-    //     moveup(p2,p1)
-    // }
     const switchTarget = (func, sub = null) => {
         if (target == p1.name) {
             if (sub) {
