@@ -1,5 +1,6 @@
-# 卒業制作のための下調べをするよ
+# 卒業制作のためのあれこれ
 
+blocklysample => blockly周りを試してみたサンプル
 > 構成
 ```$xslt
 .
@@ -34,3 +35,5 @@
 │   └── theme_scripts
 └── index.html
 ```
+
+canvasSample => 一旦細かな値を定めるために雑に作っていく奴
