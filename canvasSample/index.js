@@ -342,13 +342,17 @@ window.addEventListener('keydown', event => {
             switchTarget(moveup)
             break
         case 'a':
-            switchTarget(moveleft)
+            // switchTarget(moveleft)
+            switchTarget(selectRotation,-90)
+            switchTarget(drawRotatedImage)
             break
         case 's':
             switchTarget(movedown)
             break
         case 'd':
-            switchTarget(moveright)
+            // switchTarget(moveright)
+            switchTarget(selectRotation,90)
+            switchTarget(drawRotatedImage)
             break
         case 'q':
             switchTarget(selectRotation,-90)
