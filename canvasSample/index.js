@@ -74,6 +74,7 @@ const makeCode = (commands) => {
         }
     })
     stringCode += '};'
+    console.log(stringCode + 'evalfunction()')
     return stringCode + 'evalfunction()'
 }
 
