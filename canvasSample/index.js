@@ -35,6 +35,7 @@ const p2 = {
     MP:100
 };
 
+// function
 const addList = (value) => commands => {
     commands.push(value)
     console.log(commands)
@@ -108,13 +109,7 @@ const initfunc = () => {
 const selectRotation = target => radius => {
     target.direction += radius
 }
-/**
- * 回転させた画像を表示する
- * @param {object} image - Imageオブジェクト
- * @param {number} x - 画像の中心となるX座標
- * @param {number} y - 画像の中心となるY座標
- * @param {number} angle - 回転する角度[度]
- */
+
 const drawRotatedImage = (target, target2) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // コンテキストを保存する
@@ -280,7 +275,7 @@ window.addEventListener('keydown', event => {
     }
 })
 
-sleep(1000).then(()=>{
+sleep(500).then(()=>{
     console.log('sleepnow')
     initfunc()
 })
