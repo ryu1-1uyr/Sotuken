@@ -17,6 +17,9 @@ sigeru.src = 'sigeru.png'
 const fukuoka = new Image();
 fukuoka.src = "asdsd.gif";
 
+const attacksample = new Image();
+attacksample.src = 'attacksample.png'
+
 const p1 = {
     name: 'sigeru',
     x: 0,
@@ -340,6 +343,27 @@ const moveleft = (target, target2) => {
     }
 }
 
+const attack = (target, target2) => {
+    //向いてる方向を見る => なんかそれっぽい画像の描画
+    switch (target.direction) {
+        case 90:
+            ctx.drawImage(attacksample,target.x+100,target.y,100,100)
+            break
+        case 180:
+            ctx.drawImage(attacksample,target.x,target.y+100,100,100)
+            break
+        case 270:
+            ctx.drawImage(attacksample,target.x-100,target.y,100,100)
+            break
+        case 0:
+            ctx.drawImage(attacksample,target.x,target.y-100,100,100)
+
+            break
+        default:
+            console.error('何かがおかしい…事件に違いない…')
+    }
+}
+
 //main
 window.addEventListener('keydown', event => {
     switch (event.key) {
@@ -366,6 +390,9 @@ window.addEventListener('keydown', event => {
         case 'e':
             switchTarget(selectRotation,90)
             switchTarget(drawRotatedImage)
+            break
+        case 'f':
+            switchTarget(attack)
             break
         default :
             console.log(event)
