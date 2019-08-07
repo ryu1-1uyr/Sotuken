@@ -214,7 +214,7 @@ const drawRotatedImage = (target, target2) => {
     console.log(target2.direction,target2.name)
 }
 
-const takeDamage = target => target2 => {
+const giveDamage = target => target2 => {
     console.log(target.name + 'の攻撃！ ' + target2.name + 'は20ダメージうけた！')
     target2.HP -= 20
     setStatusValue(target,target2)
