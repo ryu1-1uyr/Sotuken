@@ -66,7 +66,8 @@ const makeCode = (commands) => {
                 stringCode += 'switchTarget(selectRotation,-90);switchTarget(drawRotatedImage);'
                 break
             case 'E':
-                //インド人を右に
+                stringCode += 'await sleep(400).then(() => {'
+                stringCode += 'switchTarget(selectRotation,90);switchTarget(drawRotatedImage);'
                 break
             default:
                 console.error('親に向かって何だその値は')
