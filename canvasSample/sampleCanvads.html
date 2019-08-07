@@ -119,9 +119,9 @@
         }
     }
 
-    const sleep = function (waitSec) {
-        return new Promise(function (resolve) {
-            setTimeout(function () {
+    const sleep = (waitSec) => {
+        return new Promise( (resolve) => {
+            setTimeout( () => {
                 resolve()
             }, waitSec);
         });
@@ -243,7 +243,7 @@
         ctx.restore();
     }
 
-    const moveright = function (target, target2) {
+    const moveright = (target, target2) => {
         console.log('right')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x - 100 && target.y == target2.y) {
@@ -258,7 +258,7 @@
         }
     }
 
-    const moveleft = function (target, target2) {
+    const moveleft = (target, target2) => {
         console.log('left')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x + 100 && target.y == target2.y) {
@@ -273,7 +273,7 @@
         }
     }
 
-    const moveup = function (target, target2) {
+    const moveup = (target, target2) => {
         console.log('up')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x && target.y == target2.y + 100) {
@@ -288,7 +288,7 @@
         }
     }
 
-    const movedown = function (target, target2) {
+    const movedown = (target, target2) => {
         console.log('down')
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         if (target.x == target2.x && target.y == target2.y - 100) {
