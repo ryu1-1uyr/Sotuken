@@ -340,6 +340,14 @@ window.addEventListener('keydown', event => {
         case 'd':
             switchTarget(moveright)
             break
+        case 'q':
+            switchTarget(selectRotation,-90)
+            switchTarget(drawRotatedImage)
+            break
+        case 'e':
+            switchTarget(selectRotation,90)
+            switchTarget(drawRotatedImage)
+            break
         default :
             console.log(event)
     }
