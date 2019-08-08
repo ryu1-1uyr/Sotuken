@@ -1,7 +1,5 @@
 let target = 'sigeru'
 
-const commands = []
-const sampleCommands = ["W", "W", "E", "W", "W", "E", "W", "W", "E", "W", "W"]
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
 const turn = document.getElementById('turn')
