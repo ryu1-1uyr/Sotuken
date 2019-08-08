@@ -83,6 +83,7 @@ const addList = (value) => commands => {
     console.log(commands)
 }
 
+// fixme Vueへの移植
 const makeCode = selectedTarget => { // 絶対この関数は依存させてはならない
 
     console.log(selectedTarget)
