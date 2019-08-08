@@ -1,6 +1,8 @@
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
 const turn = document.getElementById('turn')
+const MAXTURN = 50
+const result = document.getElementById('result')
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext("2d");
 const TO_RADIANS = Math.PI / 180;
@@ -44,6 +46,33 @@ const p2 = {
     commands: ["W", "W", "E", "W", "W", "E", "W", "W", "E", "W", "W"],
     isPlayer: false
 };
+
+const isFinish = (target,target2) => { // HPが0は負け、両方yHPあって50ターン経過したら、HP多い方が勝ち
+    if (nowTurn === MAXTURN) {
+        alert('おわおわりでーすw')
+        if (target.HP === 0 && target2.HP === 0 ) {
+            alert('引き分けはしらん')
+        } else if (target2.HP === 0) {
+            renderFinalResult(target,target2)(target.name)
+        } else if (target.HP === 0) {
+            renderFinalResult(target,target2)(target2.name)
+        } else {
+            //ターン切れ
+            if (target.HP > target2.hp){
+                //win target 1
+                renderFinalResult(target,target2)(target.name)
+            } else if (target.HP < target2.hp) {
+                //win target2
+                renderFinalResult(target,target2)(target2.name)
+            }
+            alert('勝負がつきませんでした〜w')
+        }
+    }
+}
+
+const renderFinalResult = (target,target2) => winner => {
+    result.innerText = `${target.name}と${target2.name}の勝負 <h1>${winner}の勝ち！</h1>>`
+}
 
 const setTarget = targetName => targetName // この関数いる？
 
