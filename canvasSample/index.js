@@ -242,6 +242,7 @@ const moveup = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
+        setStatusValue(target,target2)
 
         switch (target.direction) {
             case 90:
@@ -292,7 +293,8 @@ const movedown = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
-        
+        setStatusValue(target,target2)
+
         switch (target.direction) {
             case 90:
                 moveleft(target, target2)
@@ -413,29 +415,39 @@ const attack = (target, target2) => {
 const debug = (action) => {
     switch (action.key) {
         case 'w':
-            switchTarget(moveup)
+            switchTarget(moveup)(target)
+
+            switchTarget(movedown)(setTarget('kumasan'))
             break
         case 'a':
-            switchTarget(selectRotation, -90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, -90)(setTarget('kumasan'))
+            switchTarget(drawRotatedImage)(setTarget('kumasan'))
+
+            switchTarget(selectRotation, -90)(target)
+            switchTarget(drawRotatedImage)(target)
             break
         case 's':
-            switchTarget(movedown)
+            switchTarget(movedown)(target)
+
+            switchTarget(moveup)(setTarget('kumasan'))
             break
         case 'd':
-            switchTarget(selectRotation, 90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, 90)(setTarget('kumasan'))
+            switchTarget(drawRotatedImage)(setTarget('kumasan'))
+
+            switchTarget(selectRotation, 90)(target)
+            switchTarget(drawRotatedImage)(target)
             break
         case 'q':
-            switchTarget(selectRotation, -90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, -90)(target)
+            switchTarget(drawRotatedImage)(target)
             break
         case 'e':
-            switchTarget(selectRotation, 90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, 90)(target)
+            switchTarget(drawRotatedImage)(target)
             break
         case 'f':
-            switchTarget(attack)
+            switchTarget(attack)(target)
             break
         default :
             console.log(event)
