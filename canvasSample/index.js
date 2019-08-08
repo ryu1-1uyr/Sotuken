@@ -1,5 +1,3 @@
-let target = 'sigeru'
-
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
 const turn = document.getElementById('turn')
@@ -154,7 +152,7 @@ const initfunc = () => {
     ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
     ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
 
-    switchTarget(setStatusValue)(target)
+    switchTarget(setStatusValue)(setTarget('sigeru'))
 }
 
 const selectRotation = target => radius => {
@@ -438,7 +436,7 @@ const attack = (target, target2) => {
 const debug = (action) => {
     switch (action.key) {
         case 'w':
-            switchTarget(moveup)(target)
+            switchTarget(moveup)(setTarget('sigeru'))
             //2pは反転
             switchTarget(movedown)(setTarget('kumasan'))
             break
@@ -446,11 +444,11 @@ const debug = (action) => {
             switchTarget(selectRotation, -90)(setTarget('kumasan'))
             switchTarget(drawRotatedImage)(setTarget('kumasan'))
 
-            switchTarget(selectRotation, -90)(target)
-            switchTarget(drawRotatedImage)(target)
+            switchTarget(selectRotation, -90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 's':
-            switchTarget(movedown)(target)
+            switchTarget(movedown)(setTarget('sigeru'))
             //2pは反転
             switchTarget(moveup)(setTarget('kumasan'))
             break
@@ -458,19 +456,19 @@ const debug = (action) => {
             switchTarget(selectRotation, 90)(setTarget('kumasan'))
             switchTarget(drawRotatedImage)(setTarget('kumasan'))
 
-            switchTarget(selectRotation, 90)(target)
-            switchTarget(drawRotatedImage)(target)
+            switchTarget(selectRotation, 90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 'q':
-            switchTarget(selectRotation, -90)(target)
-            switchTarget(drawRotatedImage)(target)
+            switchTarget(selectRotation, -90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 'e':
-            switchTarget(selectRotation, 90)(target)
-            switchTarget(drawRotatedImage)(target)
+            switchTarget(selectRotation, 90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 'f':
-            switchTarget(attack)(target)
+            switchTarget(attack)(setTarget('sigeru'))
             break
         default :
             console.log(event)
