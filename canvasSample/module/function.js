@@ -1,4 +1,4 @@
-const addList = (value) => commands {
+const addList = (value) => commands => {
     commands.push(value)
     console.log(commands)
 }

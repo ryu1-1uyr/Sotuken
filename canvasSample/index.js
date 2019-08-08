@@ -1,6 +1,3 @@
-let target = 'sigeru'
-
-const commands = []
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
 const turn = document.getElementById('turn')
@@ -31,7 +28,9 @@ const p1 = {
     image: sigeru,
     direction: 0,
     HP: 100,
-    MP: 100
+    MP: 100,
+    commands: [],
+    isPlayer: true
 }
 
 const p2 = {
@@ -41,8 +40,12 @@ const p2 = {
     image: fukuoka,
     direction: 0,
     HP: 100,
-    MP: 100
+    MP: 100,
+    commands: ["W", "W", "E", "W", "W", "E", "W", "W", "E", "W", "W"],
+    isPlayer: false
 };
+
+const setTarget = targetName => targetName // この関数いる？
 
 // function
 const addList = (value) => commands => {
@@ -50,49 +53,70 @@ const addList = (value) => commands => {
     console.log(commands)
 }
 
-const makeCode = (commands) => {
+const makeCode = selectedTarget => {
+
+    console.log(selectedTarget)
+
     let stringCode = 'async function evalfunction () {'
-    commands.map((command) => {
+    selectedTarget.commands.map((command) => {
         switch (command) {
             case 'W':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(moveup);});`
+
+                if (selectedTarget.isPlayer) {
+                    stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
+                } else {
+                    stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
+                }
+
                 break
             case 'A':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(moveleft);});`
+                stringCode += `switchTarget(moveleft)('${selectedTarget.name}');});`
                 break
             case 'S':
+
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(movedown);});`
+
+                if (selectedTarget.isPlayer) {
+                    stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
+                } else {
+                    stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
+                }
+
                 break
             case 'D':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(moveright);});`
+                stringCode += `switchTarget(moveright)('${selectedTarget.name}');});`
                 break
             case 'Q':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += 'switchTarget(selectRotation,-90);switchTarget(drawRotatedImage);});'
+                stringCode += `switchTarget(selectRotation,-90)('${selectedTarget.name}');switchTarget(drawRotatedImage)('${selectedTarget.name}');});`
                 break
             case 'E':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += 'switchTarget(selectRotation,90);switchTarget(drawRotatedImage);});'
+                stringCode += `switchTarget(selectRotation,90)('${selectedTarget.name}');switchTarget(drawRotatedImage)('${selectedTarget.name}');});`
                 break
             case 'F':
                 stringCode += 'await sleep(400).then(() => {'
-                stringCode += 'switchTarget(attack);});'
+                stringCode += `switchTarget(attack)('${selectedTarget.name}');});`
                 break
             default:
                 console.error('親に向かって何だその値は')
         }
-        stringCode += 'nowTurn+=1;switchTarget(setStatusValue);'
+        if (selectedTarget.isPlayer) {
+            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');`
+
+        }
     })
     stringCode += '};'
-    console.log(stringCode + 'evalfunction()')
-    return stringCode + 'evalfunction()'
-}
+    console.log(stringCode + 'evalfunction();')
+    return stringCode + 'evalfunction();'
 
-const switchTarget = (func, sub = null) => {
+
+}//eval(makeCode(p1));eval(makeCode(p2))
+
+const switchTarget = (func, sub = null) =>　target => {
     if (target === p1.name) {
         if (sub) {
             func(p1, p2)(sub)
@@ -128,7 +152,7 @@ const initfunc = () => {
     ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
     ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
 
-    switchTarget(setStatusValue)
+    switchTarget(setStatusValue)(setTarget('sigeru'))
 }
 
 const selectRotation = target => radius => {
@@ -239,6 +263,7 @@ const moveup = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
+        setStatusValue(target,target2)
 
         switch (target.direction) {
             case 90:
@@ -289,7 +314,8 @@ const movedown = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
-        
+        setStatusValue(target,target2)
+
         switch (target.direction) {
             case 90:
                 moveleft(target, target2)
@@ -336,12 +362,13 @@ const moveright = (target, target2) => {
     if (target.x === target2.x - 100 && target.y === target2.y) {
         console.log('いたーい')
         drawRotatedImage(target, target2)
-    } else if (target.x <= 300) {
+    } else if (target.x < 400) {
         target.x += movement
         drawRotatedImage(target, target2)
     } else {
-        console.log('out of range ', target.x)
+        console.log('out of range ', target.x , target)
         drawRotatedImage(target, target2)
+
     }
 }
 
@@ -355,8 +382,8 @@ const moveleft = (target, target2) => {
         target.x -= movement
         drawRotatedImage(target, target2)
     } else {
-        ctx.drawImage(target.image, target.x, target.y, 100, 100);
-        // y += movement
+        console.log('out of range at left', target.x,target)
+        drawRotatedImage(target, target2)
     }
 }
 
@@ -409,29 +436,39 @@ const attack = (target, target2) => {
 const debug = (action) => {
     switch (action.key) {
         case 'w':
-            switchTarget(moveup)
+            switchTarget(moveup)(setTarget('sigeru'))
+            //2pは反転
+            switchTarget(movedown)(setTarget('kumasan'))
             break
         case 'a':
-            switchTarget(selectRotation, -90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, -90)(setTarget('kumasan'))
+            switchTarget(drawRotatedImage)(setTarget('kumasan'))
+
+            switchTarget(selectRotation, -90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 's':
-            switchTarget(movedown)
+            switchTarget(movedown)(setTarget('sigeru'))
+            //2pは反転
+            switchTarget(moveup)(setTarget('kumasan'))
             break
         case 'd':
-            switchTarget(selectRotation, 90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, 90)(setTarget('kumasan'))
+            switchTarget(drawRotatedImage)(setTarget('kumasan'))
+
+            switchTarget(selectRotation, 90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 'q':
-            switchTarget(selectRotation, -90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, -90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 'e':
-            switchTarget(selectRotation, 90)
-            switchTarget(drawRotatedImage)
+            switchTarget(selectRotation, 90)(setTarget('sigeru'))
+            switchTarget(drawRotatedImage)(setTarget('sigeru'))
             break
         case 'f':
-            switchTarget(attack)
+            switchTarget(attack)(setTarget('sigeru'))
             break
         default :
             console.log(event)
