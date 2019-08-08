@@ -146,7 +146,7 @@ const makeCode = selectedTarget => {
 
 }//eval(makeCode(p1));eval(makeCode(p2))
 
-const switchTarget = (func, sub = null) =>　target => {
+const switchTarget = (func, sub = null) => target => {
     if (target === p1.name) {
         if (sub) {
             func(p1, p2)(sub)
@@ -293,7 +293,7 @@ const moveup = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
-        setStatusValue(target,target2)
+        setStatusValue(target, target2)
 
         switch (target.direction) {
             case 90:
@@ -344,7 +344,7 @@ const movedown = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
-        setStatusValue(target,target2)
+        setStatusValue(target, target2)
 
         switch (target.direction) {
             case 90:
@@ -396,7 +396,7 @@ const moveright = (target, target2) => {
         target.x += movement
         drawRotatedImage(target, target2)
     } else {
-        console.log('out of range ', target.x , target)
+        console.log('out of range ', target.x, target)
         drawRotatedImage(target, target2)
 
     }
@@ -412,7 +412,7 @@ const moveleft = (target, target2) => {
         target.x -= movement
         drawRotatedImage(target, target2)
     } else {
-        console.log('out of range at left', target.x,target)
+        console.log('out of range at left', target.x, target)
         drawRotatedImage(target, target2)
     }
 }
