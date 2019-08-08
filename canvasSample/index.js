@@ -83,7 +83,7 @@ const addList = (value) => commands => {
     console.log(commands)
 }
 
-const makeCode = selectedTarget => {
+const makeCode = selectedTarget => { // 絶対この関数は依存させてはならない
 
     console.log(selectedTarget)
 
