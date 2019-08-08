@@ -31,23 +31,30 @@
     <!--<input type="button" value="target at kumasan" onclick="target=setTarget('kumasan')">-->
 </section>
 
-<canvas id="board" width="500" height="500" style="  background-color: #888;
+<!--画面左側、実行画面+ステータス-->
+<div>
+    <canvas id="board" width="500" height="500" style="  background-color: #888;
   background-image: linear-gradient(45deg, #444 25%, transparent 25%,
   transparent 75%, #444 75%, #444), linear-gradient(45deg, #444 25%,
   transparent 25%, transparent 75%, #444 75%, #444);
   background-position: 0 0, 100px 100px;
   background-size: 200px 200px;" onload="initfunc()"></canvas>
-<div>
-    <h2 id="HP"></h2>
-    <h2 id="HP2"></h2>
-    <h2 id="turn"></h2>
-</div>
+    <div>
+        <h2 id="HP"></h2>
+        <h2 id="HP2"></h2>
+        <h2 id="turn"></h2>
+    </div>
 
-<div>
-    <h1 id="result"></h1>
+    <div>
+        <h1 id="result"></h1>
+    </div>
+</div>
+<!--エディタ部分、Vue要素-->
+<div id="app">
+    {{ message }}
 </div>
 
 <script src="index.js"></script>
-
+<script src="editer.js"></script>
 </body>
 </html>
