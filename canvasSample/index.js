@@ -59,7 +59,6 @@ const makeCode = selectedTarget => {
 
     console.log(selectedTarget)
 
-
     let stringCode = 'async function evalfunction () {'
     selectedTarget.commands.map((command) => {
         switch (command) {
@@ -110,11 +109,11 @@ const makeCode = selectedTarget => {
         stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');`
     })
     stringCode += '};'
-    console.log(stringCode + 'evalfunction()')
-    return stringCode + 'evalfunction()'
+    console.log(stringCode + 'evalfunction();')
+    return stringCode + 'evalfunction();'
 
 
-}
+}//eval(makeCode(p1));eval(makeCode(p2))
 
 const switchTarget = (func, sub = null) =>　target => {
     if (target === p1.name) {
