@@ -22,7 +22,7 @@ const attacksample = new Image();
 attacksample.src = 'attacksample.png'
 
 const p1 = {
-    name: 'sigeru',
+    name: 'sigeru',//これちゃんと自機だってわかる名前にしような
     x: 0,
     y: 400,
     image: sigeru,
