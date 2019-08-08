@@ -106,7 +106,10 @@ const makeCode = selectedTarget => {
             default:
                 console.error('親に向かって何だその値は')
         }
-        stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');`
+        if (selectedTarget.isPlayer) {
+            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');`
+
+        }
     })
     stringCode += '};'
     console.log(stringCode + 'evalfunction();')
