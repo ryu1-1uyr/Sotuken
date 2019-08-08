@@ -58,7 +58,7 @@ const isFinish = (target, target2) => { // HPが0は負け、両方yHPあって5
         renderFinalResult(target, target2)(target2.name)
     } else if (nowTurn >= MAXTURN) {
         //ターン切れ
-        if (target.HP > target2.hp) {
+        if (target.HP > target2.HP) {
             //win target 1
             renderFinalResult(target, target2)(target.name)
         } else if (target.HP < target2.hp) {
