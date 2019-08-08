@@ -5,7 +5,7 @@ const canvas = document.getElementById('board');
 const ctx = canvas.getContext("2d");
 const TO_RADIANS = Math.PI / 180;
 const consumptionMP = {
-    attack: 10,
+    attack: 5,
     move: 2
 }
 
