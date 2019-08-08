@@ -135,7 +135,7 @@ const makeCode = selectedTarget => {
                 console.error('親に向かって何だその値は')
         }
         if (selectedTarget.isPlayer) {
-            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');`
+            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');switchTarget(isFinish)('${selectedTarget.name}');`
 
         }
     })
