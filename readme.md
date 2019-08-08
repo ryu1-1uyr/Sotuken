@@ -37,3 +37,4 @@ blocklysample => blockly周りを試してみたサンプル
 ```
 
 canvasSample => 一旦細かな値を定めるために雑に作っていく奴
+IE8 とそれ以下のバージョンをサポートしていません
