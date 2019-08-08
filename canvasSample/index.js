@@ -30,7 +30,9 @@ const p1 = {
     image: sigeru,
     direction: 0,
     HP: 100,
-    MP: 100
+    MP: 100,
+    commands: [],
+    isPlayer: true
 }
 
 const p2 = {
@@ -40,10 +42,12 @@ const p2 = {
     image: fukuoka,
     direction: 0,
     HP: 100,
-    MP: 100
+    MP: 100,
+    commands: ["W", "W", "E", "W", "W", "E", "W", "W", "E", "W", "W"],
+    isPlayer: false
 };
 
-const setTarget = targetName => targetName
+const setTarget = targetName => targetName // この関数いる？
 
 // function
 const addList = (value) => commands => {
@@ -414,7 +418,7 @@ const debug = (action) => {
     switch (action.key) {
         case 'w':
             switchTarget(moveup)(target)
-
+            //2pは反転
             switchTarget(movedown)(setTarget('kumasan'))
             break
         case 'a':
@@ -426,7 +430,7 @@ const debug = (action) => {
             break
         case 's':
             switchTarget(movedown)(target)
-
+            //2pは反転
             switchTarget(moveup)(setTarget('kumasan'))
             break
         case 'd':
