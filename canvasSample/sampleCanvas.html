@@ -16,8 +16,8 @@
     <br>
     <input type="button" value="前方へ攻撃" onclick="addList('F')(commands)"><br>
     <input type="button" value="move" onclick="eval(makeCode(commands));commands.length = 0"><br>
-    <input type="button" value="target at shigeru " onclick="target='sigeru'">
-    <input type="button" value="target at kumasan" onclick="target='kumasan'">
+    <input type="button" value="target at shigeru " onclick="target=setTarget('sigeru')">
+    <input type="button" value="target at kumasan" onclick="target=setTarget('kumasan')">
 </section>
 
 <canvas id="board" width="500" height="500" style="  background-color: #888;

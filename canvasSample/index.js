@@ -44,6 +44,8 @@ const p2 = {
     MP: 100
 };
 
+const setTarget = targetName => targetName
+
 // function
 const addList = (value) => commands => {
     commands.push(value)
@@ -92,7 +94,7 @@ const makeCode = (commands) => {
     return stringCode + 'evalfunction()'
 }
 
-const switchTarget = (func, sub = null) => {
+const switchTarget = (func, sub = null) =>　target => {
     if (target === p1.name) {
         if (sub) {
             func(p1, p2)(sub)
