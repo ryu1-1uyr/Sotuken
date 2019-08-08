@@ -59,22 +59,34 @@ const makeCode = selectedTarget => {
 
     console.log(selectedTarget)
 
-    if(selectedTarget.isPlayer){
 
         let stringCode = 'async function evalfunction () {'
         selectedTarget.commands.map((command) => {
             switch (command) {
                 case 'W':
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
+
+                    if (selectedTarget.isPlayer) {
+                        stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
+                    } else {
+                        stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
+                    }
+
                     break
                 case 'A':
                     stringCode += 'await sleep(400).then(() => {'
                     stringCode += `switchTarget(moveleft)('${selectedTarget.name}');});`
                     break
                 case 'S':
+
                     stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
+
+                    if (selectedTarget.isPlayer) {
+                        stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
+                    } else {
+                        stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
+                    }
+
                     break
                 case 'D':
                     stringCode += 'await sleep(400).then(() => {'
@@ -100,48 +112,7 @@ const makeCode = selectedTarget => {
         stringCode += '};'
         console.log(stringCode + 'evalfunction()')
         return stringCode + 'evalfunction()'
-        
-    } else { //自機以外だと反転させがち〜
-        let stringCode = 'async function evalfunction () {'
-        selectedTarget.commands.map((command) => {
-            switch (command) {
-                case 'W':
-                    stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
-                    break
-                case 'A':
-                    stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(moveleft)('${selectedTarget.name}');});`
-                    break
-                case 'S':
-                    stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
-                    break
-                case 'D':
-                    stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(moveright)('${selectedTarget.name}');});`
-                    break
-                case 'Q':
-                    stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(selectRotation,-90)('${selectedTarget.name}');switchTarget(drawRotatedImage)('${selectedTarget.name}');});`
-                    break
-                case 'E':
-                    stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(selectRotation,90)('${selectedTarget.name}');switchTarget(drawRotatedImage)('${selectedTarget.name}');});`
-                    break
-                case 'F':
-                    stringCode += 'await sleep(400).then(() => {'
-                    stringCode += `switchTarget(attack)('${selectedTarget.name}');});`
-                    break
-                default:
-                    console.error('親に向かって何だその値は')
-            }
-            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');`
-        })
-        stringCode += '};'
-        console.log(stringCode + 'evalfunction()')
-        return stringCode + 'evalfunction()'
-    }
+
 
 }
 
