@@ -131,7 +131,7 @@ const initfunc = () => {
     ctx.drawImage(p1.image, 0, 0, 100, 100, p1.x, p1.y, 100, 100);
     ctx.drawImage(p2.image, p2.x, p2.y, 100, 100);
 
-    switchTarget(setStatusValue)
+    switchTarget(setStatusValue)(target)
 }
 
 const selectRotation = target => radius => {
@@ -339,12 +339,13 @@ const moveright = (target, target2) => {
     if (target.x === target2.x - 100 && target.y === target2.y) {
         console.log('いたーい')
         drawRotatedImage(target, target2)
-    } else if (target.x <= 300) {
+    } else if (target.x < 400) {
         target.x += movement
         drawRotatedImage(target, target2)
     } else {
-        console.log('out of range ', target.x)
+        console.log('out of range ', target.x , target)
         drawRotatedImage(target, target2)
+
     }
 }
 
@@ -358,8 +359,8 @@ const moveleft = (target, target2) => {
         target.x -= movement
         drawRotatedImage(target, target2)
     } else {
-        ctx.drawImage(target.image, target.x, target.y, 100, 100);
-        // y += movement
+        console.log('out of range at left', target.x,target)
+        drawRotatedImage(target, target2)
     }
 }
 
