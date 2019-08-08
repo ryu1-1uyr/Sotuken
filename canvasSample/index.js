@@ -43,7 +43,7 @@ const p2 = {
     direction: 0,
     HP: 100,
     MP: 100,
-    commands: ["W", "W", "E", "W", "W", "E", "W", "W", "E", "W", "W"],
+    commands: ["W", "W", "E", "W", "W", "E", "W", "W", "E", "W", "W"],// 2pのこの値をとこかしらからfetchとかしたら、すぐオンライン対戦できるようになる
     isPlayer: false
 };
 
