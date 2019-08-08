@@ -1,11 +1,13 @@
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
 const turn = document.getElementById('turn')
+const MAXTURN = 50
+const result = document.getElementById('result')
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext("2d");
 const TO_RADIANS = Math.PI / 180;
 const consumptionMP = {
-    attack: 10,
+    attack: 5,
     move: 2
 }
 
@@ -45,6 +47,34 @@ const p2 = {
     isPlayer: false
 };
 
+const isFinish = (target, target2) => { // HPが0は負け、両方yHPあって50ターン経過したら、HP多い方が勝ち
+
+
+    if (target.HP === 0 && target2.HP === 0) {
+        alert('引き分けはしらん')
+    } else if (target2.HP <= 0) {
+        renderFinalResult(target, target2)(target.name)
+    } else if (target.HP <= 0) {
+        renderFinalResult(target, target2)(target2.name)
+    } else if (nowTurn >= MAXTURN) {
+        //ターン切れ
+        if (target.HP > target2.hp) {
+            //win target 1
+            renderFinalResult(target, target2)(target.name)
+        } else if (target.HP < target2.hp) {
+            //win target2
+            renderFinalResult(target, target2)(target2.name)
+        } else {
+            alert('勝負がつきませんでした〜w')
+        }
+    }
+}
+
+const renderFinalResult = (target, target2) => winner => {
+    alert('おわおわりでーすw')
+    result.innerText = `${target.name}と${target2.name}の勝負 ${winner}の勝ち！`
+}
+
 const setTarget = targetName => targetName // この関数いる？
 
 // function
@@ -53,7 +83,7 @@ const addList = (value) => commands => {
     console.log(commands)
 }
 
-const makeCode = selectedTarget => {
+const makeCode = selectedTarget => { // 絶対この関数は依存させてはならない
 
     console.log(selectedTarget)
 
@@ -105,7 +135,7 @@ const makeCode = selectedTarget => {
                 console.error('親に向かって何だその値は')
         }
         if (selectedTarget.isPlayer) {
-            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');`
+            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');switchTarget(isFinish)('${selectedTarget.name}');`
 
         }
     })
@@ -116,7 +146,7 @@ const makeCode = selectedTarget => {
 
 }//eval(makeCode(p1));eval(makeCode(p2))
 
-const switchTarget = (func, sub = null) =>　target => {
+const switchTarget = (func, sub = null) => target => {
     if (target === p1.name) {
         if (sub) {
             func(p1, p2)(sub)
@@ -263,7 +293,7 @@ const moveup = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
-        setStatusValue(target,target2)
+        setStatusValue(target, target2)
 
         switch (target.direction) {
             case 90:
@@ -314,7 +344,7 @@ const movedown = (target, target2) => {
         drawRotatedImage(target, target2)
     } else {
         target.MP -= consumptionMP.move // fixme 関数型っぽくしたいならこの消費するMPの値も引数に組み込むといい
-        setStatusValue(target,target2)
+        setStatusValue(target, target2)
 
         switch (target.direction) {
             case 90:
@@ -366,7 +396,7 @@ const moveright = (target, target2) => {
         target.x += movement
         drawRotatedImage(target, target2)
     } else {
-        console.log('out of range ', target.x , target)
+        console.log('out of range ', target.x, target)
         drawRotatedImage(target, target2)
 
     }
@@ -382,7 +412,7 @@ const moveleft = (target, target2) => {
         target.x -= movement
         drawRotatedImage(target, target2)
     } else {
-        console.log('out of range at left', target.x,target)
+        console.log('out of range at left', target.x, target)
         drawRotatedImage(target, target2)
     }
 }

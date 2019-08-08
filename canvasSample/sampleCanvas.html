@@ -16,6 +16,8 @@
     <br>
     <input type="button" value="前方へ攻撃" onclick="addList('F')(p1.commands)"><br>
     <input type="button" value="move" onclick="eval(makeCode(p1));p1.commands.length = 0"><br>
+    <input type="button" value="moveSomePlayer" onclick="eval(makeCode(p1));eval(makeCode(p2));p1.commands.length = 0"><br>
+
     <!--<input type="button" value="target at shigeru " onclick="target=setTarget('sigeru')">-->
     <!--<input type="button" value="target at kumasan" onclick="target=setTarget('kumasan')">-->
 </section>
@@ -30,6 +32,10 @@
     <h2 id="HP"></h2>
     <h2 id="HP2"></h2>
     <h2 id="turn"></h2>
+</div>
+
+<div>
+    <h1 id="result"></h1>
 </div>
 
 <script src="index.js"></script>
