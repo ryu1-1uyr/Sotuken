@@ -36,5 +36,8 @@ blocklysample => blockly周りを試してみたサンプル
 └── index.html
 ```
 
-canvasSample => 一旦細かな値を定めるために雑に作っていく奴
+canvasSample =>
+
+一旦細かな値を定めるために雑に作っていく奴
+
 IE8 とそれ以下のバージョンをサポートしていません
