@@ -24,6 +24,7 @@
 
 </head>
 <body>
+
 <!--todo CSSを切り分けて別ファイルにする-->
 <nav class="nav nav-pills nav-justified" style="background-color: #dddddd">
     <a class="nav-item nav-link active" href="#">Active</a>
@@ -32,26 +33,7 @@
     <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
 </nav>
 
-<section>
-    <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center"
-           onclick="addList('W')(p1.commands)"><br>
-    <input type="button" value="rotate 90 hidari"
-           onclick="addList('Q')(p1.commands)">
-    <input id="button_S" type="button" value="S" style="padding-left: 64px;text-align: center"
-           onclick="addList('S')(p1.commands)">
-    <input type="button" value="rotate 90 migi"
-           onclick="addList('E')(p1.commands)">
-    <br>
-    <input type="button" value="前方へ攻撃" onclick="addList('F')(p1.commands)"><br>
-    <input type="button" value="move" onclick="eval(makeCode(p1));p1.commands.length = 0"><br>
-    <input type="button" value="moveSomePlayer"
-           onclick="eval(makeCode(p1));eval(makeCode(p2));p1.commands.length = 0"><br>
-
-    <!--<input type="button" value="target at shigeru " onclick="target=setTarget('sigeru')">-->
-    <!--<input type="button" value="target at kumasan" onclick="target=setTarget('kumasan')">-->
-</section>
-
-<div class="row" style="min-height: 800px">
+<div class="row" style="min-height: 800px;margin-top: 50px">
 
     <!--画面左側、実行画面+ステータス-->
     <div class="col-5" style="background-color: slategrey">
@@ -101,6 +83,25 @@
     <!--エディタ部分、Vue要素-->
     <div class="col-6" style="background-color: #888888;min-height: 600px">
         <div id="editor">
+
+            <div>
+                <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center"
+                       @click="addList('W')(p1.commands)"><br>
+                <input type="button" value="rotate 90 hidari"
+                       @click="addList('Q')(p1.commands)">
+                <input id="button_S" type="button" value="S" style="padding-left: 64px;text-align: center"
+                       @click="addList('S')(p1.commands)">
+                <input type="button" value="rotate 90 migi"
+                       @click="addList('E')(p1.commands)">
+                <br>
+                <input type="button" value="前方へ攻撃" @click="addList('F')(p1.commands)"><br>
+                <input type="button" value="move at vue" @click="eval(makeCode(p1));p1.commands.length = 0"><br>
+
+                <input type="button" value="moveSomePlayer"
+                       @click="eval(makeCode(p1));eval(makeCode(p2));p1.commands.length = 0"><br>
+
+            </div>
+
             <div v-for="grocery of groceryList">
                 {{grocery}}
             </div>
