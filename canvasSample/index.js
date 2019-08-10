@@ -49,7 +49,6 @@ const p2 = {
 
 const isFinish = (target, target2) => { // HPが0は負け、両方yHPあって50ターン経過したら、HP多い方が勝ち
 
-
     if (target.HP === 0 && target2.HP === 0) {
         alert('引き分けはしらん')
     } else if (target2.HP <= 0) {
@@ -76,76 +75,6 @@ const renderFinalResult = (target, target2) => winner => {
 }
 
 const setTarget = targetName => targetName // この関数いる？
-
-// function
-const addList = (value) => commands => {
-    commands.push(value)
-    console.log(commands)
-}
-
-// fixme Vueへの移植
-const makeCode = selectedTarget => { // 絶対この関数は依存させてはならない
-
-    console.log(selectedTarget)
-
-    let stringCode = 'async function evalfunction () {'
-    selectedTarget.commands.map((command) => {
-        switch (command) {
-            case 'W':
-                stringCode += 'await sleep(400).then(() => {'
-
-                if (selectedTarget.isPlayer) {
-                    stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
-                } else {
-                    stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
-                }
-
-                break
-            case 'A':
-                stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(moveleft)('${selectedTarget.name}');});`
-                break
-            case 'S':
-
-                stringCode += 'await sleep(400).then(() => {'
-
-                if (selectedTarget.isPlayer) {
-                    stringCode += `switchTarget(movedown)('${selectedTarget.name}');});`
-                } else {
-                    stringCode += `switchTarget(moveup)('${selectedTarget.name}');});`
-                }
-
-                break
-            case 'D':
-                stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(moveright)('${selectedTarget.name}');});`
-                break
-            case 'Q':
-                stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(selectRotation,-90)('${selectedTarget.name}');switchTarget(drawRotatedImage)('${selectedTarget.name}');});`
-                break
-            case 'E':
-                stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(selectRotation,90)('${selectedTarget.name}');switchTarget(drawRotatedImage)('${selectedTarget.name}');});`
-                break
-            case 'F':
-                stringCode += 'await sleep(400).then(() => {'
-                stringCode += `switchTarget(attack)('${selectedTarget.name}');});`
-                break
-            default:
-                console.error('親に向かって何だその値は')
-        }
-        if (selectedTarget.isPlayer) {
-            stringCode += `nowTurn+=1;switchTarget(setStatusValue)('${selectedTarget.name}');switchTarget(isFinish)('${selectedTarget.name}');`
-
-        }
-    })
-    stringCode += '};'
-    console.log(stringCode + 'evalfunction();')
-    return stringCode + 'evalfunction();'
-
-
-}//eval(makeCode(p1));eval(makeCode(p2))
 
 const switchTarget = (func, sub = null) => target => {
     if (target === p1.name) {
