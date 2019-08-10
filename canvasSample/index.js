@@ -49,7 +49,6 @@ const p2 = {
 
 const isFinish = (target, target2) => { // HPが0は負け、両方yHPあって50ターン経過したら、HP多い方が勝ち
 
-
     if (target.HP === 0 && target2.HP === 0) {
         alert('引き分けはしらん')
     } else if (target2.HP <= 0) {
@@ -78,10 +77,10 @@ const renderFinalResult = (target, target2) => winner => {
 const setTarget = targetName => targetName // この関数いる？
 
 // function
-const addList = (value) => commands => {
-    commands.push(value)
-    console.log(commands)
-}
+// const addList = (value) => commands => {
+//     commands.push(value)
+//     console.log(commands)
+// }
 
 // fixme Vueへの移植
 const makeCode = selectedTarget => { // 絶対この関数は依存させてはならない

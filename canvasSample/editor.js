@@ -25,5 +25,9 @@ const editor = new Vue({
             console.log(this.p1)
             console.log(p1)
         },
-    }
+        addList: (value) => (commands) => {
+            commands.push(value)
+            console.log(commands)
+        }
+    },
 })

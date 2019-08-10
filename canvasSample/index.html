@@ -84,13 +84,13 @@
 
             <div>
                 <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center"
-                       onclick="addList('W')(p1.commands)"><br>
+                       @click="addList('W')(p1.commands)"><br>
                 <input type="button" value="rotate 90 hidari"
-                       onclick="addList('Q')(p1.commands)">
+                       @click="addList('Q')(p1.commands)">
                 <input id="button_S" type="button" value="S" style="padding-left: 64px;text-align: center"
-                       onclick="addList('S')(p1.commands)">
+                       @click="addList('S')(p1.commands)">
                 <input type="button" value="rotate 90 migi"
-                       onclick="addList('E')(p1.commands)">
+                       @click="addList('E')(p1.commands)">
                 <br>
                 <input type="button" value="前方へ攻撃" onclick="addList('F')(p1.commands)"><br>
                 <input type="button" value="move" onclick="eval(makeCode(p1));p1.commands.length = 0"><br>
