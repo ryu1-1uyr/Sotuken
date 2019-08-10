@@ -21,10 +21,6 @@ const editor = new Vue({
         }
     },
     methods:{
-        checkP(){
-            console.log(this.p1)
-            console.log(p1)
-        },
         addList: (value) => (commands) => {
             commands.push(value)
             console.log(commands,value)
@@ -89,7 +85,6 @@ const editor = new Vue({
             console.log(stringCode + 'evalfunction();')
             return stringCode + 'evalfunction();'
 
-
-        }//eval(makeCode(p1));eval(makeCode(p2))
+        }
     },
 })
