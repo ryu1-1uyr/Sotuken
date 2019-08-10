@@ -1,4 +1,3 @@
-let commands = []
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
 const turn = document.getElementById('turn')
@@ -76,12 +75,6 @@ const renderFinalResult = (target, target2) => winner => {
 }
 
 const setTarget = targetName => targetName // この関数いる？
-
-// function
-// const addList = (value) => commands => {
-//     commands.push(value)
-//     console.log(commands)
-// }
 
 const switchTarget = (func, sub = null) => target => {
     if (target === p1.name) {
