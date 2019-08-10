@@ -96,7 +96,7 @@
                 <input type="button" value="move at vue" @click="eval(makeCode(p1));p1.commands.length = 0"><br>
 
                 <input type="button" value="moveSomePlayer"
-                       onclick="eval(makeCode(p1));eval(makeCode(p2));p1.commands.length = 0"><br>
+                       @click="eval(makeCode(p1));eval(makeCode(p2));p1.commands.length = 0"><br>
 
                 <!--<input type="button" value="target at shigeru " onclick="target=setTarget('sigeru')">-->
                 <!--<input type="button" value="target at kumasan" onclick="target=setTarget('kumasan')">-->
