@@ -1,3 +1,4 @@
+let commands = []
 const HP = document.getElementById('HP')
 const HP2 = document.getElementById('HP2')
 const turn = document.getElementById('turn')
