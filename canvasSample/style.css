@@ -17,3 +17,15 @@
     text-align: center;
     padding-top: 50px;
 }
+
+#editorArea {
+    background-color: #888888;
+    min-height: 600px;
+}
+#allElements {
+    min-height: 800px;
+    margin-top: 50px;
+}
+#canvasArea {
+    background-color: slategrey;
+}
