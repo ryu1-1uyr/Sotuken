@@ -32,9 +32,6 @@ const editor = new Vue({
         }
     },
     methods:{
-        test:()=>{
-            console.log(this.loopCount)
-            },
         addList: (value) => (commands) => {
             commands.push(value)
             console.log(commands,value)
