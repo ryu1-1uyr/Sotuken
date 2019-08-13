@@ -7,17 +7,17 @@ const editor = new Vue({
                 { id: 1, text: 'Cheese' },
                 { id: 2, text: 'Whatever else humans are supposed to eat' }
             ],
-            p1: {
-                name: 'sigeru',//これちゃんと自機だってわかる名前にしような
-                x: 0,
-                y: 400,
-                image: sigeru,
-                direction: 0,
-                HP: 100,
-                MP: 100,
-                commands: [],
-                isPlayer: true
-            }
+            // p1: {
+            //     name: 'sigeru',//これちゃんと自機だってわかる名前にしような
+            //     x: 0,
+            //     y: 400,
+            //     image: sigeru,
+            //     direction: 0,
+            //     HP: 100,
+            //     MP: 100,
+            //     commands: [],
+            //     isPlayer: true
+            // }
         }
     },
     methods:{
@@ -72,6 +72,10 @@ const editor = new Vue({
                     case 'F':
                         stringCode += 'await sleep(400).then(() => {'
                         stringCode += `switchTarget(attack)('${selectedTarget.name}');});`
+                        break
+                    case 'Lstart':
+                        break
+                    case 'Lend':
                         break
                     default:
                         console.error('親に向かって何だその値は')

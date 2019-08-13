@@ -80,6 +80,9 @@
                        @click="addList('E')(p1.commands)">
                 <br>
                 <input type="button" value="前方へ攻撃" @click="addList('F')(p1.commands)"><br>
+                <input type="button" value="Loop開始" @click="addList('Lstart')('p1.commands')"><br>
+                <input type="button" value="Loop終了" @click="addList('Lend')('p1.commands')"><br>
+
                 <input type="button" value="move at vue" @click="eval(makeCode(p1));p1.commands.length = 0"><br>
 
                 <input type="button" value="moveSomePlayer"
