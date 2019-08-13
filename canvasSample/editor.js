@@ -36,6 +36,8 @@ const editor = new Vue({
             commands.push(value)
             console.log(commands,value)
         },
+        // this.(data)を呼び出す場合 => で書くとthisが束縛されるので使えなくなる気をつけよ
+        
         makeCode: function (selectedTarget) { // 絶対この関数は依存させてはならない
 
             console.log(selectedTarget)
