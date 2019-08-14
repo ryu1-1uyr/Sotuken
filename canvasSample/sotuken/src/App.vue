@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-4">
                 <p>行動リスト</p>
-                <draggable class="dragArea list-group" :list="list1" :group="{ name: 'people', pull: 'clone', put: false }" @change="log">
+                <draggable class="dragArea list-group" :list="list1"
+                           :group="{ name: 'people', pull: 'clone', put: false }" @change="log">
                     <div class="list-group-item" v-for="element in list1">
                         {{ element.name }}
                     </div>
@@ -17,7 +18,7 @@
                         {{ element.name }}<i class="fa fa-times close" @click="removeAt(idx)">X</i>
 
                         <div v-if="element.command === 'Lstart'">
-                            <input type="number" class="form-control" v-model="element.howLoop" />
+                            <input type="number" class="form-control" v-model="element.howLoop"/>
                         </div>
                     </div>
                 </draggable>
@@ -42,26 +43,26 @@
         data: function () {
             return {
                 loopCountList: [0],
-                loopCountIndex:0,
+                loopCountIndex: 0,
                 list1: [
-                    {name: "1歩進む", id: 1, command: 'W',class:''},
-                    {name: "右を向く", id: 2, command: 'E',class:''},
-                    {name: "左を向く", id: 3, command: 'Q',class:''},
-                    {name: "攻撃する", id: 4, command: 'F',class:''},
-                    {name: "繰り返し", id: 5, command: 'Lstart', howLoop: 0, class:'red'},
-                    {name: "繰り返し終了", id: 6, command: 'Lend',class:'red'},
-                    {name: "1歩後退", id: 7, command: 'S',class:''},
+                    {name: "1歩進む", id: 1, command: 'W', class: ''},
+                    {name: "右を向く", id: 2, command: 'E', class: ''},
+                    {name: "左を向く", id: 3, command: 'Q', class: ''},
+                    {name: "攻撃する", id: 4, command: 'F', class: ''},
+                    {name: "1歩後退", id: 7, command: 'S', class: ''},
+                    {name: "繰り返し", id: 5, command: 'Lstart', howLoop: 0, class: 'red'},
+                    {name: "繰り返し終了", id: 6, command: 'Lend', class: 'red'},
                 ],
                 list2: [
-                    {name: "1歩進む", id: 1, command: 'W',class:''},
+                    {name: "1歩進む", id: 1, command: 'W', class: ''},
                 ],
                 list: [
-                    { name: "John", text: "", id: 0 },
-                    { name: "Joao", text: "", id: 1 },
-                    { name: "Jean", text: "", id: 2 }
+                    {name: "John", text: "", id: 0},
+                    {name: "Joao", text: "", id: 1},
+                    {name: "Jean", text: "", id: 2}
                 ],
                 dragging: false,
-                p1:{
+                p1: {
                     name: 'sigeru',//これちゃんと自機だってわかる名前にしような
                     x: 0,
                     y: 400,
@@ -86,11 +87,11 @@
             }
         },
         methods: {
-            moveSomePlayer(){
+            moveSomePlayer() {
                 this.makeMoveList()
                 eval(this.makeCode(this.p2))
             },
-            evalcode(){
+            evalcode() {
                 eval(this.makeCode(this.p1))
                 this.p1.commands.length = 0
             },
@@ -98,13 +99,13 @@
                 commands.push(value)
                 console.log(commands, value)
             },
-            makeMoveList(){
-                this.list2.map(x=>{
+            makeMoveList() {
+                this.list2.map(x => {
                     console.log(x.command)
                     this.addList(x.command)(this.p1.commands)
                     if (x.command === 'Lstart') {
                         this.loopCountList.push(x.howLoop)
-                        this.loopCountIndex = 1+ this.loopCountIndex|0
+                        this.loopCountIndex = 1 + this.loopCountIndex | 0
                     }
                 })
                 console.log(p1, this.loopCountList)
@@ -199,7 +200,8 @@
         color: #2c3e50;
         margin-top: 60px;
     }
+
     .red {
-        background: rgba(255,119,112,0.95);
+        background: rgba(255, 119, 112, 0.95);
     }
 </style>
