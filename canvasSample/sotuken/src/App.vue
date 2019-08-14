@@ -48,6 +48,8 @@
         </div>
 
         <input style="margin-top: 30px" type="button" value="行動開始するボタン" @click="makeMoveList">
+        <input style="margin-top: 30px" type="button" value="つーぴーも動かす" @click="moveSomePlayer">
+
 
 
 <!--        <div class="col-8">-->
@@ -114,10 +116,25 @@
                     MP: 100,
                     commands: [],
                     isPlayer: true
-                }
+                },
+                p2: {
+                    name: 'kumasan',
+                    x: 400,
+                    y: 0,
+                    image: fukuoka,
+                    direction: 0,
+                    HP: 100,
+                    MP: 100,
+                    commands: ["W", "W", "E", "W", "W", "E", "W", "W", "E", "W", "W"],// 2pのこの値をとこかしらからfetchとかしたら、すぐオンライン対戦できるようになる
+                    isPlayer: false
+                },
             }
         },
         methods: {
+            moveSomePlayer(){
+                this.makeMoveList()
+                eval(this.makeCode(this.p2))
+            },
             evalcode(){
                 eval(this.makeCode(this.p1))
                 this.p1.commands.length = 0
