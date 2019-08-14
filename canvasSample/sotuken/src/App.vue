@@ -23,8 +23,8 @@
         </div>
 
         <div class="row">
-            <div class="col-3">
-                <h3>Draggable 1</h3>
+            <div class="col-4">
+                <p>行動リスト</p>
                 <draggable class="dragArea list-group" :list="list1" :group="{ name: 'people', pull: 'clone', put: false }" @change="log">
                     <div class="list-group-item" v-for="element in list1">
                         {{ element.name }}
@@ -32,19 +32,47 @@
                 </draggable>
             </div>
 
-            <div class="col-3">
-                <h3>Draggable 2</h3>
+            <div class="col-8">
+                <p>行動順</p>
                 <draggable class="dragArea list-group" :list="list2" group="people" @change="log">
-                    <div class="list-group-item" v-for="element in list2" >
-                        {{ element.name }}
+                    <div class="list-group-item" v-for="(element, idx) in list2" >
+                        {{ element.name }}<i class="fa fa-times close" @click="removeAt(idx)">X</i>
+
+                        <div v-if="element.command === 'Lstart'">
+                            <input type="number" class="form-control" v-model="element.howLoop" />
+                        </div>
                     </div>
                 </draggable>
             </div>
 
-            <div class="col-3" :value="list1" title="List 1"></div>
+<!--            <div class="col-3" :value="list1" title="List 1"></div>-->
 
-            <div class="col-3" :value="list2" title="List 2"></div>
+<!--            <div class="col-3" v-for="(element, idx) in list2" title="List 2">-->
+<!--                {{element}} と {{idx}}-->
+<!--            </div>-->
         </div>
+
+
+<!--        <div class="col-8">-->
+<!--&lt;!&ndash;            <h3>Draggable {{ draggingInfo }}</h3>&ndash;&gt;-->
+
+<!--            <draggable tag="ul" :list="list" class="list-group" handle=".handle">-->
+<!--                <li-->
+<!--                        class="list-group-item"-->
+<!--                        v-for="(element, idx) in list"-->
+<!--                        :key="element.name"-->
+<!--                >-->
+<!--                    <i class="fa fa-align-justify handle"></i>-->
+
+<!--                    <span class="text">{{ element.name }} </span>-->
+
+<!--                    <input type="text" class="form-control" v-model="element.text" />-->
+
+<!--                    <i @click="removeAt(idx)">asasfasfsaf</i>-->
+<!--                </li>-->
+<!--            </draggable>-->
+<!--        </div>-->
+
     </div>
 </template>
 
@@ -60,16 +88,23 @@
             return {
                 loopCount: 0,
                 list1: [
-                    {name: "1歩進む", id: 1},
-                    {name: "右を向く", id: 2},
-                    {name: "左を向く", id: 3},
-                    {name: "攻撃する", id: 4},
-                    {name: "繰り返し", id: 5},
-                    {name: "繰り返し終了", id: 6},
+                    {name: "1歩進む", id: 1, command: 'W'},
+                    {name: "右を向く", id: 2, command: 'E'},
+                    {name: "左を向く", id: 3, command: 'Q'},
+                    {name: "攻撃する", id: 4, command: 'F'},
+                    {name: "繰り返し", id: 5, command: 'Lstart', howLoop: 0},
+                    {name: "繰り返し終了", id: 6, command: 'Lend'},
+                    {name: "1歩後退", id: 7, command: 'S'},
                 ],
                 list2: [
-                    {name: "Johnson", id: 7}
+                    {name: "1歩進む", id: 1, command: 'W'},
                 ],
+                list: [
+                    { name: "John", text: "", id: 0 },
+                    { name: "Joao", text: "", id: 1 },
+                    { name: "Jean", text: "", id: 2 }
+                ],
+                dragging: false,
             }
         },
         methods: {
@@ -79,6 +114,9 @@
             },
             log: function (evt) {
                 window.console.log(evt);
+            },
+            removeAt(idx) {
+                this.list2.splice(idx, 1);
             },
             // this.(data)を呼び出す場合 => で書くとthisが束縛されるので使えなくなる気をつけよ
 
