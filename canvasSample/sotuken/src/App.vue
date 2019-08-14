@@ -196,11 +196,12 @@
 
 <style>
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+        /*-webkit-font-smoothing: antialiased;*/
+        /*-moz-osx-font-smoothing: grayscale;*/
+        font-family: "M PLUS Rounded 1c",serif;
         text-align: center;
-        color: #2c3e50;
+        color: #020402;
         margin-top: 60px;
     }
 
@@ -231,7 +232,7 @@
         padding:5px;
         border-radius: 20px;
 
-        color: #dfdfdf;
+        color: #fff;
 
         -webkit-transition: all 0.3s ease;
         -moz-transition: all 0.3s ease;
