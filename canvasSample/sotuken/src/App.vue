@@ -15,7 +15,7 @@
             <input type="button" value="Loop開始" @click="addList('Lstart')(p1.commands)">
             <input type="button" value="Loop終了" @click="addList('Lend')(p1.commands)"><br>
 
-            <input type="button" value="move at vue" @click="eval(makeCode(p1));p1.commands.length = 0"><br>
+            <input type="button" value="move at vue" @click="evalcode"><br>
 
             <input type="button" value="moveSomePlayer"
                    @click="eval(makeCode(p1));eval(makeCode(p2));p1.commands.length = 0"><br>
@@ -45,12 +45,9 @@
                 </draggable>
             </div>
 
-<!--            <div class="col-3" :value="list1" title="List 1"></div>-->
-
-<!--            <div class="col-3" v-for="(element, idx) in list2" title="List 2">-->
-<!--                {{element}} と {{idx}}-->
-<!--            </div>-->
         </div>
+
+        <input type="button" value="行動開始するボタン" @click="checklist">
 
 
 <!--        <div class="col-8">-->
@@ -86,7 +83,9 @@
         },
         data: function () {
             return {
-                loopCount: 0,
+                loopCount:0,
+                loopCountList: [0],
+                loopCountIndex:0,
                 list1: [
                     {name: "1歩進む", id: 1, command: 'W'},
                     {name: "右を向く", id: 2, command: 'E'},
@@ -105,12 +104,38 @@
                     { name: "Jean", text: "", id: 2 }
                 ],
                 dragging: false,
+                p1:{
+                    name: 'sigeru',//これちゃんと自機だってわかる名前にしような
+                    x: 0,
+                    y: 400,
+                    image: sigeru,
+                    direction: 0,
+                    HP: 100,
+                    MP: 100,
+                    commands: [],
+                    isPlayer: true
+                }
             }
         },
         methods: {
+            evalcode(){
+                eval(this.makeCode(this.p1))
+                this.p1.commands.length = 0
+            },
             addList: (value) => (commands) => {
                 commands.push(value)
                 console.log(commands, value)
+            },
+            checklist(){
+                this.list2.map(x=>{
+                    console.log(x.command)
+                    this.addList(x.command)(p1.commands)
+                    if (x.command === 'Lstart') {
+                        this.loopCountList.push(x.howLoop)
+                        this.loopCountIndex = 1+ this.loopCountIndex|0
+                    }
+                })
+                console.log(p1, this.loopCountList)
             },
             log: function (evt) {
                 window.console.log(evt);
@@ -169,7 +194,7 @@
                             stringCode += `switchTarget(attack)('${selectedTarget.name}');});`
                             break
                         case 'Lstart':
-                            stringCode += `for(let i=0;i<${this.loopCount};i=(i+1)|0){`
+                            stringCode += `for(let i=0;i<${this.loopCountList[this.loopCountIndex]};i=(i+1)|0){`
                             break
                         case 'Lend':
                             stringCode += '};'
