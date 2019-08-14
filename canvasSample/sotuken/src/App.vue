@@ -50,28 +50,6 @@
         <input style="margin-top: 30px" type="button" value="行動開始するボタン" @click="makeMoveList">
         <input style="margin-top: 30px" type="button" value="つーぴーも動かす" @click="moveSomePlayer">
 
-
-
-<!--        <div class="col-8">-->
-<!--&lt;!&ndash;            <h3>Draggable {{ draggingInfo }}</h3>&ndash;&gt;-->
-
-<!--            <draggable tag="ul" :list="list" class="list-group" handle=".handle">-->
-<!--                <li-->
-<!--                        class="list-group-item"-->
-<!--                        v-for="(element, idx) in list"-->
-<!--                        :key="element.name"-->
-<!--                >-->
-<!--                    <i class="fa fa-align-justify handle"></i>-->
-
-<!--                    <span class="text">{{ element.name }} </span>-->
-
-<!--                    <input type="text" class="form-control" v-model="element.text" />-->
-
-<!--                    <i @click="removeAt(idx)">asasfasfsaf</i>-->
-<!--                </li>-->
-<!--            </draggable>-->
-<!--        </div>-->
-
     </div>
 </template>
 
