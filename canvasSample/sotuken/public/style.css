@@ -21,6 +21,8 @@
 #editorArea {
     background-color: #F1DEDE;
     min-height: 600px;
+    border-radius: 30px;
+
 }
 #allElements {
     min-height: 800px;
@@ -28,6 +30,9 @@
 }
 #canvasArea {
     background-color: #F1DEDE;
+    border-radius: 30px;
+    margin: 100px;
+    padding: 1px;
 }
 
 .textarea {
