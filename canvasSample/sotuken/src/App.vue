@@ -22,24 +22,11 @@
 
         </div>
 
-        <div v-for="grocery of groceryList">
-            {{grocery}}
-        </div>
-
         <div class="row">
             <div class="col-3">
                 <h3>Draggable 1</h3>
-                <draggable
-                        class="dragArea list-group"
-                        :list="list1"
-                        :group="{ name: 'people', pull: 'clone', put: false }"
-                        @change="log"
-                >
-                    <div
-                            class="list-group-item"
-                            v-for="element in list1"
-                            :key="element.name"
-                    >
+                <draggable class="dragArea list-group" :list="list1" :group="{ name: 'people', pull: 'clone', put: false }" @change="log">
+                    <div class="list-group-item" v-for="element in list1" :key="element.name">
                         {{ element.name }}
                     </div>
                 </draggable>
@@ -47,17 +34,8 @@
 
             <div class="col-3">
                 <h3>Draggable 2</h3>
-                <draggable
-                        class="dragArea list-group"
-                        :list="list2"
-                        group="people"
-                        @change="log"
-                >
-                    <div
-                            class="list-group-item"
-                            v-for="element in list2"
-                            :key="element.name"
-                    >
+                <draggable class="dragArea list-group" :list="list2" group="people" @change="log">
+                    <div class="list-group-item" v-for="element in list2" :key="element.name">
                         {{ element.name }}
                     </div>
                 </draggable>
@@ -80,22 +58,17 @@
         },
         data: function () {
             return {
-                groceryList: [
-                    {id: 0, text: 'Vegetables'},
-                    {id: 1, text: 'Cheese'},
-                    {id: 2, text: 'Whatever else humans are supposed to eat'}
-                ],
                 loopCount: 0,
                 list1: [
-                    { name: "John", id: 1 },
-                    { name: "Joao", id: 2 },
-                    { name: "Jean", id: 3 },
-                    { name: "Gerard", id: 4 }
+                    {name: "John", id: 1},
+                    {name: "Joao", id: 2},
+                    {name: "Jean", id: 3},
+                    {name: "Gerard", id: 4}
                 ],
                 list2: [
-                    { name: "Juan", id: 5 },
-                    { name: "Edgard", id: 6 },
-                    { name: "Johnson", id: 7 }
+                    {name: "Juan", id: 5},
+                    {name: "Edgard", id: 6},
+                    {name: "Johnson", id: 7}
                 ],
             }
         },
@@ -104,7 +77,7 @@
                 commands.push(value)
                 console.log(commands, value)
             },
-            log: function(evt) {
+            log: function (evt) {
                 window.console.log(evt);
             },
             // this.(data)を呼び出す場合 => で書くとthisが束縛されるので使えなくなる気をつけよ
