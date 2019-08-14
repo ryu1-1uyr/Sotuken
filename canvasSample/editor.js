@@ -88,7 +88,6 @@ const editor = new Vue({
                         break
                     case 'Lstart':
                         stringCode += `for(let i=0;i<${this.loopCount};i=(i+1)|0){`
-                        console.log(this.loopCount)
                         break
                     case 'Lend':
                         stringCode += '};'
