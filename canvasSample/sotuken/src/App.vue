@@ -1,27 +1,5 @@
 <template>
     <div id="editor">
-        <div>
-            <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center"
-                   @click="addList('W')(p1.commands)"><br>
-            <input type="button" value="rotate 90 hidari"
-                   @click="addList('Q')(p1.commands)">
-            <input id="button_S" type="button" value="S" style="padding-left: 64px;text-align: center"
-                   @click="addList('S')(p1.commands)">
-            <input type="button" value="rotate 90 migi"
-                   @click="addList('E')(p1.commands)">
-            <br>
-            <input type="button" value="前方へ攻撃" @click="addList('F')(p1.commands)"><br>
-            ループ回数<input type="number" v-model="loopCount">
-            <input type="button" value="Loop開始" @click="addList('Lstart')(p1.commands)">
-            <input type="button" value="Loop終了" @click="addList('Lend')(p1.commands)"><br>
-
-            <input type="button" value="move at vue" @click="evalcode"><br>
-
-            <input type="button" value="moveSomePlayer"
-                   @click="eval(makeCode(p1));eval(makeCode(p2));p1.commands.length = 0"><br>
-
-        </div>
-
         <div class="row">
             <div class="col-4">
                 <p>行動リスト</p>
