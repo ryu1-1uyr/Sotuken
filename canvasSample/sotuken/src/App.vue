@@ -129,7 +129,7 @@
             checklist(){
                 this.list2.map(x=>{
                     console.log(x.command)
-                    this.addList(x.command)(p1.commands)
+                    this.addList(x.command)(this.p1.commands)
                     if (x.command === 'Lstart') {
                         this.loopCountList.push(x.howLoop)
                         this.loopCountIndex = 1+ this.loopCountIndex|0
