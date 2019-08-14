@@ -13,7 +13,7 @@
             <div class="col-8">
                 <p>行動順</p>
                 <draggable class="dragArea list-group" :list="list2" group="people" @change="log">
-                    <div class="list-group-item" v-for="(element, idx) in list2" >
+                    <div class="list-group-item" v-for="(element, idx) in list2" v-bind:class="element.class">
                         {{ element.name }}<i class="fa fa-times close" @click="removeAt(idx)">X</i>
 
                         <div v-if="element.command === 'Lstart'">
@@ -41,20 +41,19 @@
         },
         data: function () {
             return {
-                loopCount:0,
                 loopCountList: [0],
                 loopCountIndex:0,
                 list1: [
-                    {name: "1歩進む", id: 1, command: 'W'},
-                    {name: "右を向く", id: 2, command: 'E'},
-                    {name: "左を向く", id: 3, command: 'Q'},
-                    {name: "攻撃する", id: 4, command: 'F'},
-                    {name: "繰り返し", id: 5, command: 'Lstart', howLoop: 0},
-                    {name: "繰り返し終了", id: 6, command: 'Lend'},
-                    {name: "1歩後退", id: 7, command: 'S'},
+                    {name: "1歩進む", id: 1, command: 'W',class:''},
+                    {name: "右を向く", id: 2, command: 'E',class:''},
+                    {name: "左を向く", id: 3, command: 'Q',class:''},
+                    {name: "攻撃する", id: 4, command: 'F',class:''},
+                    {name: "繰り返し", id: 5, command: 'Lstart', howLoop: 0, class:'red'},
+                    {name: "繰り返し終了", id: 6, command: 'Lend',class:'red'},
+                    {name: "1歩後退", id: 7, command: 'S',class:''},
                 ],
                 list2: [
-                    {name: "1歩進む", id: 1, command: 'W'},
+                    {name: "1歩進む", id: 1, command: 'W',class:''},
                 ],
                 list: [
                     { name: "John", text: "", id: 0 },
@@ -199,5 +198,8 @@
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+    }
+    .red {
+        background: rgba(255,119,112,0.95);
     }
 </style>
