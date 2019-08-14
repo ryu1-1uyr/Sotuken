@@ -47,7 +47,7 @@
 
         </div>
 
-        <input type="button" value="行動開始するボタン" @click="checklist">
+        <input style="margin-top: 30px" type="button" value="行動開始するボタン" @click="makeMoveList">
 
 
 <!--        <div class="col-8">-->
@@ -126,7 +126,7 @@
                 commands.push(value)
                 console.log(commands, value)
             },
-            checklist(){
+            makeMoveList(){
                 this.list2.map(x=>{
                     console.log(x.command)
                     this.addList(x.command)(this.p1.commands)
@@ -136,6 +136,8 @@
                     }
                 })
                 console.log(p1, this.loopCountList)
+
+                this.evalcode()
             },
             log: function (evt) {
                 window.console.log(evt);
