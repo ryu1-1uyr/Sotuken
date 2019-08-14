@@ -19,7 +19,7 @@
 }
 
 #editorArea {
-    background-color: #888888;
+    background-color: #F1DEDE;
     min-height: 600px;
 }
 #allElements {
@@ -27,5 +27,19 @@
     margin-top: 50px;
 }
 #canvasArea {
-    background-color: slategrey;
+    background-color: #F1DEDE;
+}
+
+.textarea {
+    text-align: center;
+    /*color: #F1DEDE;*/
+}
+
+body {
+    background: #403F4C;
+}
+
+.headnav {
+    background-color: #D496A7;
+    color: #F1DEDE;
 }
