@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="editor">
         <div>
             <input id="button_W" type="button" value="W" style="padding-left: 64px;text-align: center"
                    @click="addList('W')(p1.commands)"><br>
@@ -25,16 +25,58 @@
         <div v-for="grocery of groceryList">
             {{grocery}}
         </div>
+
+        <div class="row">
+            <div class="col-3">
+                <h3>Draggable 1</h3>
+                <draggable
+                        class="dragArea list-group"
+                        :list="list1"
+                        :group="{ name: 'people', pull: 'clone', put: false }"
+                        @change="log"
+                >
+                    <div
+                            class="list-group-item"
+                            v-for="element in list1"
+                            :key="element.name"
+                    >
+                        {{ element.name }}
+                    </div>
+                </draggable>
+            </div>
+
+            <div class="col-3">
+                <h3>Draggable 2</h3>
+                <draggable
+                        class="dragArea list-group"
+                        :list="list2"
+                        group="people"
+                        @change="log"
+                >
+                    <div
+                            class="list-group-item"
+                            v-for="element in list2"
+                            :key="element.name"
+                    >
+                        {{ element.name }}
+                    </div>
+                </draggable>
+            </div>
+
+            <div class="col-3" :value="list1" title="List 1"></div>
+
+            <div class="col-3" :value="list2" title="List 2"></div>
+        </div>
     </div>
 </template>
 
 <script>
-  
+    import draggable from '../node_modules/vuedraggable'
 
     export default {
         name: 'app',
         components: {
-            HelloWorld
+            draggable,
         },
         data: function () {
             return {
@@ -44,12 +86,26 @@
                     {id: 2, text: 'Whatever else humans are supposed to eat'}
                 ],
                 loopCount: 0,
+                list1: [
+                    { name: "John", id: 1 },
+                    { name: "Joao", id: 2 },
+                    { name: "Jean", id: 3 },
+                    { name: "Gerard", id: 4 }
+                ],
+                list2: [
+                    { name: "Juan", id: 5 },
+                    { name: "Edgard", id: 6 },
+                    { name: "Johnson", id: 7 }
+                ],
             }
         },
         methods: {
             addList: (value) => (commands) => {
                 commands.push(value)
                 console.log(commands, value)
+            },
+            log: function(evt) {
+                window.console.log(evt);
             },
             // this.(data)を呼び出す場合 => で書くとthisが束縛されるので使えなくなる気をつけよ
 
