@@ -2,7 +2,7 @@
     <div id="editor">
         <div class="row">
             <div class="col-4">
-                <p>行動リスト</p>
+                <p class="title">行動リスト</p>
                 <draggable class="dragArea list-group" :list="list1"
                            :group="{ name: 'people', pull: 'clone', put: false }" @change="log">
                     <div class="list-group-item" v-for="element in list1">
@@ -12,7 +12,7 @@
             </div>
 
             <div class="col-8">
-                <p>行動順</p>
+                <p class="title">行動順</p>
                 <draggable class="dragArea list-group" :list="list2" group="people" @change="log">
                     <div class="list-group-item" v-for="(element, idx) in list2" v-bind:class="element.class">
                         {{ element.name }}<i class="fa fa-times close" @click="removeAt(idx)">X</i>
@@ -26,8 +26,11 @@
 
         </div>
 
-        <input style="margin-top: 30px" type="button" value="行動開始するボタン" @click="makeMoveList">
-        <input style="margin-top: 30px" type="button" value="つーぴーも動かす" @click="moveSomePlayer">
+
+        <div class="footer">
+            <input style="margin-top: 30px" type="button" value="行動開始するボタン" @click="makeMoveList">
+            <input style="margin-top: 30px" type="button" value="つーぴーも動かす" @click="moveSomePlayer">
+        </div>
 
     </div>
 </template>
@@ -203,5 +206,40 @@
 
     .red {
         background: rgba(255, 119, 112, 0.95);
+    }
+    .row {
+        text-align: center;
+    }
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-top: 20px;
+        background: #fff8f3;
+        border-radius: 50px;
+        font-size: 20px;
+    }
+    .footer {
+        position: absolute;/*←絶対位置*/
+        bottom: 0; /*下に固定*/
+        width: 100%;
+    }
+
+    .footer input {
+        background: #90A8C3;
+        padding:5px;
+        border-radius: 20px;
+
+        color: #dfdfdf;
+
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all  0.3s ease;
+    }
+    .footer input:hover {
+        background: #D496A7;
+        color: #020402;
     }
 </style>
