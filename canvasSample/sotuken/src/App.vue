@@ -5,7 +5,7 @@
                 <p class="title">行動リスト</p>
                 <draggable class="dragArea list-group" :list="list1"
                            :group="{ name: 'people', pull: 'clone', put: false }" @change="log">
-                    <div class="list-group-item" v-for="element in list1">
+                    <div class="list-group-item" v-for="element in list1" v-bind:class="element.class" @click="tes(element)">
                         {{ element.name }}
                     </div>
                 </draggable>
@@ -90,6 +90,10 @@
             }
         },
         methods: {
+            tes(hoge){
+                console.log(hoge)
+                this.list2.push(hoge)
+            },
             moveSomePlayer() {
                 this.makeMoveList()
                 eval(this.makeCode(this.p2))
