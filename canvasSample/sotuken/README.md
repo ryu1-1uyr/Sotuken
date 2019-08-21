@@ -1,5 +1,7 @@
 # sotuken
 
+Vueに移植版
+
 ## Project setup
 ```
 yarn install
@@ -28,6 +30,5 @@ yarn run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-font 
+font
 M PLUS Rounded 1c
- 
