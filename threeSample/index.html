@@ -68,18 +68,22 @@
     scene.add(light);
     scene.add(light2);
 
+    const plane = new THREE.GridHelper(300, 10, 0x888888, 0x888888);
+    plane.position.y = -40;
+    scene.add(plane);
+
     let counter = 0
     tick = () => {
 
-        console.log(counter)
+        // console.log(counter)
         // 箱を回転させる
-        box.rotation.x += 0.01;
+        // box.rotation.x += 0.01;
         // box.rotation.y += 0.01;
         // box.rotation.z += 0.01;
 
         myShape.rotation.y += 0.01;
 
-        counter += 1
+        // counter += 1
 
         // レンダリング
         renderer.render(scene, camera);
