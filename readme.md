@@ -36,7 +36,7 @@ blocklysample => blockly周りを試してみたサンプル
 └── index.html
 ```
 
-canvasSample =>
+canvasSample => s
 
 一旦細かな値を定めるために雑に作っていく奴
 
