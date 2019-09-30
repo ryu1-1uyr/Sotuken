@@ -1,6 +1,12 @@
 # 卒業制作のためのあれこれ
 
-blocklysample => blockly周りを試してみたサンプル
+
+- blocklysample => blockly周りを試してみたサンプル
+
+- canvasSample => なんかそれっぽい自作フレームワーク＋Vueでの実装
+
+- threeSample => three.js使って描画部分をリッチにいしていきたいねってやつ
+
 > 構成
 ```$xslt
 .
@@ -35,8 +41,6 @@ blocklysample => blockly周りを試してみたサンプル
 │   └── theme_scripts
 └── index.html
 ```
-
-canvasSample => s
 
 一旦細かな値を定めるために雑に作っていく奴
 
