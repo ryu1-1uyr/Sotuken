@@ -118,6 +118,14 @@
         requestAnimationFrame(tick);
     }
 
+    const crushTestFunc = () => {
+        if (myShape.position.x - 20 === myShape4.position.x + 20) {
+            console.log('ぶつかったよ〜ん')
+        } else {
+            myShape.position.x -= 5
+        }
+    }
+
     const init = () => {
         // 初回実行
         tick();
