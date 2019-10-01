@@ -35,7 +35,12 @@
     // ドーナツを作成
     const geometry_d = new THREE.TorusGeometry(300, 100, 64, 100);
     // マテリアルを作成
-    const material_d = new THREE.MeshStandardMaterial({color: 0x6699FF, roughness:0.5});
+    const material_d = new THREE.MeshStandardMaterial({color: '#CBFFAB', roughness:0.5});
+
+    const returnMaterial = (color) => {
+        return new THREE.MeshStandardMaterial({color: color, roughness:0.5});
+    }
+
     // メッシュを作成
     const mesh = new THREE.Mesh(geometry_d, material_d);
     // 3D空間にメッシュを追加
@@ -50,7 +55,29 @@
     // const mygeo = new THREE.OctahedronBufferGeometry(10,10)//OctahedronBufferGeometryこのマテリアルげろ重い
     const mygeo = new THREE.OctahedronGeometry(20,0)//サイズ、追加頂点数
     const myShape = new THREE.Mesh(mygeo, material_d);
+    const myShape2 = new THREE.Mesh(mygeo, returnMaterial('#E800A5'));
+    const myShape3 = new THREE.Mesh(mygeo, returnMaterial('#00E880'));
+    const myShape4 = new THREE.Mesh(mygeo, returnMaterial('#FFFE41'));
     scene.add(myShape)
+    scene.add(myShape2)
+    scene.add(myShape3)
+    scene.add(myShape4)
+
+    //右下
+    myShape.position.z = 300 // Zのプラス方向を手前側
+    myShape.position.x = 300 // Xは右側が整数の領域
+
+    //左上
+    myShape2.position.z = -300
+    myShape2.position.x = -300
+
+    //右上
+    myShape3.position.z = -300
+    myShape3.position.x = 300
+
+    //左下
+    myShape4.position.z = 300
+    myShape4.position.x = -300
 
     // 平行光源
     const light = new THREE.DirectionalLight(0xFFFFFF);
@@ -68,7 +95,7 @@
     scene.add(light);
     scene.add(light2);
 
-    const plane = new THREE.GridHelper(300, 10, 0x888888, 0x888888);
+    const plane = new THREE.GridHelper(600, 8, 0x888888, 0x888888);//サイズ、1片あたりいくつ刻むか
     plane.position.y = -40;
     scene.add(plane);
 
