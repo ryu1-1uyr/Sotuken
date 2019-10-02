@@ -121,7 +121,11 @@ tick = () => {
 
 const init = () => {
     // 初回実行
-    tick();
+    try {
+        tick();
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 window.addEventListener('DOMContentLoaded', init);

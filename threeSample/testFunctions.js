@@ -19,27 +19,6 @@ const whereMove = num => num2 => {
 
 //object2つ引数にとって、1が2に接近する関数
 
-// // 2点のx,z座標が同じ時
-// if ((obje1.position.x === obje2.position.x) && (obje1.position.z === obje2.position.z)) {
-//     console.log("どっちもぶつかっているよ")
-//
-// } else if (obje1.position.x === obje2.position.x) { //Xガブ使ってるから動くのはZ
-//     obje1.position.z += whereMove(obje1.position.x)(obje2.position.x)
-//     console.log("Xはぶつかっているよ")
-//
-// } else if (obje1.position.z === obje2.position.z) {　//Zガブ使ってるから動くのはX
-//     obje1.position.x += whereMove(obje1.position.z)(obje2.position.z)
-//     console.log("Zはぶつかっているよ")
-//
-// } else { // おらどっちもうごけ
-//     obje1.position.x += whereMove(obje1.position.x)(obje2.position.x)
-//     obje1.position.z += whereMove(obje1.position.x)(obje2.position.x)
-//
-//     console.log("まだ距離が遠いよ")
-//
-// }
-
-
 const Approach = obje1 => obje2 => {
 
 
