@@ -92,6 +92,8 @@ plane.position.y = -40;
 scene.add(plane);
 
 let counter = 0
+
+//このtickみたいなものを定義することができれば、コマンド選択した動き？みたいなのを実現できるかもしれない
 tick = () => {
 
     // console.log(counter)
@@ -102,20 +104,18 @@ tick = () => {
 
     myShape.rotation.y += 0.01;
 
+
+    // shape1が2に近く実験
+    if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z ) {
+        Approach(myShape)(myShape2)
+    }
+
     // counter += 1
 
     // レンダリング
     renderer.render(scene, camera);
 
     requestAnimationFrame(tick);
-}
-
-const crushTestFunc = obje1 => obje2 => {
-    if (obje1.position.x - 40 === obje2.position.x) {
-        console.log('ぶつかったよ〜ん')
-    } else {
-        myShape.position.x -= 5
-    }
 }
 
 
