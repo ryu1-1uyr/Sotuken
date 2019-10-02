@@ -17,6 +17,7 @@ camera.position.set(1, 1, +80);
 
 // カメラコントローラーを作成
 const controls = new THREE.OrbitControls(camera);
+// これなんかJQueryまわりの変なエラー吐くからなぁ…
 
 // 箱を作成
 const geometry = new THREE.BoxGeometry(200, 200, 200);
@@ -92,6 +93,7 @@ plane.position.y = -40;
 scene.add(plane);
 
 let counter = 0
+myShape.hp = 10 // myShapeはobjectなのでこういう運用もできる可能性を感じた
 
 //このtickみたいなものを定義することができれば、コマンド選択した動き？みたいなのを実現できるかもしれない
 tick = () => {
@@ -106,12 +108,12 @@ tick = () => {
 
 
     // shape1が2に近く実験
-    if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z ) {
+    if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z) {
         Approach(myShape)(myShape2)
     }
 
     // retreat(myShape)(myShape2)
-    console.log(myShape.position)
+    // console.log(myShape.position)
 
     // counter += 1
 
