@@ -110,6 +110,9 @@ tick = () => {
         Approach(myShape)(myShape2)
     }
 
+    // retreat(myShape)(myShape2)
+    console.log(myShape.position)
+
     // counter += 1
 
     // レンダリング
