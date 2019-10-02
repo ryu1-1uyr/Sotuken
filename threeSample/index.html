@@ -118,13 +118,15 @@
         requestAnimationFrame(tick);
     }
 
-    const crushTestFunc_1_4 = () => {
-        if (myShape.position.x - 20 === myShape4.position.x + 20) {
+    const crushTestFunc = obje1 => obje2 => {
+        if (obje1.position.x - 40 === obje2.position.x) {
             console.log('ぶつかったよ〜ん')
         } else {
             myShape.position.x -= 5
         }
     }
+
+
 
     const init = () => {
         // 初回実行
