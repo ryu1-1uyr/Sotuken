@@ -21,7 +21,6 @@ const whereMove = num => num2 => {
 
 const Approach = obje1 => obje2 => {
 
-
     let fragX
     let fragZ
 
@@ -48,6 +47,50 @@ const Approach = obje1 => obje2 => {
             break
         case 1:
             obje1.position.z += 1
+            break
+        case 0:
+            console.log("ぶつかったよ Z")
+            fragZ = true
+            break
+        default:
+
+    }
+
+    if (fragX && fragZ) {
+        console.log("Approach 2 objects")
+    }
+}
+
+//object2つ引数にとって、1が2からはなれる関数
+
+const retreat = obje1 => obje2 => {
+
+    let fragX
+    let fragZ
+
+    // X座標軸の処理
+    switch (whereMove(obje1.position.x)(obje2.position.x)) {
+        case -1:
+            obje1.position.x += 1
+            break
+        case 1:
+            obje1.position.x += -1
+            break
+        case 0:
+            console.log("ぶつかったよ X")
+            fragX = true
+            break
+        default:
+
+    }
+
+    // Z座標軸の処理
+    switch (whereMove(obje1.position.z)(obje2.position.z)) {
+        case -1:
+            obje1.position.z += 1
+            break
+        case 1:
+            obje1.position.z += -1
             break
         case 0:
             console.log("ぶつかったよ Z")
