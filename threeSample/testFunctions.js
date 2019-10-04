@@ -62,24 +62,25 @@ const retreat = obje1 => obje2 => {
 
     // X座標軸の処理
 
-    if (whereMove(obje1.position.x)(obje2.position.x) === 0 ){ // ここのせい
+
+    if (whereMove(obje1.position.x)(obje2.position.x) === 0) { // ここのせい
         // console.log("ぶつかったよ X")
         // fragX = true
-        obje1.position.x += 1 //衝突判定を一旦無視
+        // 衝突判定を一旦無視
+        move_x(obje1)(1)
     } else {
-        obje1.position.x += - whereMove(obje1.position.x)(obje2.position.x)
+        move_x(obje1.position.x)(-whereMove(obje1.position.x)(obje2.position.x))
     }
 
     // Z座標軸の処理
-    if (whereMove(obje1.position.z)(obje2.position.z) === 0 ){
+    if (whereMove(obje1.position.z)(obje2.position.z) === 0) {
         // console.log("ぶつかったよ Z")
         // fragZ = true
-        obje1.position.z += 1
+        move_z(obje1)(1)
     } else {
-        obje1.position.z += - whereMove(obje1.position.z)(obje2.position.z)
+        move_z(obje1)(-whereMove(obje1.position.z)(obje2.position.z))
     }
-    console.log(obje1.position)
-    console.log(whereMove(obje1.position.x)(obje2.position.x))
+
     if (fragX && fragZ) {
         console.log("Approach 2 objects")
     }
