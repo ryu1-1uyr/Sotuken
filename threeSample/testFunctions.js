@@ -59,35 +59,20 @@ const retreat = obje1 => obje2 => {
     let fragZ
 
     // X座標軸の処理
-    switch (whereMove(obje1.position.x)(obje2.position.x)) {
-        case -1:
-            obje1.position.x += 1
-            break
-        case 1:
-            obje1.position.x += -1
-            break
-        case 0:
-            console.log("ぶつかったよ X")
-            fragX = true
-            break
-        default:
 
+    if (whereMove(obje1.position.x)(obje2.position.x) === 0 ){
+        console.log("ぶつかったよ X")
+        fragX = true
+    } else {
+        obje1.position.x += - whereMove(obje1.position.x)(obje2.position.x)
     }
 
     // Z座標軸の処理
-    switch (whereMove(obje1.position.z)(obje2.position.z)) {
-        case -1:
-            obje1.position.z += 1
-            break
-        case 1:
-            obje1.position.z += -1
-            break
-        case 0:
-            console.log("ぶつかったよ Z")
-            fragZ = true
-            break
-        default:
-
+    if (whereMove(obje1.position.z)(obje2.position.z) === 0 ){
+        console.log("ぶつかったよ Z")
+        fragZ = true
+    } else {
+        obje1.position.z += - whereMove(obje1.position.x)(obje2.position.x)
     }
 
     if (fragX && fragZ) {
