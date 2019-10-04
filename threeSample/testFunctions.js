@@ -10,7 +10,7 @@ const crushTestFunc = obje1 => obje2 => {
 const whereMove = num => num2 => {
     if (num > num2) {
         return -1
-    } else if (num > num2) {
+    } else if (num < num2) {
         return 1
     } else if (num === num2) {
         return 0
