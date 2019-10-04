@@ -1,5 +1,5 @@
-const width = 960;
-const height = 730;
+const width = 1800;
+const height = 900;
 
 // レンダラーを作成
 const renderer = new THREE.WebGLRenderer({
@@ -47,7 +47,7 @@ const box = new THREE.Mesh(geometry, material_d);
 // const mygeo = new THREE.OctahedronGeometry(100,100);
 // const mygeo = new THREE.OctahedronBufferGeometry(10,10)//OctahedronBufferGeometryこのマテリアルげろ重い
 const mygeo = new THREE.OctahedronGeometry(20, 0)//サイズ、追加頂点数
-const myShape = new THREE.Mesh(mygeo, material_d);
+const myShape = new THREE.Mesh(mygeo, returnMaterial('#0040FF'));
 const myShape2 = new THREE.Mesh(mygeo, returnMaterial('#E800A5'));
 const myShape3 = new THREE.Mesh(mygeo, returnMaterial('#00E880'));
 const myShape4 = new THREE.Mesh(mygeo, returnMaterial('#FFFE41'));
@@ -104,12 +104,14 @@ tick = () => {
     // box.rotation.y += 0.01;
     // box.rotation.z += 0.01;
 
-    myShape.rotation.y += 0.01;
-
+    myShape.rotation.y += 1;
 
     // shape1が2に近く実験
     if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z) {
         Approach(myShape)(myShape2)
+    }else {
+        myShape.rotation.x += 1;
+        myShape.rotation.z += 1;
     }
 
     // retreat(myShape)(myShape2)
