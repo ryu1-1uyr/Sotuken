@@ -28,22 +28,23 @@ const Approach = obje1 => obje2 => {
 
     // X座標軸の処理
 
-    if (whereMove(obje1.position.x)(obje2.position.x) === 0 ){
+    if (whereMove(obje1.position.x)(obje2.position.x) === 0) {
         console.log("ぶつかったよ X")
         // fragX = true
-        obje1.position.x += whereMove(obje1.position.x)(obje2.position.x)
+        move_x(obje1)(whereMove(obje1.position.x)(obje2.position.x))
     } else {
-        obje1.position.x += whereMove(obje1.position.x)(obje2.position.x)
+        move_x(obje1)(whereMove(obje1.position.x)(obje2.position.x))
     }
 
     // Z座標軸の処理
 
-    if (whereMove(obje1.position.z)(obje2.position.z) === 0 ){
+    if (whereMove(obje1.position.z)(obje2.position.z) === 0) {
         console.log("ぶつかったよ Z")
         // fragZ = true
-        obje1.position.z += whereMove(obje1.position.z)(obje2.position.z)
+        move_z(obje1)(whereMove(obje1.position.z)(obje2.position.z))
     } else {
-        obje1.position.z += whereMove(obje1.position.z)(obje2.position.z)
+        move_z(obje1)(whereMove(obje1.position.z)(obje2.position.z))
+        // console.log(obje1.position.z,obje2.position.z)
     }
 
     if (fragX && fragZ) {
