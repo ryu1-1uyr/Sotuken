@@ -84,3 +84,31 @@ const retreat = obje1 => obje2 => {
         console.log("Approach 2 objects")
     }
 }
+
+const isOutOfRange_X = obje => {
+    if (obje.position.x > 301) {
+        return false
+    } else {
+        return obje.position.x >= -301
+    }
+}
+
+const isOutOfRange_Z = obje => {
+    if (obje.position.z > 301) {
+        return false
+    } else {
+        return obje.position.z >= -301
+    }
+}
+
+const move_x = obje => moving_num => {
+    if (isOutOfRange_X(obje)) {
+        obje.position.x += moving_num
+    }
+}
+
+const move_z = obje => moving_num => {
+    if (isOutOfRange_Z(obje)) {
+        obje.position.z += moving_num
+    }
+}
