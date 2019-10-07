@@ -56,10 +56,10 @@ const makeMaterial = identificationCode => color => {
 
 }
 
-const myShape = new THREE.Mesh(makePlayers(2), returnMaterial('#0040FF')); //こちらも時期生成として関数化するとエモいのでは
-const myShape2 = new THREE.Mesh(makePlayers(0), returnMaterial('#E800A5'));
-const myShape3 = new THREE.Mesh(makePlayers(1), returnMaterial('#00E880'));
-const myShape4 = new THREE.Mesh(makePlayers(0), returnMaterial('#FFFE41'));
+const myShape = makeMaterial(2, '#0040FF')
+const myShape2 = makeMaterial(0, '#E800A5')
+const myShape3 = makeMaterial(1, '#00E880')
+const myShape4 = makeMaterial(0, '#FFFE41')
 
 scene.add(myShape)
 scene.add(myShape2)
