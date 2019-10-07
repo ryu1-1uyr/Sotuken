@@ -1,4 +1,4 @@
-const width = 1800;
+const width = 900;
 const height = 900;
 
 // レンダラーを作成
@@ -19,17 +19,6 @@ camera.position.set(1, 1, +80);
 const controls = new THREE.OrbitControls(camera);
 // これなんかJQueryまわりの変なエラー吐くからなぁ…
 
-// 箱を作成
-const geometry = new THREE.BoxGeometry(200, 200, 200);
-const material = new THREE.MeshStandardMaterial({color: 0x0000FF});
-// const box = new THREE.Mesh(geometry, material);
-
-
-// ドーナツを作成
-const geometry_d = new THREE.TorusGeometry(300, 100, 64, 100);
-// マテリアルを作成
-const material_d = new THREE.MeshStandardMaterial({color: '#CBFFAB', roughness: 0.5});
-
 const returnMaterial = (color) => {
     return new THREE.MeshStandardMaterial({color: color, roughness: 0.5});
 }
@@ -41,28 +30,37 @@ const makePlayers = identificationCode => {
         case 1:
             return new THREE.BoxGeometry(40, 40, 40) //fixme ここの値を後から調整してくれ
         case 2:
-            return new THREE.TetrahedronGeometry(20,0)
+            return new THREE.TetrahedronGeometry(20, 0)
     }
 }
 
-// メッシュを作成
-const mesh = new THREE.Mesh(geometry_d, material_d);
-// 3D空間にメッシュを追加
-// scene.add(mesh);
+const makeMaterial = identificationCode => color => {
+    const material = new THREE.Mesh(makePlayers(identificationCode), returnMaterial(color))
 
-const box = new THREE.Mesh(geometry, material_d);
+    switch (identificationCode) {
+        case 0:
+            material.hp = 100
+            material.fireRate = 5
+            break
+        case 1:
+            material.hp = 140
+            material.fireRate = 3
+            break
+        case 2:
+            material.hp = 120
+            material.fireRate = 2
+            break
+    }
 
+    return material
 
-// scene.add(box);
+}
 
-// const mygeo = new THREE.OctahedronGeometry(100,100);
-// const mygeo = new THREE.OctahedronBufferGeometry(10,10)//OctahedronBufferGeometryこのマテリアルげろ重い
-const mygeo = new THREE.OctahedronGeometry(20, 0)//サイズ、追加頂点数
+const myShape = new THREE.Mesh(makePlayers(2), returnMaterial('#0040FF')); //こちらも時期生成として関数化するとエモいのでは
+const myShape2 = new THREE.Mesh(makePlayers(0), returnMaterial('#E800A5'));
+const myShape3 = new THREE.Mesh(makePlayers(1), returnMaterial('#00E880'));
+const myShape4 = new THREE.Mesh(makePlayers(0), returnMaterial('#FFFE41'));
 
-const myShape = new THREE.Mesh(makePlayers(2), returnMaterial('#0040FF'));
-const myShape2 = new THREE.Mesh(mygeo, returnMaterial('#E800A5'));
-const myShape3 = new THREE.Mesh(mygeo, returnMaterial('#00E880'));
-const myShape4 = new THREE.Mesh(mygeo, returnMaterial('#FFFE41'));
 scene.add(myShape)
 scene.add(myShape2)
 scene.add(myShape3)
@@ -104,8 +102,8 @@ const plane = new THREE.GridHelper(600, 8, 0x888888, 0x888888);//サイズ、1�
 plane.position.y = -40;
 scene.add(plane);
 
-let counter = 0
-myShape.hp = 10 // myShapeはobjectなのでこういう運用もできる可能性を感じた
+// let counter = 0
+//myShape.hp = 10 // myShapeはobjectなのでこういう運用もできる可能性を感じた
 
 let hogefrag = false
 let hogefrag2 = false
