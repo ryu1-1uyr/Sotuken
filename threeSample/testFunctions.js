@@ -12,7 +12,7 @@ const whereMove = num => num2 => {
         return -1
     } else if (num < num2) {
         return 1
-    } else if (num === num2) {
+    } else if (num === num2) {//    } else if (Math.abs(num) - num2 === 0) {
         return 0
     }
 }
@@ -63,21 +63,31 @@ const retreat = obje1 => obje2 => {
 
     // X座標軸の処理
 
-
     if (whereMove(obje1.position.x)(obje2.position.x) === 0) { // ここのせい
         // console.log("ぶつかったよ X")
         // fragX = true
         // 衝突判定を一旦無視
-        move_x(obje1)(1)
+
+        if (obje2.position.x < 0) {
+            move_x(obje1)(1)
+        } else if (obje2.position.x > 0) {
+            move_x(obje1)(-1)
+        }
     } else {
-        move_x(obje1.position.x)(-whereMove(obje1.position.x)(obje2.position.x))
+        move_x(obje1)(-whereMove(obje1.position.x)(obje2.position.x))
     }
 
     // Z座標軸の処理
     if (whereMove(obje1.position.z)(obje2.position.z) === 0) {
         // console.log("ぶつかったよ Z")
         // fragZ = true
-        move_z(obje1)(1)
+
+        if (obje2.position.z < 0) {
+            move_z(obje1)(1)
+        } else if (obje2.position.z > 0) {
+            console.log("this")
+            move_z(obje1)(-1)
+        }
     } else {
         move_z(obje1)(-whereMove(obje1.position.z)(obje2.position.z))
     }
@@ -88,19 +98,18 @@ const retreat = obje1 => obje2 => {
 }
 
 const isOutOfRange_X = obje => {
-    if (obje.position.x > 301) {
+    console.log(obje)
+    if (obje.position.x >= 310) {
         return false
     } else {
-        return obje.position.x >= -301
+        return obje.position.x > -310
     }
 }
 
 const isOutOfRange_Z = obje => {
-    if (obje.position.z > 301) {
+    if (obje.position.z >= 310) {
         return false
-    } else {
-        return obje.position.z >= -301
-    }
+    } else return (obje.position.z > -310);
 }
 
 const move_x = obje => moving_num => {
