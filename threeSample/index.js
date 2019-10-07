@@ -52,14 +52,15 @@ const makeMaterial = identificationCode => color => {
             break
     }
 
+    console.log(material)
     return material
 
 }
 
-const myShape = makeMaterial(2, '#0040FF')
-const myShape2 = makeMaterial(0, '#E800A5')
-const myShape3 = makeMaterial(1, '#00E880')
-const myShape4 = makeMaterial(0, '#FFFE41')
+const myShape = makeMaterial(2)( '#0040FF')
+const myShape2 = makeMaterial(0)( '#E800A5')
+const myShape3 = makeMaterial(1)( '#00E880')
+const myShape4 = makeMaterial(0)( '#FFFE41')
 
 scene.add(myShape)
 scene.add(myShape2)
