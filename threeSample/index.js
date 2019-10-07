@@ -34,6 +34,17 @@ const returnMaterial = (color) => {
     return new THREE.MeshStandardMaterial({color: color, roughness: 0.5});
 }
 
+const makePlayers = identificationCode => {
+    switch (identificationCode) {
+        case 0:
+            return new THREE.OctahedronGeometry(20, 0)
+        case 1:
+            return new THREE.BoxGeometry(40, 40, 40) //fixme ここの値を後から調整してくれ
+        case 2:
+            return new THREE.TetrahedronGeometry(20,0)
+    }
+}
+
 // メッシュを作成
 const mesh = new THREE.Mesh(geometry_d, material_d);
 // 3D空間にメッシュを追加
@@ -47,7 +58,8 @@ const box = new THREE.Mesh(geometry, material_d);
 // const mygeo = new THREE.OctahedronGeometry(100,100);
 // const mygeo = new THREE.OctahedronBufferGeometry(10,10)//OctahedronBufferGeometryこのマテリアルげろ重い
 const mygeo = new THREE.OctahedronGeometry(20, 0)//サイズ、追加頂点数
-const myShape = new THREE.Mesh(mygeo, returnMaterial('#0040FF'));
+
+const myShape = new THREE.Mesh(makePlayers(2), returnMaterial('#0040FF'));
 const myShape2 = new THREE.Mesh(mygeo, returnMaterial('#E800A5'));
 const myShape3 = new THREE.Mesh(mygeo, returnMaterial('#00E880'));
 const myShape4 = new THREE.Mesh(mygeo, returnMaterial('#FFFE41'));
@@ -107,7 +119,7 @@ tick = () => {
     // box.rotation.y += 0.01;
     // box.rotation.z += 0.01;
 
-    myShape.rotation.y += 1;
+    // myShape.rotation.y += 1;
 
     // shape1が2に近く実験
     if (hogefrag) {
