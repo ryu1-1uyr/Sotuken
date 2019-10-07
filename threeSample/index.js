@@ -34,7 +34,7 @@ const makePlayers = identificationCode => {
     }
 }
 
-const makeMaterial = identificationCode => color => {
+const makeMaterial = identificationCode => color => { //射程とかもセットするようにする
     const material = new THREE.Mesh(makePlayers(identificationCode), returnMaterial(color))
 
     switch (identificationCode) {
@@ -52,7 +52,6 @@ const makeMaterial = identificationCode => color => {
             break
     }
 
-    console.log(material)
     return material
 
 }
@@ -119,41 +118,34 @@ tick = () => {
     // box.rotation.z += 0.01;
 
     // myShape.rotation.y += 1;
-
+    
+    // fixme この部分をゆくゆく自動生成できるようにする
     // shape1が2に近く実験
     if (hogefrag) {
-        console.log("a")
         retreat(myShape)(myShape2)
     } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
         Approach(myShape)(myShape2)
-        console.log("i")
     } else {
         hogefrag = true
         retreat(myShape)(myShape2)
-        console.log("u")
     }
     if (myShape.position.x === 301 && myShape.position.z === 301) {
         hogefrag = false
     }
 
-    console.log(myShape3.position)
     // // shape3が5に近く実験
     if (hogefrag2) {
-        // console.log(1)
         retreat(myShape3)(myShape4)
     } else if (myShape3.position.x !== myShape4.position.x && myShape3.position.z !== myShape4.position.z && hogefrag2 === false) {
         Approach(myShape3)(myShape4)
-        // console.log(2)
     } else {
         hogefrag2 = true
-        // console.log(3)
         retreat(myShape3)(myShape4)
     }
     if (myShape3.position.x === 301 && myShape3.position.z === -301) {
         hogefrag2 = false
     }
 
-    // console.log(hogefrag2)
 
     // レンダリング
     renderer.render(scene, camera);

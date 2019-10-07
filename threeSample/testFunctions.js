@@ -85,7 +85,6 @@ const retreat = obje1 => obje2 => {
         if (obje2.position.z < 0) {
             move_z(obje1)(1)
         } else if (obje2.position.z > 0) {
-            console.log("this")
             move_z(obje1)(-1)
         }
     } else {
@@ -98,7 +97,6 @@ const retreat = obje1 => obje2 => {
 }
 
 const isOutOfRange_X = obje => {
-    console.log(obje)
     if (obje.position.x >= 310) {
         return false
     } else {
