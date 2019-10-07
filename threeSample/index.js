@@ -96,6 +96,7 @@ let counter = 0
 myShape.hp = 10 // myShapeはobjectなのでこういう運用もできる可能性を感じた
 
 let hogefrag = false
+let hogefrag2 = false
 
 //このtickみたいなものを定義することができれば、コマンド選択した動き？みたいなのを実現できるかもしれない
 tick = () => {
@@ -110,18 +111,38 @@ tick = () => {
 
     // shape1が2に近く実験
     if (hogefrag) {
+        console.log("a")
         retreat(myShape)(myShape2)
     } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
         Approach(myShape)(myShape2)
+        console.log("i")
     } else {
         hogefrag = true
         retreat(myShape)(myShape2)
+        console.log("u")
     }
     if (myShape.position.x === 301 && myShape.position.z === 301) {
         hogefrag = false
     }
 
-    console.log(hogefrag)
+    console.log(myShape3.position)
+    // // shape3が5に近く実験
+    if (hogefrag2) {
+        // console.log(1)
+        retreat(myShape3)(myShape4)
+    } else if (myShape3.position.x !== myShape4.position.x && myShape3.position.z !== myShape4.position.z && hogefrag2 === false) {
+        Approach(myShape3)(myShape4)
+        // console.log(2)
+    } else {
+        hogefrag2 = true
+        // console.log(3)
+        retreat(myShape3)(myShape4)
+    }
+    if (myShape3.position.x === 301 && myShape3.position.z === -301) {
+        hogefrag2 = false
+    }
+
+    // console.log(hogefrag2)
 
     // レンダリング
     renderer.render(scene, camera);
