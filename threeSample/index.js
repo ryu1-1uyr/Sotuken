@@ -48,6 +48,7 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
                     new THREE.BoxGeometry(15, 5, 5),
                     new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
                 )
+            material.bullet.baseSpeed = {x:1, z:1}
             break
         case 1:
             material.hp = 140
@@ -59,6 +60,7 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
                     new THREE.BoxGeometry(15, 15, 15),
                     new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
                 )
+            // material.bullet.baseSpeed = 1
             break
         case 2:
             material.hp = 120
@@ -70,6 +72,7 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
                     new THREE.BoxGeometry(10, 10, 10),
                     new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
                 )
+            // material.bullet.baseSpeed = 2
             break
     }
     scene.add(material)
@@ -135,26 +138,27 @@ tick = () => {
 
     // console.log(counter)
     // 箱を回転させる
-    // box.rotation.x += 0.01;
+    myShape2.rotation.y += 0.01;
     // box.rotation.y += 0.01;
     // box.rotation.z += 0.01;
 
     // myShape.rotation.y += 1;
+    // bullet(myShape)(myShape2)
 
     // fixme この部分をゆくゆく自動生成できるようにする
     // shape1が2に近く実験
-    // if (hogefrag) {
-    //     retreat(myShape)(myShape2)
-    // } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
-    //     Approach(myShape)(myShape2)
-    // } else {
-    //     hogefrag = true
-    //     retreat(myShape)(myShape2)
-    // }
-    // if (myShape.position.x === 301 && myShape.position.z === 301) {
-    //     hogefrag = false
-    // }
-    //
+    if (hogefrag) {
+        retreat(myShape)(myShape2)
+    } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
+        Approach(myShape)(myShape2)
+    } else {
+        hogefrag = true
+        retreat(myShape)(myShape2)
+    }
+    if (myShape.position.x === 301 && myShape.position.z === 301) {
+        hogefrag = false
+    }
+
     // // // shape3が5に近く実験
     // if (hogefrag2) {
     //     retreat(myShape3)(myShape4)
