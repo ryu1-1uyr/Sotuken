@@ -41,30 +41,52 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
         case 0:
             material.hp = 100
             material.fireRate = 5
+            material.baseSpeed = 0.9
+            material.isAttack = false
+            material.bullet =
+                new THREE.Mesh(
+                    new THREE.BoxGeometry(15, 5, 5),
+                    new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
+                )
             break
         case 1:
             material.hp = 140
             material.fireRate = 3
+            material.baseSpeed = 1
+            material.isAttack = false
+            material.bullet =
+                new THREE.Mesh(
+                    new THREE.BoxGeometry(15, 15, 15),
+                    new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
+                )
             break
         case 2:
             material.hp = 120
             material.fireRate = 2
+            material.baseSpeed = 1.1
+            material.isAttack = false
+            material.bullet =
+                new THREE.Mesh(
+                    new THREE.BoxGeometry(10, 10, 10),
+                    new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
+                )
             break
     }
+    scene.add(material)
 
     return material
 
 }
 
-const myShape = makeMaterial(2)( '#0040FF')
-const myShape2 = makeMaterial(0)( '#E800A5')
-const myShape3 = makeMaterial(1)( '#00E880')
-const myShape4 = makeMaterial(0)( '#FFFE41')
+const myShape = makeMaterial(2)('#0040FF')
+const myShape2 = makeMaterial(0)('#E800A5')
+const myShape3 = makeMaterial(1)('#00E880')
+const myShape4 = makeMaterial(0)('#FFFE41')
 
-scene.add(myShape)
-scene.add(myShape2)
-scene.add(myShape3)
-scene.add(myShape4)
+// scene.add(myShape)
+// scene.add(myShape2)
+// scene.add(myShape3)
+// scene.add(myShape4)
 
 //右下
 myShape.position.z = 300 // Zのプラス方向を手前側
@@ -118,33 +140,36 @@ tick = () => {
     // box.rotation.z += 0.01;
 
     // myShape.rotation.y += 1;
-    
+
     // fixme この部分をゆくゆく自動生成できるようにする
     // shape1が2に近く実験
-    if (hogefrag) {
-        retreat(myShape)(myShape2)
-    } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
-        Approach(myShape)(myShape2)
-    } else {
-        hogefrag = true
-        retreat(myShape)(myShape2)
-    }
-    if (myShape.position.x === 301 && myShape.position.z === 301) {
-        hogefrag = false
-    }
-
-    // // shape3が5に近く実験
-    if (hogefrag2) {
-        retreat(myShape3)(myShape4)
-    } else if (myShape3.position.x !== myShape4.position.x && myShape3.position.z !== myShape4.position.z && hogefrag2 === false) {
-        Approach(myShape3)(myShape4)
-    } else {
-        hogefrag2 = true
-        retreat(myShape3)(myShape4)
-    }
-    if (myShape3.position.x === 301 && myShape3.position.z === -301) {
-        hogefrag2 = false
-    }
+    // if (hogefrag) {
+    //     retreat(myShape)(myShape2)
+    // } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
+    //     Approach(myShape)(myShape2)
+    // } else {
+    //     hogefrag = true
+    //     retreat(myShape)(myShape2)
+    // }
+    // if (myShape.position.x === 301 && myShape.position.z === 301) {
+    //     hogefrag = false
+    // }
+    //
+    // // // shape3が5に近く実験
+    // if (hogefrag2) {
+    //     retreat(myShape3)(myShape4)
+    //     console.log(1)
+    // } else if (myShape3.position.x !== myShape4.position.x && myShape3.position.z !== myShape4.position.z && hogefrag2 === false) {
+    //     Approach(myShape3)(myShape4)
+    //     console.log(2)
+    // } else {
+    //     hogefrag2 = true
+    //     retreat(myShape3)(myShape4)
+    //     console.log(3)
+    // }
+    // if (myShape3.position.x === 301 && myShape3.position.z === -301) {
+    //     hogefrag2 = false
+    // }
 
 
     // レンダリング
