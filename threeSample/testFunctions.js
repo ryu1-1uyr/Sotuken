@@ -112,13 +112,13 @@ const isOutOfRange_Z = obje => {
 
 const move_x = obje => moving_num => {
     if (isOutOfRange_X(obje)) {
-        obje.position.x += (moving_num )//* obje.baseSpeed)
+        obje.position.x += (moving_num)//* obje.baseSpeed)
     }
 }
 
 const move_z = obje => moving_num => {
     if (isOutOfRange_Z(obje)) {
-        obje.position.z += (moving_num )//* obje.baseSpeed)
+        obje.position.z += (moving_num)//* obje.baseSpeed)
         // console.log(moving_num, obje.baseSpeed, obje.position.z)
     }
 }
@@ -131,7 +131,7 @@ const move_z = obje => moving_num => {
 * 的に当たる、カウンタが一定値を超える
 * たまの削除
 */
-const showbullet =()=>{
+const showbullet = () => {
     bullet(myShape)
     bullet(myShape2)
     bullet(myShape3)
@@ -140,22 +140,108 @@ const showbullet =()=>{
 
 // bulletはたまの位置を進める + たまの表示非表示だけにする
 
-const bullet = obje => { // 1関数に役割が多くなりすぎてる => キャラのマテリアル生成時にはたまオブジェクト持たせておく => bulletが呼ばれたらscene.addするみたいな感じで良さそう
+const gcd = (a, b) => {
+    if (b === 0){
+        return a
+    }
+    return gcd(b, a % b)
+}
+
+const bulletSpeed = num => gcd => num / gcd
+
+const bullet = obje => target => { // 1関数に役割が多くなりすぎてる => キャラのマテリアル生成時にはたまオブジェクト持たせておく => bulletが呼ばれたらscene.addするみたいな感じで良さそう
     if (obje.isAttack) {
 
-        obje.bullet.position.x += 3
-        obje.bullet.position.z += 3
+        // console.log(whereMove(obje.bullet.position.x)(obje.bullet.targetCoordinat.x))
+        // console.log(whereMove(obje.bullet.position.z)(obje.bullet.targetCoordinat.z))
+
+        // ここだけ別関数にできる
+        switch (whereMove(obje.bullet.position.x)(obje.bullet.targetCoordinat.x)) {
+            case -1:
+                //プラス方向にすすんでくれ〜
+                obje.bullet.position.x -= obje.bullet.baseSpeed.x
+                break
+            case 0:
+                //え？これ実質衝突してるのでは？
+                scene.remove( obje.bullet )
+                obje.isAttack = false
+                break
+            case 1:
+                //マイナス方向に進んでクレメンス
+                obje.bullet.position.x += obje.bullet.baseSpeed.x
+                break
+        }
+        console.log(obje.bullet.position)
+
+        switch (whereMove(obje.bullet.position.z)(obje.bullet.targetCoordinat.z)) {
+            case -1:
+                //プラス方向にすすんでくれ〜
+                obje.bullet.position.z -= obje.bullet.baseSpeed.z
+                break
+            case 0:
+                //え？これ実質衝突してるのでは？
+                scene.remove( obje.bullet )
+                obje.isAttack = false
+                break
+            case 1:
+                //マイナス方向に進んでクレメンス
+                obje.bullet.position.z += obje.bullet.baseSpeed.z
+                break
+        }
+
+        if (obje.bullet.position.x > 300 || obje.bullet.position.z > 300 || obje.bullet.position.x < -300 && obje.bullet.position.z < -300 ) {
+            scene.remove( obje.bullet )
+            obje.isAttack = false
+            console.log("out of range")
+        }
 
         // if (/*衝突したら*/){
         //     // meshを非表示にする
+        //     obje.isAttack = false
         // }
 
     } else {
 
-        obje.bullet.position.x = (obje.position.x + 30)
-        obje.bullet.position.z = (obje.position.z + 30)
+        obje.bullet.position.x = (obje.position.x + 0)
+        obje.bullet.position.z = (obje.position.z + 0)
+
+        // 2点間の傾きを正規化して方向の修正
+        const targetAngleV = new THREE.Vector3();
+        targetAngleV.copy(obje.position);
+        targetAngleV.sub(target.position);
+        targetAngleV.normalize();
+
+        console.log(targetAngleV,Math.atan2(targetAngleV.x, targetAngleV.z))
+
+        obje.bullet.rotation.y = Math.atan2(targetAngleV.x, targetAngleV.z)
+
+        obje.bullet.targetCoordinat = target.position
+
+        const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x,target.position.z - obje.bullet.position.z)
+        const x = bulletSpeed(target.position.x - obje.bullet.position.x)(GreatestCommonDivisor)
+        const y = bulletSpeed(target.position.z - obje.bullet.position.z)(GreatestCommonDivisor)
+
+        const a = obje.baseSpeed
+
+        if (x > y){
+            obje.bullet.baseSpeed = {
+                x : x / x * a,
+                z : y / x * a,
+            }
+        } else {
+            obje.bullet.baseSpeed = {
+                x : x / y * a,
+                z : y / y * a,
+            }
+        }
+
+            console.log(obje.bullet.baseSpeed)
         scene.add(obje.bullet)
 
         obje.isAttack = true
     }
+}
+
+const attack = obje => target => {
+
 }
