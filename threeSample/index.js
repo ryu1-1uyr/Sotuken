@@ -143,7 +143,7 @@ tick = () => {
     // box.rotation.z += 0.01;
 
     // myShape.rotation.y += 1;
-    // bullet(myShape)(myShape2)
+    bullet(myShape)(myShape3)
 
     // fixme この部分をゆくゆく自動生成できるようにする
     // shape1が2に近く実験

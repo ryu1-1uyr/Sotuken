@@ -171,7 +171,7 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
                 obje.bullet.position.x += obje.bullet.baseSpeed.x
                 break
         }
-        console.log(obje.bullet.position)
+        // console.log(obje.bullet.position)
 
         switch (whereMove(obje.bullet.position.z)(obje.bullet.targetCoordinat.z)) {
             case -1:
@@ -189,7 +189,7 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
                 break
         }
 
-        if (obje.bullet.position.x > 300 || obje.bullet.position.z > 300 || obje.bullet.position.x < -300 && obje.bullet.position.z < -300 ) {
+        if (obje.bullet.position.x >= 300 || obje.bullet.position.z >= 300 || obje.bullet.position.x <= -300 && obje.bullet.position.z <= -300 ) {
             scene.remove( obje.bullet )
             obje.isAttack = false
             console.log("out of range")
@@ -221,17 +221,17 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
         const x = bulletSpeed(target.position.x - obje.bullet.position.x)(GreatestCommonDivisor)
         const y = bulletSpeed(target.position.z - obje.bullet.position.z)(GreatestCommonDivisor)
 
-        const a = obje.baseSpeed
+        const a = obje.fireRate
 
         if (x > y){
             obje.bullet.baseSpeed = {
-                x : x / x * a,
-                z : y / x * a,
+                x : Math.abs(x / x * a) || 1,
+                z : Math.abs(y / x * a) || 1,
             }
         } else {
             obje.bullet.baseSpeed = {
-                x : x / y * a,
-                z : y / y * a,
+                x : Math.abs(x / y * a) || 1,
+                z : Math.abs(y / y * a) || 1,
             }
         }
 
