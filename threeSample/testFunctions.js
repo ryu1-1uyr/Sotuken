@@ -112,12 +112,50 @@ const isOutOfRange_Z = obje => {
 
 const move_x = obje => moving_num => {
     if (isOutOfRange_X(obje)) {
-        obje.position.x += moving_num
+        obje.position.x += (moving_num )//* obje.baseSpeed)
     }
 }
 
 const move_z = obje => moving_num => {
     if (isOutOfRange_Z(obje)) {
-        obje.position.z += moving_num
+        obje.position.z += (moving_num )//* obje.baseSpeed)
+        // console.log(moving_num, obje.baseSpeed, obje.position.z)
+    }
+}
+
+// 攻撃処理
+
+/*
+* たまの生成
+* ベクトルの確定
+* 的に当たる、カウンタが一定値を超える
+* たまの削除
+*/
+const showbullet =()=>{
+    bullet(myShape)
+    bullet(myShape2)
+    bullet(myShape3)
+    bullet(myShape4)
+}
+
+// bulletはたまの位置を進める + たまの表示非表示だけにする
+
+const bullet = obje => { // 1関数に役割が多くなりすぎてる => キャラのマテリアル生成時にはたまオブジェクト持たせておく => bulletが呼ばれたらscene.addするみたいな感じで良さそう
+    if (obje.isAttack) {
+
+        obje.bullet.position.x += 3
+        obje.bullet.position.z += 3
+
+        // if (/*衝突したら*/){
+        //     // meshを非表示にする
+        // }
+
+    } else {
+
+        obje.bullet.position.x = (obje.position.x + 30)
+        obje.bullet.position.z = (obje.position.z + 30)
+        scene.add(obje.bullet)
+
+        obje.isAttack = true
     }
 }
