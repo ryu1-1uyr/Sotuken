@@ -297,25 +297,67 @@ const moveNicely = obje => target => number => func => {
     switch (number) {
         case 0:
             //ここにいい感じの条件分岐…
-            if(distanceToSquared(obje.position)(target.position) > 3000){
+            if (distanceToSquared(obje.position)(target.position) > 3000) {
                 func(obje)(target)
             }
             break
         case 1:
-            if(distanceToSquared(obje.position)(target.position) > 50000){
+            if (distanceToSquared(obje.position)(target.position) > 50000) {
                 func(obje)(target)
             }
             break
         case 2:
-            if(distanceToSquared(obje.position)(target.position) > 130000){
+            if (distanceToSquared(obje.position)(target.position) > 130000) {
                 func(obje)(target)
             }
             break
         case 3:
-            if(distanceToSquared(obje.position)(target.position) > 180000){
+            if (distanceToSquared(obje.position)(target.position) > 180000) {
                 func(obje)(target)
             }
             break
 
     }
 }
+
+//近くにいるとtrue
+const justTarget = obje => target => {
+    return distanceToSquared(obje.position)(target.position) <= 3000
+}
+
+//近くにいるが超至近距離ではない状態でtrue
+const nearTarget = obje => target => {
+    return distanceToSquared(obje.position)(target.position) <= 50000 && distanceToSquared(obje.position)(target.position) > 3000
+}
+
+//中距離かつ近く以上でtrue
+const middleTarget = obje => target => {
+    return distanceToSquared(obje.position)(target.position) <= 130000 && distanceToSquared(obje.position)(target.position) > 50000
+}
+//遠距離かつ中距離以上でtrue
+const farTarget = obje => target => {
+    return distanceToSquared(obje.position)(target.position) <= 180000 && distanceToSquared(obje.position)(target.position) > 130000
+}
+//射程外かつ遠距離以上でtrue
+const outOfRangeTarget = obje => target => {
+    return distanceToSquared(obje.position)(target.position) <= 360000 && distanceToSquared(obje.position)(target.position) > 180000
+}
+
+
+//自動生成するコードは基本的にこのif elseのねすとになりそう
+
+// このhgoeに入る敵との近さをBoolで返す関数が必要っぽい
+// if (justTarget) {
+//     bullet(myShape)(myShape3)
+// } else i
+//     moveNicely(myShape)(myShape3)(0)(Approach)
+// }
+
+/*
+* もし、敵が近くにいたら
+* 　　攻撃する
+* もし、敵が遠い時は
+* 　　近くに行く
+*
+* 
+*/

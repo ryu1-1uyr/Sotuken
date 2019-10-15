@@ -14,7 +14,7 @@ const scene = new THREE.Scene();
 // カメラを作成
 const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
 camera.position.set(1, 300, 850)
-camera.rotation.x = - 0.3
+camera.rotation.x = -0.3
 // カメラコントローラーを作成
 // const controls = new THREE.OrbitControls(camera);
 // これなんかJQueryまわりの変なエラー吐くからなぁ…
@@ -48,7 +48,7 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
                     new THREE.BoxGeometry(15, 5, 5),
                     new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
                 )
-            material.bullet.baseSpeed = {x:1, z:1}
+            material.bullet.baseSpeed = {x: 1, z: 1}
             break
         case 1:
             material.hp = 140
@@ -85,12 +85,12 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
 const myShape = makeMaterial(2)('#0040FF')
 const myShape2 = makeMaterial(0)('#E800A5')
 
-const myTeam = [myShape,myShape2]
+const myTeam = [myShape, myShape2]
 
 const myShape3 = makeMaterial(1)('#00E880')
 const myShape4 = makeMaterial(0)('#FFFE41')
 
-const enemyTeam = [myShape3,myShape4]
+const enemyTeam = [myShape3, myShape4]
 
 
 // scene.add(myShape)
@@ -103,8 +103,8 @@ myShape.position.z = 30 // Zのプラス方向を手前側
 myShape.position.x = 30 // Xは右側が整数の領域
 
 //左上
-myShape2.position.z = -300
-myShape2.position.x = -300
+myShape2.position.z = -250
+myShape2.position.x = -280
 
 //右上
 myShape3.position.z = -300
@@ -150,8 +150,40 @@ tick = () => {
     // box.rotation.y += 0.01;
     // box.rotation.z += 0.01;
 
+    // moveNicely(myShape2)(myShape3)(0)(Approach)
+    //
+    // if (hgoe) { // このhgoeに入る敵との近さをBoolで返す関数が必要っぽい
+    //     //some
+    // } else if (huga) {
+    //     //some
+    // } else if (aa) {
+    //     //some
+    // }
+
+    // if (justTarget) { // このhgoeに入る敵との近さをBoolで返す関数が必要っぽい
+    //     bullet(myShape)(myShape3)
+    // } else {
+    //     moveNicely(myShape)(myShape3)(0)(Approach)
+    // }
+
+
+    /*
+    * もし、敵が近くにいたら
+    * 　　攻撃する
+    * もし、敵が遠い時は
+    * 　　近くに行く
+    */
+
     // myShape.rotation.y += 1;
     bullet(myShape)(myShape3)
+    bullet(myShape2)(myShape3)
+
+    if (nearTarget(myShape4)(myShape3)){
+        bullet(myShape4)(myShape3)
+    } else {
+        moveNicely(myShape4)(myShape3)(0)(Approach)
+    }
+
     // console.log(myShape3.position)
     // console.log(myShape.bullet.position)
 
@@ -171,7 +203,7 @@ tick = () => {
 
     // console.log(searchFarTarget(myShape)(enemyTeam))
 
-    Approach(myShape)(searchFarTarget(myShape)(enemyTeam))
+    // Approach(myShape)(searchFarTarget(myShape)(enemyTeam))
 
     // // // shape3が5に近く実験
     // if (hogefrag2) {
