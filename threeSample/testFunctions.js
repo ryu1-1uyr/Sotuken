@@ -141,7 +141,7 @@ const showbullet = () => {
 // bulletはたまの位置を進める + たまの表示非表示だけにする
 
 const gcd = (a, b) => {
-    if (b === 0){
+    if (b === 0) {
         return a
     }
     return gcd(b, a % b)
@@ -152,9 +152,6 @@ const bulletSpeed = num => gcd => num / gcd
 const bullet = obje => target => { // 1関数に役割が多くなりすぎてる => キャラのマテリアル生成時にはたまオブジェクト持たせておく => bulletが呼ばれたらscene.addするみたいな感じで良さそう
     if (obje.isAttack) {
 
-        // console.log(whereMove(obje.bullet.position.x)(obje.bullet.targetCoordinat.x))
-        // console.log(whereMove(obje.bullet.position.z)(obje.bullet.targetCoordinat.z))
-
         // ここだけ別関数にできる
         switch (whereMove(obje.bullet.position.x)(obje.bullet.targetCoordinat.x)) {
             case -1:
@@ -163,7 +160,7 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
                 break
             case 0:
                 //え？これ実質衝突してるのでは？
-                scene.remove( obje.bullet )
+                scene.remove(obje.bullet)
                 obje.isAttack = false
                 break
             case 1:
@@ -180,7 +177,7 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
                 break
             case 0:
                 //え？これ実質衝突してるのでは？
-                scene.remove( obje.bullet )
+                scene.remove(obje.bullet)
                 obje.isAttack = false
                 break
             case 1:
@@ -189,16 +186,25 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
                 break
         }
 
-        if (obje.bullet.position.x >= 300 || obje.bullet.position.z >= 300 || obje.bullet.position.x <= -300 && obje.bullet.position.z <= -300 ) {
-            scene.remove( obje.bullet )
+        if (obje.bullet.position.x >= 300 || obje.bullet.position.z >= 300 || obje.bullet.position.x <= -300 && obje.bullet.position.z <= -300) {
+            scene.remove(obje.bullet)
             obje.isAttack = false
-            console.log("out of range")
+            // console.log("out of range")
         }
 
-        // if (/*衝突したら*/){
-        //     // meshを非表示にする
-        //     obje.isAttack = false
-        // }
+        if (obje.bullet.position.x !== 300 &&
+            target.position.x - obje.bullet.position.x < 1 &&
+            target.position.x - obje.bullet.position.x > -1 &&
+            obje.bullet.position.z - target.position.z < 1 &&
+            target.position.x - obje.bullet.position.x > -1) {
+            // meshを非表示にする
+            obje.isAttack = false
+            // console.log(target.position.x, obje.bullet.position.x,
+            //     target.position.z, obje.bullet.position.z)
+            // alert("とまれ")
+        }
+
+        attack(obje.bullet)(target)
 
     } else {
 
@@ -211,31 +217,31 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
         targetAngleV.sub(target.position);
         targetAngleV.normalize();
 
-        console.log(targetAngleV,Math.atan2(targetAngleV.x, targetAngleV.z))
+        // console.log(targetAngleV, Math.atan2(targetAngleV.x, targetAngleV.z))
 
         obje.bullet.rotation.y = Math.atan2(targetAngleV.x, targetAngleV.z)
 
         obje.bullet.targetCoordinat = target.position
 
-        const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x,target.position.z - obje.bullet.position.z)
+        const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x, target.position.z - obje.bullet.position.z)
         const x = bulletSpeed(target.position.x - obje.bullet.position.x)(GreatestCommonDivisor)
         const y = bulletSpeed(target.position.z - obje.bullet.position.z)(GreatestCommonDivisor)
 
         const a = obje.fireRate
 
-        if (x > y){
+        if (x > y) {
             obje.bullet.baseSpeed = {
-                x : Math.abs(x / x * a) || 1,
-                z : Math.abs(y / x * a) || 1,
+                x: Math.abs(x / x * a) || 1,
+                z: Math.abs(y / x * a) || 1,
             }
         } else {
             obje.bullet.baseSpeed = {
-                x : Math.abs(x / y * a) || 1,
-                z : Math.abs(y / y * a) || 1,
+                x: Math.abs(x / y * a) || 1,
+                z: Math.abs(y / y * a) || 1,
             }
         }
 
-            console.log(obje.bullet.baseSpeed)
+        // console.log(obje.bullet.baseSpeed)
         scene.add(obje.bullet)
 
         obje.isAttack = true
@@ -243,5 +249,27 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
 }
 
 const attack = obje => target => {
+    //接触判定
+    if(euclideanDistance(obje)(target)){
+        console.log(`hit at ${obje} and ${obje}`)
 
+        // HPを減らすなど
+        // 持続ヒットのため、威力抑えめにすること。
+    }
+}
+
+ const distanceToSquared = v => d => {
+
+    const dx = v.x - d.x, dy = v.z - d.z;
+    return dx * dx + dy * dy;
+
+}
+
+const euclideanDistance = obje => target => {
+
+
+    let b = obje.geometry.boundingSphere.radius + target.geometry.boundingSphere.radius;
+    console.log({'Rs':b,'distance':distanceToSquared(obje.position)(target.position)})
+
+    return distanceToSquared(obje.position)(target.position) <= b * b
 }
