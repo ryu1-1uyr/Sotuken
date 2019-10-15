@@ -76,6 +76,7 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
             break
     }
     scene.add(material)
+    // material.geometry.boundingSphere.radius *= 0.8
 
     return material
 
@@ -92,8 +93,8 @@ const myShape4 = makeMaterial(0)('#FFFE41')
 // scene.add(myShape4)
 
 //右下
-myShape.position.z = 300 // Zのプラス方向を手前側
-myShape.position.x = 300 // Xは右側が整数の領域
+myShape.position.z = 30 // Zのプラス方向を手前側
+myShape.position.x = 30 // Xは右側が整数の領域
 
 //左上
 myShape2.position.z = -300
@@ -135,6 +136,7 @@ let hogefrag2 = false
 
 //このtickみたいなものを定義することができれば、コマンド選択した動き？みたいなのを実現できるかもしれない
 tick = () => {
+    // console.log(counter++)
 
     // console.log(counter)
     // 箱を回転させる
@@ -144,20 +146,22 @@ tick = () => {
 
     // myShape.rotation.y += 1;
     bullet(myShape)(myShape3)
+    // console.log(myShape3.position)
+    // console.log(myShape.bullet.position)
 
     // fixme この部分をゆくゆく自動生成できるようにする
     // shape1が2に近く実験
-    if (hogefrag) {
-        retreat(myShape)(myShape2)
-    } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
-        Approach(myShape)(myShape2)
-    } else {
-        hogefrag = true
-        retreat(myShape)(myShape2)
-    }
-    if (myShape.position.x === 301 && myShape.position.z === 301) {
-        hogefrag = false
-    }
+    // if (hogefrag) {
+    //     retreat(myShape)(myShape2)
+    // } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
+    //     Approach(myShape)(myShape2)
+    // } else {
+    //     hogefrag = true
+    //     retreat(myShape)(myShape2)
+    // }
+    // if (myShape.position.x === 301 && myShape.position.z === 301) {
+    //     hogefrag = false
+    // }
 
     // // // shape3が5に近く実験
     // if (hogefrag2) {
@@ -182,11 +186,21 @@ tick = () => {
     requestAnimationFrame(tick);
 }
 
+const sleep = (waitSec) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve()
+        }, waitSec);
+    });
+}
 
 const init = () => {
     // 初回実行
     try {
-        tick();
+        sleep(1000).then(() => {
+            console.log('sleepnow')
+            tick();
+        })
     } catch (e) {
         console.log(e)
     }
