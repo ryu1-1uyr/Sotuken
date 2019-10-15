@@ -85,8 +85,13 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
 const myShape = makeMaterial(2)('#0040FF')
 const myShape2 = makeMaterial(0)('#E800A5')
 
+const myTeam = [myShape,myShape2]
+
 const myShape3 = makeMaterial(1)('#00E880')
 const myShape4 = makeMaterial(0)('#FFFE41')
+
+const enemyTeam = [myShape3,myShape4]
+
 
 // scene.add(myShape)
 // scene.add(myShape2)
@@ -179,9 +184,6 @@ tick = () => {
     // if (myShape3.position.x === 301 && myShape3.position.z === -301) {
     //     hogefrag2 = false
     // }
-
-    console.log(camera.position)
-
 
     // レンダリング
     renderer.render(scene, camera);
