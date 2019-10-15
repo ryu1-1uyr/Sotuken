@@ -19,8 +19,6 @@ const whereMove = num => num2 => {
 
 //object2つ引数にとって、1が2に接近する関数
 
-//fixme この関数に引数を1つ増やして、どこまで近くか、っての決めれた方が良さそう
-
 const Approach = obje1 => obje2 => {
 
     let fragX
@@ -53,8 +51,6 @@ const Approach = obje1 => obje2 => {
 }
 
 //object2つ引数にとって、1が2からはなれる関数
-
-//fixme この関数に引数を1つ増やして、どこまで下がるか、っての決めれた方が良さそう
 
 const retreat = obje1 => obje2 => {
 
@@ -205,6 +201,7 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
 
     } else {
 
+        //fixme ここがよくない2019 2点を結んだ延長線上の壁にぶつかる点をマークしないといけない
         obje.bullet.position.x = (obje.position.x + 0)
         obje.bullet.position.z = (obje.position.z + 0)
 
