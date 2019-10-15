@@ -1,5 +1,5 @@
-const width = 900;
-const height = 900;
+const width = 600;
+const height = 600;
 
 // レンダラーを作成
 const renderer = new THREE.WebGLRenderer({
@@ -13,10 +13,10 @@ const scene = new THREE.Scene();
 
 // カメラを作成
 const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-camera.position.set(1, 1, +80);
-
+camera.position.set(1, 300, 850)
+camera.rotation.x = - 0.3
 // カメラコントローラーを作成
-const controls = new THREE.OrbitControls(camera);
+// const controls = new THREE.OrbitControls(camera);
 // これなんかJQueryまわりの変なエラー吐くからなぁ…
 
 const returnMaterial = (color) => {
@@ -84,6 +84,7 @@ const makeMaterial = identificationCode => color => { //射程とかもセット
 
 const myShape = makeMaterial(2)('#0040FF')
 const myShape2 = makeMaterial(0)('#E800A5')
+
 const myShape3 = makeMaterial(1)('#00E880')
 const myShape4 = makeMaterial(0)('#FFFE41')
 
@@ -105,8 +106,8 @@ myShape3.position.z = -300
 myShape3.position.x = 300
 
 //左下
-myShape4.position.z = 300
-myShape4.position.x = -300
+myShape4.position.z = 200
+myShape4.position.x = -200
 
 // 平行光源
 const light = new THREE.DirectionalLight(0xFFFFFF);
@@ -178,6 +179,8 @@ tick = () => {
     // if (myShape3.position.x === 301 && myShape3.position.z === -301) {
     //     hogefrag2 = false
     // }
+
+    console.log(camera.position)
 
 
     // レンダリング
