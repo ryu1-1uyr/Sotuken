@@ -169,6 +169,10 @@ tick = () => {
     //     hogefrag = false
     // }
 
+    // console.log(searchFarTarget(myShape)(enemyTeam))
+
+    Approach(myShape)(searchFarTarget(myShape)(enemyTeam))
+
     // // // shape3が5に近く実験
     // if (hogefrag2) {
     //     retreat(myShape3)(myShape4)
