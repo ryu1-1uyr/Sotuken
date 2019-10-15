@@ -39,7 +39,7 @@ const Approach = obje1 => obje2 => {
     // Z座標軸の処理
 
     if (whereMove(obje1.position.z)(obje2.position.z) === 0) {
-        console.log("ぶつかったよ Z")
+        // console.log("ぶつかったよ Z")
         // fragZ = true
         move_z(obje1)(whereMove(obje1.position.z)(obje2.position.z))
     } else {
@@ -293,13 +293,29 @@ const searchNearTarget = obje => enemyArr => {
 
 }
 
-// const arr = [11, 22, 33];
-//
-// const obj = arr.reduce((acc, value, index) => {
-//     acc[`number${index}`] = value;
-//     return acc;
-// }, {});
-// console.log(obj);
-// { number0: 11, number1: 22, number2: 33 }
+const moveNicely = obje => target => number => func => {
+    switch (number) {
+        case 0:
+            //ここにいい感じの条件分岐…
+            if(distanceToSquared(obje.position)(target.position) > 3000){
+                func(obje)(target)
+            }
+            break
+        case 1:
+            if(distanceToSquared(obje.position)(target.position) > 50000){
+                func(obje)(target)
+            }
+            break
+        case 2:
+            if(distanceToSquared(obje.position)(target.position) > 130000){
+                func(obje)(target)
+            }
+            break
+        case 3:
+            if(distanceToSquared(obje.position)(target.position) > 180000){
+                func(obje)(target)
+            }
+            break
 
-// numbers.map(function(num, index)
+    }
+}
