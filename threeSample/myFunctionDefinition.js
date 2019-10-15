@@ -247,7 +247,7 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
 
 const attack = obje => target => {
     //接触判定
-    if(euclideanDistance(obje)(target)){
+    if (euclideanDistance(obje)(target)) {
         // console.log(`hit at ${obje} and ${obje}`)
 
         // 後々引数にダメージを追記できるような設計へ
@@ -257,7 +257,7 @@ const attack = obje => target => {
     }
 }
 
- const distanceToSquared = v => d => {
+const distanceToSquared = v => d => {
 
     const dx = v.x - d.x, dy = v.z - d.z;
     return dx * dx + dy * dy;
@@ -273,14 +273,23 @@ const euclideanDistance = obje => target => {
     return distanceToSquared(obje.position)(target.position) <= b * b
 }
 
-// 一番遠いやつをターゲットとする関数
-const searchTarget = obje => enemyArr => {
+const makeDistanceArray = obje => enemyArr => enemyArr.map(x => distanceToSquared(obje.position)(x.position))
 
-    const tmp = enemyArr.map( x=> {
-        return  distanceToSquared(obje.position)(x.position)
-    })
-    
-    return enemyArr[tmp.indexOf(Math.max.apply(null,tmp))]
+//searchTarget系のの関数たちはオブジェクトを返す点に注意
+
+const searchFarTarget = obje => enemyArr => {
+
+    const tmp = makeDistanceArray(obje)(enemyArr)
+
+    return enemyArr[tmp.indexOf(Math.max.apply(null, tmp))]
+
+}
+
+const searchNearTarget = obje => enemyArr => {
+
+    const tmp = makeDistanceArray(obje)(enemyArr)
+
+    return enemyArr[tmp.indexOf(Math.min.apply(null, tmp))]
 
 }
 
