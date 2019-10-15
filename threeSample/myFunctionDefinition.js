@@ -199,9 +199,6 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
             target.position.x - obje.bullet.position.x > -1) {
             // meshを非表示にする
             obje.isAttack = false
-            // console.log(target.position.x, obje.bullet.position.x,
-            //     target.position.z, obje.bullet.position.z)
-            // alert("とまれ")
         }
 
         attack(obje.bullet)(target)
@@ -251,10 +248,12 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
 const attack = obje => target => {
     //接触判定
     if(euclideanDistance(obje)(target)){
-        console.log(`hit at ${obje} and ${obje}`)
+        // console.log(`hit at ${obje} and ${obje}`)
 
-        // HPを減らすなど
+        // 後々引数にダメージを追記できるような設計へ
         // 持続ヒットのため、威力抑えめにすること。
+        target.hp -= 1
+        console.log(target.hp)
     }
 }
 
@@ -269,7 +268,7 @@ const euclideanDistance = obje => target => {
 
 
     let b = obje.geometry.boundingSphere.radius + target.geometry.boundingSphere.radius;
-    console.log({'Rs':b,'distance':distanceToSquared(obje.position)(target.position)})
+    // console.log({'Rs':b,'distance':distanceToSquared(obje.position)(target.position)})
 
     return distanceToSquared(obje.position)(target.position) <= b * b
 }
