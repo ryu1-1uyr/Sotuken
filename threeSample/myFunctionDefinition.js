@@ -253,7 +253,7 @@ const attack = obje => target => {
         // 後々引数にダメージを追記できるような設計へ
         // 持続ヒットのため、威力抑えめにすること。
         target.hp -= 1
-        console.log(target.hp)
+        // console.log(target.hp)
     }
 }
 
@@ -271,4 +271,8 @@ const euclideanDistance = obje => target => {
     // console.log({'Rs':b,'distance':distanceToSquared(obje.position)(target.position)})
 
     return distanceToSquared(obje.position)(target.position) <= b * b
+}
+
+const searchTarget = obje => {
+
 }
