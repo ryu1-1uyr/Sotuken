@@ -273,6 +273,24 @@ const euclideanDistance = obje => target => {
     return distanceToSquared(obje.position)(target.position) <= b * b
 }
 
-const searchTarget = obje => {
+// 一番遠いやつをターゲットとする関数
+const searchTarget = obje => enemyArr => {
+
+    const tmp = enemyArr.map( x=> {
+        return  distanceToSquared(obje.position)(x.position)
+    })
+    
+    return enemyArr[tmp.indexOf(Math.max.apply(null,tmp))]
 
 }
+
+// const arr = [11, 22, 33];
+//
+// const obj = arr.reduce((acc, value, index) => {
+//     acc[`number${index}`] = value;
+//     return acc;
+// }, {});
+// console.log(obj);
+// { number0: 11, number1: 22, number2: 33 }
+
+// numbers.map(function(num, index)
