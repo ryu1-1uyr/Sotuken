@@ -1,10 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>editer</title>
+    <style>
+        body {
+            background: rgba(102,102,102,0.58);
+        }
+        #hoge {
+            display: inline-block;
+            color: white;
+
+        }
+
+        #container {
+            padding : 50px;
+            display: flex;
+        }
+        .item {
+            background: rgba(0,102,23,0.58);
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
-$END$
+
+<div id="hoge">
+    <div style="background: #9e9e9e">hoge</div>
+    <div style="background: #5A5A5A">hoge</div>
+    <div style="background: #403F4C">hoge</div>
+</div>
+
+<div id="fuga">
+    <div style="background: #9e9e9e">hugo</div>
+    <div style="background: #5A5A5A">huge</div>
+    <div style="background: #403F4C">hogo</div>
+</div>
+
+<div id="container">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+    <div class="item">Item 4</div>
+</div>
+
+
+<div>
+    <div class="electer">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="action">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+    // let sortable = Sortable.create(hoge, {
+    //     group: "hoge",
+    //     animation: 100
+    // });
+
+    let containerTable = Sortable.create(container, {
+        group: "container",
+        animation: 100
+    });
+
+    ////////////////////////////////////////////////////
+
+    let sortable = Sortable.create(hoge, {
+        group: {
+            name: "hoge",
+            pull: function () {
+                return "clone";
+            }
+        },
+        sort: false,
+        animation: 100
+    });
+
+    ////////////////////////////////////////////////////
+
+    let editableList = Sortable.create(fuga, {
+        group: {
+            name: "fuga",
+            put: ["hoge"],
+        },
+        filter: ".js-remove",
+        onAdd: function (evt) {
+            var el = editableList.closest(evt.item);
+            el.innerHTML += '<i class="js-remove">✖</i>';
+        },
+        onFilter: function (evt) {
+            var el = editableList.closest(evt.item);
+            el && el.parentNode.removeChild(el);
+        },
+        animation: 100,
+    });
+</script>
+
 </body>
 </html>
