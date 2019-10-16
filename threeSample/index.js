@@ -178,7 +178,7 @@ tick = () => {
     // bullet(myShape)(myShape3)
     // bullet(myShape2)(myShape3)
 
-    if (nearTarget(myShape4)(myShape)){
+    if (nearTarget(myShape4)(myShape)) {
         bullet(myShape4)(myShape)
     } else {
         moveNicely(myShape4)(myShape)(0)(Approach)
@@ -227,7 +227,7 @@ tick = () => {
     requestAnimationFrame(tick);
 }
 
-let stringcode ="const tick2=()=>{myShape2.rotation.y += 0.01;renderer.render(scene, camera);requestAnimationFrame(tick2);};tick2()"
+let stringcode = "const tick2=()=>{myShape2.rotation.y += 0.01;renderer.render(scene, camera);requestAnimationFrame(tick2);};tick2()"
 
 const sleep = (waitSec) => {
     return new Promise((resolve) => {
