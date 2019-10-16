@@ -148,44 +148,45 @@ const bulletSpeed = num => gcd => num / gcd
 const bullet = obje => target => { // 1関数に役割が多くなりすぎてる => キャラのマテリアル生成時にはたまオブジェクト持たせておく => bulletが呼ばれたらscene.addするみたいな感じで良さそう
     if (obje.isAttack) {
 
-        // ここだけ別関数にできる
-        switch (whereMove(obje.bullet.position.x)(obje.bullet.targetCoordinat.x)) {
-            case -1:
+        // fixme 攻撃から移動に行動を変えたときに弾道が残るw
+        switch (obje.bullet.positiveOrNegative.x) {
+            case 'positive':
                 //プラス方向にすすんでくれ〜
                 obje.bullet.position.x -= obje.bullet.baseSpeed.x
                 break
             case 0:
-                //え？これ実質衝突してるのでは？
+                //fixme この行今動いてない
                 scene.remove(obje.bullet)
                 obje.isAttack = false
                 break
-            case 1:
+            case 'negative':
                 //マイナス方向に進んでクレメンス
                 obje.bullet.position.x += obje.bullet.baseSpeed.x
                 break
         }
         // console.log(obje.bullet.position)
 
-        switch (whereMove(obje.bullet.position.z)(obje.bullet.targetCoordinat.z)) {
-            case -1:
+        switch (obje.bullet.positiveOrNegative.z) {
+            case 'positive':
                 //プラス方向にすすんでくれ〜
                 obje.bullet.position.z -= obje.bullet.baseSpeed.z
                 break
             case 0:
-                //え？これ実質衝突してるのでは？
+                //fixme この行今動いてない
                 scene.remove(obje.bullet)
                 obje.isAttack = false
                 break
-            case 1:
+            case 'negative':
                 //マイナス方向に進んでクレメンス
                 obje.bullet.position.z += obje.bullet.baseSpeed.z
                 break
         }
 
-        if (obje.bullet.position.x >= 300 || obje.bullet.position.z >= 300 || obje.bullet.position.x <= -300 && obje.bullet.position.z <= -300) {
+        console.log(obje.bullet.position.x >= 300 || obje.bullet.position.z >= 300 || obje.bullet.position.x <= -300 || obje.bullet.position.z <= -300)
+        if (obje.bullet.position.x >= 300 || obje.bullet.position.z >= 300 || obje.bullet.position.x <= -300 || obje.bullet.position.z <= -300) {
             scene.remove(obje.bullet)
             obje.isAttack = false
-            // console.log("out of range")
+            console.log("out of range")
         }
 
         if (obje.bullet.position.x !== 300 &&
@@ -201,7 +202,7 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
 
     } else {
 
-        //fixme ここがよくない2019 2点を結んだ延長線上の壁にぶつかる点をマークしないといけない
+        //たまの打ち出し 初期座標
         obje.bullet.position.x = (obje.position.x + 0)
         obje.bullet.position.z = (obje.position.z + 0)
 
@@ -216,6 +217,8 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
         obje.bullet.rotation.y = Math.atan2(targetAngleV.x, targetAngleV.z)
 
         obje.bullet.targetCoordinat = target.position
+        obje.bullet.positiveOrNegative = {x: '', z: ''}
+        obje.bullet.baseSpeed = {x: '', z: ''}
 
         const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x, target.position.z - obje.bullet.position.z)
         const x = bulletSpeed(target.position.x - obje.bullet.position.x)(GreatestCommonDivisor)
@@ -223,20 +226,68 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
 
         const a = obje.fireRate
 
-        if (x > y) {
+        if (x > y) { // 弾速を遅くする
             obje.bullet.baseSpeed = {
-                x: Math.abs(x / x * a) || 1,
-                z: Math.abs(y / x * a) || 1,
+                x: Math.abs(x / x * a) > 6 ? Math.abs(x / x * a) / 10 : Math.abs(x / x * a),
+                z: Math.abs(y / x * a) > 6 ? Math.abs(y / x * a) / 10 : Math.abs(y / x * a),
             }
         } else {
             obje.bullet.baseSpeed = {
-                x: Math.abs(x / y * a) || 1,
-                z: Math.abs(y / y * a) || 1,
+                x: Math.abs(x / y * a) > 6 ? Math.abs(x / y * a) / 10 : Math.abs(x / y * a),
+                z: Math.abs(y / y * a) > 6 ? Math.abs(y / y * a) / 10 : Math.abs(y / y * a),
             }
         }
 
-        // console.log(obje.bullet.baseSpeed)
+        console.log(obje.bullet.baseSpeed)
+
+        // if (obje.bullet.baseSpeed.x > 5) {
+        //     obje.bullet.baseSpeed = {x: obje.bullet.baseSpeed.x / a}
+        //     console.log(obje.bullet.baseSpeed.x, "矯正した")
+        // }
+        // if (obje.bullet.baseSpeed.z > 5) {
+        //     obje.bullet.baseSpeed = {z: obje.bullet.baseSpeed.z / a}
+        //     console.log(obje.bullet.baseSpeed.z, "矯正した")
+        // }
+
         scene.add(obje.bullet)
+
+        // fixme 151~183までの挙動を毎フレーム行なっているので、弾道ができを追尾する動きをしている
+        // 初期に位置特定、政府の判定をしてそれを保持すればいいんじゃね
+
+        switch (whereMove(obje.bullet.position.x)(obje.bullet.targetCoordinat.x)) {
+            case -1:
+                //プラス方向にすすんでくれ〜
+                obje.bullet.positiveOrNegative.x = 'positive'
+                break
+            case 0:
+                //え？これ実質衝突してるのでは？
+                // scene.remove(obje.bullet)
+                // obje.isAttack = false
+                break
+            case 1:
+                //マイナス方向に進んでクレメンス
+                obje.bullet.positiveOrNegative.x = 'negative'
+                break
+        }
+        // console.log(obje.bullet.position)
+
+        switch (whereMove(obje.bullet.position.z)(obje.bullet.targetCoordinat.z)) {
+            case -1:
+                //プラス方向にすすんでくれ〜
+                obje.bullet.positiveOrNegative.z = 'positive'
+                break
+            case 0:
+                //え？これ実質衝突してるのでは？
+                // scene.remove(obje.bullet)
+                // obje.isAttack = false
+                break
+            case 1:
+                //マイナス方向に進んでクレメンス
+                obje.bullet.positiveOrNegative.z = 'negative'
+                break
+        }
+        // console.log(obje.bullet.positiveOrNegative)
+        // fixme
 
         obje.isAttack = true
     }
@@ -262,7 +313,6 @@ const distanceToSquared = v => d => {
 }
 
 const euclideanDistance = obje => target => {
-
 
     let b = obje.geometry.boundingSphere.radius + target.geometry.boundingSphere.radius;
     // console.log({'Rs':b,'distance':distanceToSquared(obje.position)(target.position)})
@@ -291,6 +341,10 @@ const searchNearTarget = obje => enemyArr => {
 }
 
 const moveNicely = obje => target => number => func => {
+    if (obje.isAttack) {
+        scene.remove(obje.bullet)
+        obje.isAttack = false
+    }
     switch (number) {
         case 0:
             //ここにいい感じの条件分岐…
