@@ -16,7 +16,7 @@ const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
 camera.position.set(1, 300, 850)
 camera.rotation.x = -0.3
 // カメラコントローラーを作成
-// const controls = new THREE.OrbitControls(camera);
+const controls = new THREE.OrbitControls(camera);
 // これなんかJQueryまわりの変なエラー吐くからなぁ…
 
 const returnMaterial = (color) => {
@@ -175,13 +175,13 @@ tick = () => {
     */
 
     // myShape.rotation.y += 1;
-    bullet(myShape)(myShape3)
-    bullet(myShape2)(myShape3)
+    // bullet(myShape)(myShape3)
+    // bullet(myShape2)(myShape3)
 
-    if (nearTarget(myShape4)(myShape3)){
-        bullet(myShape4)(myShape3)
+    if (nearTarget(myShape4)(myShape)){
+        bullet(myShape4)(myShape)
     } else {
-        moveNicely(myShape4)(myShape3)(0)(Approach)
+        moveNicely(myShape4)(myShape)(0)(Approach)
     }
 
     // console.log(myShape3.position)
@@ -189,17 +189,17 @@ tick = () => {
 
     // fixme この部分をゆくゆく自動生成できるようにする
     // shape1が2に近く実験
-    // if (hogefrag) {
-    //     retreat(myShape)(myShape2)
-    // } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
-    //     Approach(myShape)(myShape2)
-    // } else {
-    //     hogefrag = true
-    //     retreat(myShape)(myShape2)
-    // }
-    // if (myShape.position.x === 301 && myShape.position.z === 301) {
-    //     hogefrag = false
-    // }
+    if (hogefrag) {
+        retreat(myShape)(myShape2)
+    } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
+        Approach(myShape)(myShape2)
+    } else {
+        hogefrag = true
+        retreat(myShape)(myShape2)
+    }
+    if (myShape.position.x === 301 && myShape.position.z === 301) {
+        hogefrag = false
+    }
 
     // console.log(searchFarTarget(myShape)(enemyTeam))
 
@@ -227,6 +227,8 @@ tick = () => {
     requestAnimationFrame(tick);
 }
 
+let stringcode ="const tick2=()=>{myShape2.rotation.y += 0.01;renderer.render(scene, camera);requestAnimationFrame(tick2);};tick2()"
+
 const sleep = (waitSec) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -240,7 +242,8 @@ const init = () => {
     try {
         sleep(1000).then(() => {
             console.log('sleepnow')
-            tick();
+            tick()
+            // eval(stringcode)
         })
     } catch (e) {
         console.log(e)
