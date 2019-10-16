@@ -342,8 +342,10 @@ const searchNearTarget = obje => enemyArr => {
 
 const moveNicely = obje => target => number => func => {
     if (obje.isAttack) {
-        scene.remove(obje.bullet)
-        obje.isAttack = false
+        sleep(1000).then(() => {
+            scene.remove(obje.bullet)
+            obje.isAttack = false
+        })
     }
     switch (number) {
         case 0:
