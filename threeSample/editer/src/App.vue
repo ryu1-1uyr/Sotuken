@@ -1,10 +1,11 @@
 <template>
     <div id="app">
+        {{list2}}
 
         <draggable class="dragArea container" :list="list1"
                    :group="{ name: 'people', pull: 'clone', put: false }" @change="log">
             <div class="list-group-item baseElement" v-for="element in list1" v-bind:class="element.class"
-                 @click="addList(element)">
+                 @click="addList(element)(list2)">
                 {{ element.name }}
             </div>
         </draggable>
@@ -13,9 +14,7 @@
 
         <draggable class="dragArea container getarea" :list="list2" group="people" @change="log">
             <div class="list-group-item yourArea" v-for="(element, idx) in list2" v-bind:class="element.class">
-                {{ element.name }}<i class="fa fa-times close" @click="removeAt(idx)">X</i>
-
-
+                {{ element.name }}<i class="fa fa-times close" @click="removeAt(idx)(list2)">X</i>
             </div>
         </draggable>
 
@@ -25,7 +24,21 @@
 <!--            </div>-->
 <!--        </draggable>-->
 
-        <div v-if="this.list2.some((x)=> x.command === 'if')">if aru</div>
+        <div v-if="this.list2.some((x)=> x.command === 'if')">
+            <div v-for=" (atlist2, index) in list2">
+                {{index}}
+                <div v-if="atlist2.command === 'if'" >
+                    <h1>{{atlist2}}</h1>
+                    <draggable class="dragArea container child" :list="atlist2.list" group="people" @change="log" >
+                        <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list" >
+                            <h2>{{idx}}</h2>
+                            {{ element.name }}<i class="fa fa-times close" @click="removeAt(idx)(atlist2.list)">X</i>
+                        </div>
+
+                    </draggable>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -33,7 +46,6 @@
 
 <script>
     import draggable from '../node_modules/vuedraggable'
-
 
     export default {
         name: 'app',
@@ -65,12 +77,12 @@
             log: function (evt) {
                 window.console.log(evt);
             },
-            addList(command) {
+            addList: (command) => (list) => {
                 console.log(command)
-                this.list2.push(command)
+                list.push(command)
             },
-            removeAt(idx) {
-                this.list2.splice(idx, 1);
+            removeAt: (idx)=>(list)=> {
+                list.splice(idx, 1);
             },
             isIf(){
                 let frag = false
@@ -118,8 +130,8 @@
         width: 500px;
         /*height: 500px;*/
         background: #9effff;
-        z-index: -100;
-        position: absolute;
+        /*z-index: -100;*/
+        /*position: absolute;*/
     }
     .getarea{
         background: rgba(102,0,5,0.36);
