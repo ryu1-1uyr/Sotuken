@@ -14,7 +14,16 @@
         {{list2}}
         <div class="container">
             <div class="headButton container" @click="addList(newIF())(list2)">条件分岐</div>
-            <div class="headButton container">ターゲット</div>
+            <div class="headButton container"
+                 v-on:mouseover="mouseoverTarget(true)"
+                 v-on:mouseleave="mouseleaveTarget(false)">ターゲット
+                <transition name="up">
+                    <div v-if="target" class="centerContainer absolute down" @click="testlog('near')">近い</div>
+                </transition>
+                <transition name="down">
+                    <div v-if="target" class="centerContainer absolute up" @click="testlog('far')">遠い</div>
+                </transition>
+            </div>
             <div class="headButton container"
                  v-on:mouseover="mouseoverMove(true)"
                  v-on:mouseleave="mouseleaveMove(false)">行動
@@ -332,9 +341,17 @@
         animation: up1 1.0s ease 0s forwards;
     }
 
-    .up-enter, .up-leave-to
-    {
+    .up-enter, .up-leave-to {
         animation: up2 1.0s ease 0s forwards;
+    }
+
+    .down-enter-active, .down-leave-active {
+        /*transition: opacity .1s;*/
+        animation: down1 1.0s ease 0s forwards;
+    }
+
+    .down-enter, .down-leave-to {
+        animation: down2 1.0s ease 0s forwards;
     }
 
     @keyframes right-up {
@@ -444,6 +461,28 @@
         to {
             opacity: 0;
             transform: translateX(-100%) translateY(100%) scale(1);
+        }
+    }
+
+    @keyframes down1 {
+        from {
+            opacity: 0;
+            transform: translateY(-100%) scale(1);
+        }
+        to {
+            opacity: 100%;
+            transform: translateY(0%) scale(1.3);
+        }
+    }
+
+    @keyframes down2 {
+        from {
+            opacity: 100%;
+            transform: translateY(0%) scale(1.3);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-100%) scale(1);
         }
     }
 </style>
