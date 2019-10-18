@@ -1,0 +1,46 @@
+<script>
+    onload=function(){
+        const canvas = document.createElement('canvas')
+        document.body.appendChild(canvas)
+        canvas.width = canvas.height = 800
+        const gl = canvas.getContext("experimental-webgl")
+        const shader = gl.createProgram()
+        const vshader = gl.createShader(gl.VERTEX_SHADER)
+        const fshader = gl.createShader(gl.FRAGMENT_SHADER)
+        gl.shaderSource(vshader, `
+    attribute vec3 vertex;
+    varying vec3 pos;
+    void main(){
+      gl_Position=vec4(vertex, 1);
+      pos=vertex;
+    }
+  `);
+        gl.shaderSource(fshader, `
+    precision mediump float;
+    varying vec3 pos;
+    void main(void){
+      gl_FragColor=vec4(pos,1);
+    }
+  `)
+        gl.compileShader(vshader)
+        gl.compileShader(fshader)
+        gl.attachShader(shader, vshader)
+        gl.attachShader(shader, fshader)
+        gl.linkProgram(shader)
+        const attrib = gl.getAttribLocation(shader, 'vertex')
+        const vertex = [-0.5,-0.5,0,+0.5,-0.5,0,+0.5,+0.5,0,-0.5,-0.5,0,+0.5,+0.5,0,-0.5,+0.5,0]
+        const vbuf = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, vbuf)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertex), gl.STATIC_DRAW)
+        function animate(){
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+            gl.useProgram(shader)
+            gl.enableVertexAttribArray(attrib)
+            gl.bindBuffer(gl.ARRAY_BUFFER, vbuf)
+            gl.vertexAttribPointer(attrib, 3, gl.FLOAT, false, 0, 0)
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertex.length / 3)
+            requestAnimationFrame(animate)
+        }
+        animate()
+    }
+</script>
