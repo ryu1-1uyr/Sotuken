@@ -83,6 +83,7 @@
                 {{ element.name }}
                 <span v-if="list2[idx -1]">{{list2[idx -1].nextWord}}</span>
                 <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">が</span>
+                <span v-if="Array.isArray(element)" >の行動をする</span>
                 <i class="fa fa-times close" @click="removeAt(idx)(list2)">X</i>
             </div>
         </draggable>
@@ -92,23 +93,30 @@
         <!--                {{childrenElement.name}}<i class="fa fa-times close" @click="removeAt(childrenidx)">X</i>-->
         <!--            </div>-->
         <!--        </draggable>-->
+        {{this.list2.some((x)=> x.command === 'if')}}
 
         <div v-if="this.list2.some((x)=> x.command === 'if')">
             <div v-for=" (atlist2, index) in list2">
-                <div v-if="atlist2.command === 'if'">
-                    {{index}}
-                    <draggable class="dragArea container child" :list="atlist2.list" group="people" @change="log">
-                        <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list">
-                            {{ element.name }}
-                            <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">へ</span>
-                            <span v-if="element.id === 'range' ||element.id === 'range' ">になるまで</span>
-                            <i class="fa fa-times close" @click="removeAt(idx)(atlist2.list)">X</i>
+                <div v-if="Array.isArray(atlist2.list)">
+                    {{index,atlist2.list}}
+                    <draggable class="dragArea child" :list="atlist2.list" group="people" @change="log">
+                        <div class="container">
+                            <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list">
+                                {{ element.name }}
+                                <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">へ</span>
+                                <span v-if="element.id === 'range' ||element.id === 'range' ">になるまで</span>
+                                <i class="fa fa-times close" @click="removeAt(idx)(atlist2)">X</i>
+                            </div>
+
                         </div>
+
+                        <button @click="removeAt(index)(list2)">{{index}}</button>
 
                     </draggable>
                 </div>
             </div>
         </div>
+        <div v-else>要素がない</div>
 
 
     </div>
@@ -155,7 +163,7 @@
                     let index = val.length - 1
                     if (val[index].command === 'if') {
                         console.log(cyan + 'ifdayo' + reset)
-                        val.push([])
+                        val.push({name: 'の行動をする', command: 'list', class: 'BGblue', list: [...new Array]})
                     }
                     console.log(val[index])
                 },
@@ -171,14 +179,14 @@
                 list.push(command)
             },
             newIF: () => {
-                return {name: "もし", command: 'if', class: 'BGred', list: [...new Array]}
+                return {name: "もし", command: 'if', class: 'BGred'}
             },
 
             newNearEnemy: () => {
-                return {name: "近い敵", command: 'nearEnemy', class: '', nextWord: 'にいる'}
+                return {name: "近い敵", command: 'nearEnemy', class: '', nextWord: 'にいる時'}
             },
             newFarEnemy: () => {
-                return {name: "遠い敵", command: 'farEnemy', class: '', nextWord: 'にいる'}
+                return {name: "遠い敵", command: 'farEnemy', class: '', nextWord: 'にいる時'}
             },
 
             newApproach: () => {
@@ -279,13 +287,13 @@
     }
 
     .baseElement {
-        background: rgba(0, 102, 23, 0.58);
+        background: rgba(102, 102, 123, 0.48);
         padding: 10px;
         margin: 10px;
     }
 
     .yourArea {
-        background: rgba(48, 0, 102, 0.58);
+        background: rgba(100, 30, 200, 0.38);
         padding: 10px;
         margin: 10px;
     }
@@ -303,7 +311,10 @@
     }
 
     .BGred {
-        background: rgba(133, 0, 21, 0.85);
+        background: rgba(133, 0, 21, 0.55);
+    }
+    .BGblue {
+        background: rgba(0,2,98,0.47);
     }
 
 
