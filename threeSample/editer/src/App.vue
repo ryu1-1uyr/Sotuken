@@ -95,8 +95,8 @@
 
         <div v-if="this.list2.some((x)=> x.command === 'if')">
             <div v-for=" (atlist2, index) in list2">
-                {{index}}
                 <div v-if="atlist2.command === 'if'">
+                    {{index}}
                     <draggable class="dragArea container child" :list="atlist2.list" group="people" @change="log">
                         <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list">
                             {{ element.name }}
@@ -116,6 +116,8 @@
 
 <script>
     import draggable from '../node_modules/vuedraggable'
+    const cyan    = '\u001b[36m'
+    const reset   = '\u001b[0m';
 
     export default {
         name: 'app',
@@ -144,6 +146,19 @@
                     {name: "射程外", id: 10, command: 'outOfRangeTarget', class: ''}
                 ], // こいつらは生で今全部描画しているけど、紙にからいたUI通りアコーディオンっぽくする
                 list2: [],
+            }
+        },
+        watch: {
+            list2: {
+                handler: function (val, oldVal) {
+                    let index = val.length -1
+                    if (val[index].command === 'if') {
+                        console.log(cyan+'ifdayo'+reset)
+                        val.push([])
+                    }
+                    console.log(val[index])
+                },
+                deep: true
             }
         },
         methods: {
@@ -179,7 +194,7 @@
                 return {name: "零距離", command: 'justTarget', class: '', id: 'range'}
             },
             newNearTarget: () => {
-                return {name: "近距離", command: 'nearTarget', class: '',id: 'range'}
+                return {name: "近距離", command: 'nearTarget', class: '', id: 'range'}
             },
             newMiddleTarget: () => {
                 return {name: "中距離", command: 'middleTarget', class: '', id: 'range'}
