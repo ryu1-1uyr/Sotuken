@@ -5,7 +5,7 @@
 
 - canvasSample => なんかそれっぽい自作フレームワーク＋Vueでの実装
 
-- threeSample => three.js使って描画部分をリッチにいしていきたいねってやつ
+- threeSample => three.js使って描画部分をリッチにいしていきたいねってやつ、Vueも使い始めたあびゃあ
 
 > 構成
 ```$xslt
