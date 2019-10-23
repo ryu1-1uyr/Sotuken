@@ -116,8 +116,9 @@
 
 <script>
     import draggable from '../node_modules/vuedraggable'
-    const cyan    = '\u001b[36m'
-    const reset   = '\u001b[0m';
+
+    const cyan = '\u001b[36m'
+    const reset = '\u001b[0m';
 
     export default {
         name: 'app',
@@ -151,9 +152,9 @@
         watch: {
             list2: {
                 handler: function (val, oldVal) {
-                    let index = val.length -1
+                    let index = val.length - 1
                     if (val[index].command === 'if') {
-                        console.log(cyan+'ifdayo'+reset)
+                        console.log(cyan + 'ifdayo' + reset)
                         val.push([])
                     }
                     console.log(val[index])
@@ -208,6 +209,14 @@
 
             removeAt: (idx) => (list) => {
                 list.splice(idx, 1);
+            },
+            removeList(idx) {
+                // const list = [1, 2, 3, 3, 3]
+                const removeIndex = this.list2.indexOf(idx)
+                console.log(this.list2)
+                this.list2 = this.list2.filter((_, index) => index !== removeIndex) // [1, 2, 3, 3]
+                console.log(this.list2)
+
             },
             testlog(log) {
                 console.log(log)
