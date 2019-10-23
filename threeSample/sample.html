@@ -1,0 +1,62 @@
+<body>
+<script src="three.js/build/three.js"></script>
+<script>
+    const width = 800
+    const height = 600
+    const renderer = new THREE.WebGLRenderer({antialias: true})
+    renderer.setSize(width, height)
+    renderer.setClearColor(0x222222)
+    renderer.shadowMap.enabled = true
+    renderer.shadowMapType = THREE.PCFSoftShadowMap
+    document.body.appendChild(renderer.domElement)
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100)
+    camera.position.set(1, 2, 4)
+    camera.lookAt(new THREE.Vector3(0, 0, 0))
+    const light = new THREE.DirectionalLight(0xffffff)
+    light.position.set(2, 4, 1)
+    scene.add(light)
+    light.castShadow = true
+    light.shadowMapWidth = light.shadowMapHeight = 1024
+    const geometry = new THREE.BoxGeometry(1, 1, 1)
+    const material = new THREE.MeshPhongMaterial()
+    const cubes = [...new Array(100)].map(() => {
+        const cube = new THREE.Mesh(geometry, material)
+        cube.scale.set(0.5, 0.5, 0.5)
+        cube.position.set(
+            4 * Math.random() - 2,
+            4 * Math.random() - 2,
+            4 * Math.random() - 2
+        )
+        scene.add(cube)
+        cube.castShadow = true
+        cube.receiveShadow = true
+        return cube
+    })
+    const animate = function () {
+        for (const cube of cubes) {
+            const x = cube.position.x
+            const y = cube.position.y
+            const z = cube.position.z
+            let w, dx = 0, dy = 0, dz = 0
+            w = 1 / (1 + 2 * (z - 0.3) * (z - 0.3));
+            dx += -w * y;
+            dy += +w * x
+            w = 1 / (1 + 2 * (z + 0.3) * (z + 0.3));
+            dx += +w * y;
+            dy += -w * x
+            w = 1 / (1 + 8 * (x - 0.2) * (x - 0.2));
+            dy += -w * z;
+            dz += +w * y
+            w = 1 / (1 + 8 * (y + 0.1) * (y + 0.1));
+            dz += -w * x;
+            dx += +w * z
+            cube.position.x += 0.01 * dx
+            cube.position.y += 0.01 * dy
+            cube.position.z += 0.01 * dz
+        }
+        renderer.render(scene, camera)
+        requestAnimationFrame(animate)
+    }
+    animate()
+</script>
