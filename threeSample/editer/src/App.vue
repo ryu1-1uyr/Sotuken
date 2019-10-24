@@ -2,6 +2,7 @@
     <div id="app">
 
         {{list2}}
+        <input type="button" @click="parseCode" value="createCode"/>
         <div class="container">
             <div class="headButton container"
                  v-on:mouseover="mouseoverIf(true)"
@@ -83,7 +84,7 @@
                 {{ element.name }}
                 <span v-if="list2[idx -1]">{{list2[idx -1].nextWord}}</span>
                 <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">が</span>
-                <span v-if="Array.isArray(element)" >の行動をする</span>
+                <span v-if="Array.isArray(element)">の行動をする</span>
                 <i class="fa fa-times close" @click="removeAt(idx)(list2)">X</i>
             </div>
         </draggable>
@@ -105,7 +106,7 @@
                                 {{ element.name }}
                                 <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">へ</span>
                                 <span v-if="element.id === 'range' ||element.id === 'range' ">になるまで</span>
-                                <i class="fa fa-times close" @click="removeAt(idx)(atlist2)">X</i>
+                                <i class="fa fa-times close" @click="removeAt(idx)(atlist2.list)">X</i>
                             </div>
 
                         </div>
@@ -253,6 +254,43 @@
             mouseleaveIf(TF) {
                 this.isif = TF
             },
+            parseCode() {
+                this.list2.map(x => {
+                    console.log(x.command)
+                    if (x.command === 'list') {
+                        x.list.map(y => {
+                            console.log(y.command)
+                        })
+                    }
+                })
+            },
+            createCode(command){
+                switch (command) {
+                    case 'if':
+                        break
+                    case 'nearEnemy':
+                        break
+                    case 'farEnemy':
+                        break
+                    case 'approach':
+                        break
+                    case 'retreat':
+                        break
+                    case 'bullet':
+                        break
+                    case 'justTarget':
+                        break
+                    case 'nearTarget':
+                        break
+                    case 'middleTarget':
+                        break
+                    case 'farTarget':
+                        break
+                    case 'outOfRangeTarget':
+                        //こいつは別に実装戦でもいい。あとまわし
+                        break
+                }
+            },
         }
     }
 </script>
@@ -313,8 +351,9 @@
     .BGred {
         background: rgba(133, 0, 21, 0.55);
     }
+
     .BGblue {
-        background: rgba(0,2,98,0.47);
+        background: rgba(0, 2, 98, 0.47);
     }
 
 
