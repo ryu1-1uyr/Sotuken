@@ -339,7 +339,7 @@ const searchNearTarget = obje => enemyArr => {
     return enemyArr[tmp.indexOf(Math.min.apply(null, tmp))]
 
 }
-
+// fixme この関数ちょっとあほあほ構造すぎるので手直しが必要
 const moveNicely = obje => target => number => func => {
     if (obje.isAttack) {
         sleep(1000).then(() => {
