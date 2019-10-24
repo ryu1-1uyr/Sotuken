@@ -341,31 +341,31 @@ const searchNearTarget = obje => enemyArr => {
 }
 // moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(0)
 // fixme この関数ちょっとあほあほ構造すぎるので手直しが必要
-const moveNicely = obje => target => func => number => {
+const moveNicely = obje => target => func => stringTarget => {
     if (obje.isAttack) {
         sleep(1000).then(() => {
             scene.remove(obje.bullet)
             obje.isAttack = false
         })
     }
-    switch (number) {// fixme ここの数字の条件分岐をやめて、function.nameでとってくる予定なので、文字列の関数名にする
-        case 0:
+    switch (stringTarget) {// fixme ここの数字の条件分岐をやめて、function.nameでとってくる予定なので、文字列の関数名にする
+        case 'justTarget':
             //ここにいい感じの条件分岐…
             if (distanceToSquared(obje.position)(target.position) > 3000) {
                 func(obje)(target)
             }
             break
-        case 1:
+        case 'nearTarget':
             if (distanceToSquared(obje.position)(target.position) > 50000) {
                 func(obje)(target)
             }
             break
-        case 2:
+        case 'middleTarget':
             if (distanceToSquared(obje.position)(target.position) > 130000) {
                 func(obje)(target)
             }
             break
-        case 3:
+        case 'farTarget':
             if (distanceToSquared(obje.position)(target.position) > 180000) {
                 func(obje)(target)
             }
