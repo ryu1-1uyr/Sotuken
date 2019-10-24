@@ -255,39 +255,62 @@
                 this.isif = TF
             },
             parseCode() {
+                let code = ''
                 this.list2.map(x => {
+                    code += '' // ここでcreateCodeしたいわね
                     console.log(x.command)
                     if (x.command === 'list') {
                         x.list.map(y => {
+                            code += '' // ここでcreateCodeしたいわね
                             console.log(y.command)
                         })
+                        //fixme 絶対よくないんだけど、ここでコードに ; を足さないと動かなそう
+                        code += ';'
                     }
                 })
             },
-            createCode(command){
+            createCode(command) { //fixme obje1を自機として一旦直書きするぞ
+                //if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam))) bullet(myShape)(searchNearTarget(myShape)(enemyTeam));
                 switch (command) {
                     case 'if':
+                        code = 'if ( '
                         break
+                    case 'list':
+                        code = ')'
+                        break
+
+                    //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
                     case 'nearEnemy':
+                        //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
+                        'searchNearTarget(myShape)(enemyTeam))'
                         break
                     case 'farEnemy':
+                        //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
+                        'searchFarTarget(myShape)(enemyTeam))'
                         break
+
+                    case 'justTarget':
+                        'justTarget(myShape)('
+                        break
+                    case 'nearTarget':
+                        'nearTarget(myShape)('
+                        break
+                    case 'middleTarget':
+                        'middleTarget(myShape)('
+                        break
+                    case 'farTarget':
+                        'farTarget(myShape)('
+                        break
+                    case 'outOfRangeTarget':
+                        //こいつは別に実装後ででもいい。あとまわし
+                        break
+
                     case 'approach':
                         break
                     case 'retreat':
                         break
                     case 'bullet':
-                        break
-                    case 'justTarget':
-                        break
-                    case 'nearTarget':
-                        break
-                    case 'middleTarget':
-                        break
-                    case 'farTarget':
-                        break
-                    case 'outOfRangeTarget':
-                        //こいつは別に実装戦でもいい。あとまわし
+                        'bullet(myShape)('
                         break
                 }
             },
