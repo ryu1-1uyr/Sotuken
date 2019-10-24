@@ -181,28 +181,28 @@ tick = () => {
     /*****でもの部分はここを見せるとわかりやすそう！*****************************************************************************************/
 
 
-    if (nearTarget(myShape4)(myShape)) {
-        bullet(myShape4)(myShape)
-    } else {
-        moveNicely(myShape4)(myShape)(0)(Approach)
-    }
-
-    // console.log(myShape3.position)
-    // console.log(myShape.bullet.position)
-
-    // fixme この部分をゆくゆく自動生成できるようにする
-    // shape1が2に近く実験
-    if (hogefrag) {
-        retreat(myShape)(myShape2)
-    } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
-        Approach(myShape)(myShape2)
-    } else {
-        hogefrag = true
-        retreat(myShape)(myShape2)
-    }
-    if (myShape.position.x === 301 && myShape.position.z === 301) {
-        hogefrag = false
-    }
+    // if (nearTarget(myShape4)(myShape)) {
+    //     bullet(myShape4)(myShape)
+    // } else {
+    //     moveNicely(myShape4)(myShape)(0)(Approach)
+    // }
+    //
+    // // console.log(myShape3.position)
+    // // console.log(myShape.bullet.position)
+    //
+    // // fixme この部分をゆくゆく自動生成できるようにする
+    // // shape1が2に近く実験
+    // if (hogefrag) {
+    //     retreat(myShape)(myShape2)
+    // } else if (myShape.position.x !== myShape2.position.x && myShape.position.z !== myShape2.position.z && hogefrag === false) {
+    //     Approach(myShape)(myShape2)
+    // } else {
+    //     hogefrag = true
+    //     retreat(myShape)(myShape2)
+    // }
+    // if (myShape.position.x === 301 && myShape.position.z === 301) {
+    //     hogefrag = false
+    // }
 
     /*****************************************-*****************************************************/
 
@@ -257,4 +257,4 @@ const init = () => {
 
 window.addEventListener('DOMContentLoaded', init);
 
-if(farTarget(myShape)(searchNearTarget(myShape)(enemyTeam)))moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam))(Approach)(justTarget);
+// if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam)))bullet(myShape)(searchNearTarget(myShape)(enemyTeam));else moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam))(Approach)(justTarget);
