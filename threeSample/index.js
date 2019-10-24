@@ -256,3 +256,5 @@ const init = () => {
 }
 
 window.addEventListener('DOMContentLoaded', init);
+
+if(farTarget(myShape)(searchNearTarget(myShape)(enemyTeam)))moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam))(Approach)(justTarget);

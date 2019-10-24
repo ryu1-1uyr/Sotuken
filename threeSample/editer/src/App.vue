@@ -107,16 +107,16 @@
             <div v-for=" (atlist2, index) in list2">
                 <div v-if="Array.isArray(atlist2.list)">
                     {{index,atlist2.list}}
-                    <draggable class="dragArea child" :list="atlist2.list" group="people" @change="log">
-                        <div class="container">
-                            <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list">
-                                {{ element.name }}
-                                <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">へ</span>
-                                <span v-if="element.id === 'range' ||element.id === 'range' ">になるまで</span>
-                                <i class="fa fa-times close" @click="removeAt(idx)(atlist2.list)">X</i>
-                            </div>
-
+                    <draggable class="dragArea child container" :list="atlist2.list" group="people" @change="log">
+                        <!--                        <div class="container">-->
+                        <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list">
+                            {{ element.name }}
+                            <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">へ</span>
+                            <span v-if="element.id === 'range' ||element.id === 'range' ">になるまで</span>
+                            <i class="fa fa-times close" @click="removeAt(idx)(atlist2.list)">X</i>
                         </div>
+
+                        <!--                        </div>-->
 
                         <button @click="removeAt(index)(list2)">{{index}}</button>
 
@@ -196,10 +196,10 @@
             },
 
             newNearEnemy: () => {
-                return {name: "近い敵", command: 'nearEnemy', class: '', nextWord: 'にいる時'}
+                return {name: "近い敵", command: 'nearEnemy', class: '', nextWord: 'にいる時', func: 'searchNearTarget'}
             },
             newFarEnemy: () => {
-                return {name: "遠い敵", command: 'farEnemy', class: '', nextWord: 'にいる時'}
+                return {name: "遠い敵", command: 'farEnemy', class: '', nextWord: 'にいる時', func: 'searchFarTarget'}
             },
 
             newApproach: () => {
@@ -270,14 +270,27 @@
                 let code = ''
                 this.list2.map(x => {
                     console.log(x)
-                    code += this.createCode(x.command) // ここでcreateCodeしたいわね
+                    code += this.createCode(x.command)()() // ここでcreateCodeしたいわね
 
                     console.log(x.command)
                     if (x.command === 'list' || x.command === 'list2') {
-                        x.list.map(y => {
-                            code += this.createCode(y.command) // ここでcreateCodeしたいわね
-                            console.log(y.command)
-                        })
+
+                        // for (const y of x.list) {
+                        //     console.log(y,'やよ〜')
+                        // }
+                        if (x.list[0].command === 'bullet') {
+                            code += this.createCode(x.list[0].command)(this.createCode(x.list[1].command)(1))()
+                        }
+
+                        if (x.list[0].command === 'approach' || x.list[0].command === 'retreat') {
+                            code += this.createCode(x.list[0].command)(x.list[1].func)(x.list[2].command)
+                            console.log(x.list[1].func,x.list[2].command)
+                        }
+
+                        // x.list.map(y => {
+                        //     code += this.createCode(y.command)()() // ここでcreateCodeしたいわね
+                        //     console.log(y.command)
+                        // })
                         //fixme 絶対よくないんだけど、ここでコードに ; を足さないと動かなそう
                         code += ';'
                     }
@@ -285,7 +298,7 @@
                 })
                 console.log(code)
             },
-            createCode: command => insertElem => { //fixme obje1を自機として一旦直書きするぞ
+            createCode: command => insertElem => insertElem2 => { //fixme obje1を自機として一旦直書きするぞ
                 //if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam))) bullet(myShape)(searchNearTarget(myShape)(enemyTeam));
 
                 if (insertElem) { //fixme 幾ら何で愚直すぎない？？？？？
@@ -328,10 +341,10 @@
                             break
 
                         case 'approach':
-                            return `moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(${insertElem})`
+                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(Approach)(${insertElem2})`
 
                         case 'retreat':
-                            return `moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(retreat)(${insertElem})`
+                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(retreat)(${insertElem2})`
 
                         case 'bullet':
                             return `bullet(myShape)(${insertElem})`
