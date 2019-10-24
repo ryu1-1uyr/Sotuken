@@ -9,10 +9,14 @@
                  v-on:mouseleave="mouseleaveIf(false)">
                 <div v-if="!isif">条件分岐</div>
                 <transition name="scale">
-                    <div v-if="isif" class="centerContainer absolute scale left up" @click="addList(newIF())(list2)">もし</div>
+                    <div v-if="isif" class="centerContainer absolute scale left up" @click="addList(newIF())(list2)">
+                        もし
+                    </div>
                 </transition>
                 <transition name="scale2">
-                    <div v-if="isif" class="centerContainer absolute scale2 right down" @click="addList(newElseIF())(list2)">それ以外の時は</div>
+                    <div v-if="isif" class="centerContainer absolute scale2 right down"
+                         @click="addList(newElseIF())(list2)">それ以外の時は
+                    </div>
                 </transition>
             </div>
 
@@ -168,7 +172,7 @@
                     if (val[index].command === 'if') {
                         console.log(cyan + 'ifdayo' + reset)
                         val.push({name: 'の行動をする', command: 'list', class: 'BGblue', list: [...new Array]})
-                    }else if (val[index].command === 'else') {
+                    } else if (val[index].command === 'else') {
                         val.push({name: 'の行動をする', command: 'list2', class: 'BGblue', list: [...new Array]})
                     }
                     console.log(val[index])
@@ -281,54 +285,106 @@
                 })
                 console.log(code)
             },
-            createCode(command) { //fixme obje1を自機として一旦直書きするぞ
+            createCode: command => insertElem => { //fixme obje1を自機として一旦直書きするぞ
                 //if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam))) bullet(myShape)(searchNearTarget(myShape)(enemyTeam));
-                switch (command) {
-                    case 'if':
-                        return 'if('
-                    case 'list':
-                        return ')'
 
-                    case 'else':
-                        return 'else'
+                if (insertElem) { //fixme 幾ら何で愚直すぎない？？？？？
 
-                    case 'list2':
-                        return ' '
+                    switch (command) {
+                        case 'if':
+                            return `if(${insertElem})`
+                        case 'list':
+                            return ''
 
-                    //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
-                    case 'nearEnemy':
-                        //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                        return 'searchNearTarget(myShape)(enemyTeam))'
+                        case 'else':
+                            return 'else'
 
-                    case 'farEnemy':
-                        //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                        return 'searchFarTarget(myShape)(enemyTeam))'
+                        case 'list2':
+                            return ' '
 
-                    case 'justTarget':
-                        return 'justTarget(myShape)('
+                        //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
+                        case 'nearEnemy':
+                            //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
+                            return 'searchNearTarget(myShape)(enemyTeam)'
 
-                    case 'nearTarget':
-                        return 'nearTarget(myShape)('
+                        case 'farEnemy':
+                            //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
+                            return 'searchFarTarget(myShape)(enemyTeam)'
 
-                    case 'middleTarget':
-                        return 'middleTarget(myShape)('
+                        case 'justTarget':
+                            return `justTarget(myShape)(${insertElem})`
 
-                    case 'farTarget':
-                        return 'farTarget(myShape)('
+                        case 'nearTarget':
+                            return `nearTarget(myShape)(${insertElem})`
 
-                    case 'outOfRangeTarget':
-                        //こいつは別に実装後ででもいい。あとまわし
-                        break
+                        case 'middleTarget':
+                            return `middleTarget(myShape)(${insertElem})`
 
-                    case 'approach':
-                        return 'Approach(myShape)('
+                        case 'farTarget':
+                            return `farTarget(myShape)(${insertElem})`
 
-                    case 'retreat':
-                        return 'retreat(myShape)('
+                        case 'outOfRangeTarget':
+                            //こいつは別に実装後ででもいい。あとまわし
+                            break
 
-                    case 'bullet':
-                        return 'bullet(myShape)('
+                        case 'approach':
+                            return `moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(${insertElem})`
 
+                        case 'retreat':
+                            return `moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(retreat)(${insertElem})`
+
+                        case 'bullet':
+                            return `bullet(myShape)(${insertElem})`
+                    }
+                } else {
+                    switch (command) {
+                        case 'if':
+                            return 'if('
+                        case 'list':
+                            return ')'
+
+                        case 'else':
+                            return 'else'
+
+                        case 'list2':
+                            return ' '
+
+                        //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
+                        case 'nearEnemy':
+                            //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
+                            return 'searchNearTarget(myShape)(enemyTeam))'
+
+                        case 'farEnemy':
+                            //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
+                            return 'searchFarTarget(myShape)(enemyTeam))'
+
+                        case 'justTarget':
+                            return 'justTarget(myShape)('
+
+                        case 'nearTarget':
+                            return 'nearTarget(myShape)('
+
+                        case 'middleTarget':
+                            return 'middleTarget(myShape)('
+
+                        case 'farTarget':
+                            return 'farTarget(myShape)('
+
+                        case 'outOfRangeTarget':
+                            //こいつは別に実装後ででもいい。あとまわし
+                            break
+
+                        case 'approach':
+                            return 'Approach(myShape)('
+                        // moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(0)
+
+                        case 'retreat':
+                            return 'retreat(myShape)('
+
+                        case 'bullet':
+                            return 'bullet(myShape)('
+
+                    }
                 }
             },
         }
@@ -428,6 +484,7 @@
     .scale {
         transform: scale(2.4);
     }
+
     .scale2 {
         transform: scale(2.4);
         font-size: 10px;
