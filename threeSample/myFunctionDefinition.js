@@ -339,15 +339,16 @@ const searchNearTarget = obje => enemyArr => {
     return enemyArr[tmp.indexOf(Math.min.apply(null, tmp))]
 
 }
+// moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(0)
 // fixme この関数ちょっとあほあほ構造すぎるので手直しが必要
-const moveNicely = obje => target => number => func => {
+const moveNicely = obje => target => func => number => {
     if (obje.isAttack) {
         sleep(1000).then(() => {
             scene.remove(obje.bullet)
             obje.isAttack = false
         })
     }
-    switch (number) {
+    switch (number) {// fixme ここの数字の条件分岐をやめて、function.nameでとってくる予定なので、文字列の関数名にする
         case 0:
             //ここにいい感じの条件分岐…
             if (distanceToSquared(obje.position)(target.position) > 3000) {
@@ -369,7 +370,6 @@ const moveNicely = obje => target => number => func => {
                 func(obje)(target)
             }
             break
-
     }
 }
 
