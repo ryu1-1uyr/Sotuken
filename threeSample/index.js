@@ -178,6 +178,9 @@ tick = () => {
     // bullet(myShape)(myShape3)
     // bullet(myShape2)(myShape3)
 
+    /*****でもの部分はここを見せるとわかりやすそう！*****************************************************************************************/
+
+
     if (nearTarget(myShape4)(myShape)) {
         bullet(myShape4)(myShape)
     } else {
@@ -200,6 +203,8 @@ tick = () => {
     if (myShape.position.x === 301 && myShape.position.z === 301) {
         hogefrag = false
     }
+
+    /*****************************************-*****************************************************/
 
     // console.log(searchFarTarget(myShape)(enemyTeam))
 
