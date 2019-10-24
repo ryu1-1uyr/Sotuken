@@ -273,13 +273,16 @@
                     code += this.createCode(x.command)()() // ここでcreateCodeしたいわね
 
                     console.log(x.command)
+                    if (x.command === 'if') {
+
+                    }
                     if (x.command === 'list' || x.command === 'list2') {
 
                         // for (const y of x.list) {
                         //     console.log(y,'やよ〜')
                         // }
                         if (x.list[0].command === 'bullet') {
-                            code += this.createCode(x.list[0].command)(this.createCode(x.list[1].command)(1))()
+                            code += this.createCode(x.list[0].command)(this.createCode(x.list[1].command)(1)())()
                         }
 
                         if (x.list[0].command === 'approach' || x.list[0].command === 'retreat') {
@@ -341,10 +344,10 @@
                             break
 
                         case 'approach':
-                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(Approach)(${insertElem2})`
+                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(Approach)('${insertElem2}')`
 
                         case 'retreat':
-                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(retreat)(${insertElem2})`
+                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(retreat)('${insertElem2}')`
 
                         case 'bullet':
                             return `bullet(myShape)(${insertElem})`
@@ -387,15 +390,15 @@
                             //こいつは別に実装後ででもいい。あとまわし
                             break
 
-                        case 'approach':
-                            return 'Approach(myShape)('
-                        // moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(0)
-
-                        case 'retreat':
-                            return 'retreat(myShape)('
-
-                        case 'bullet':
-                            return 'bullet(myShape)('
+                        // case 'approach':
+                        //     return 'Approach(myShape)('
+                        // // moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(0)
+                        //
+                        // case 'retreat':
+                        //     return 'retreat(myShape)('
+                        //
+                        // case 'bullet':
+                        //     return 'bullet(myShape)('
 
                     }
                 }
