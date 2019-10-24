@@ -9,7 +9,10 @@
                  v-on:mouseleave="mouseleaveIf(false)">
                 <div v-if="!isif">条件分岐</div>
                 <transition name="scale">
-                    <div v-if="isif" class="centerContainer absolute scale" @click="addList(newIF())(list2)">if</div>
+                    <div v-if="isif" class="centerContainer absolute scale left up" @click="addList(newIF())(list2)">もし</div>
+                </transition>
+                <transition name="scale2">
+                    <div v-if="isif" class="centerContainer absolute scale2 right down" @click="addList(newElseIF())(list2)">それ以外の時は</div>
                 </transition>
             </div>
 
@@ -165,6 +168,8 @@
                     if (val[index].command === 'if') {
                         console.log(cyan + 'ifdayo' + reset)
                         val.push({name: 'の行動をする', command: 'list', class: 'BGblue', list: [...new Array]})
+                    }else if (val[index].command === 'else') {
+                        val.push({name: 'の行動をする', command: 'list2', class: 'BGblue', list: [...new Array]})
                     }
                     console.log(val[index])
                 },
@@ -181,6 +186,9 @@
             },
             newIF: () => {
                 return {name: "もし", command: 'if', class: 'BGred'}
+            },
+            newElseIF: () => {
+                return {name: "それ以外の時は", command: 'else', class: 'BGred'}
             },
 
             newNearEnemy: () => {
@@ -257,10 +265,11 @@
             parseCode() {
                 let code = ''
                 this.list2.map(x => {
+                    console.log(x)
                     code += this.createCode(x.command) // ここでcreateCodeしたいわね
 
                     console.log(x.command)
-                    if (x.command === 'list') {
+                    if (x.command === 'list' || x.command === 'list2') {
                         x.list.map(y => {
                             code += this.createCode(y.command) // ここでcreateCodeしたいわね
                             console.log(y.command)
@@ -276,9 +285,15 @@
                 //if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam))) bullet(myShape)(searchNearTarget(myShape)(enemyTeam));
                 switch (command) {
                     case 'if':
-                        return 'if( '
+                        return 'if('
                     case 'list':
-                        return ' )'
+                        return ')'
+
+                    case 'else':
+                        return 'else'
+
+                    case 'list2':
+                        return ' '
 
                     //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
                     case 'nearEnemy':
@@ -413,6 +428,10 @@
     .scale {
         transform: scale(2.4);
     }
+    .scale2 {
+        transform: scale(2.4);
+        font-size: 10px;
+    }
 
     .left {
         right: 10px;
@@ -504,6 +523,15 @@
     }
 
     .scale-enter, .scale-leave-to {
+        animation: scale2 1.0s ease 0s forwards;
+    }
+
+    .scale2-enter-active, .scale2-leave-active {
+        /*transition: opacity .1s;*/
+        animation: scale 1.0s ease 0s forwards;
+    }
+
+    .scale2-enter, .scale2-leave-to {
         animation: scale2 1.0s ease 0s forwards;
     }
 
