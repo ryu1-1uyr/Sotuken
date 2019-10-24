@@ -257,61 +257,63 @@
             parseCode() {
                 let code = ''
                 this.list2.map(x => {
-                    code += '' // ここでcreateCodeしたいわね
+                    code += this.createCode(x.command) // ここでcreateCodeしたいわね
+
                     console.log(x.command)
                     if (x.command === 'list') {
                         x.list.map(y => {
-                            code += '' // ここでcreateCodeしたいわね
+                            code += this.createCode(y.command) // ここでcreateCodeしたいわね
                             console.log(y.command)
                         })
                         //fixme 絶対よくないんだけど、ここでコードに ; を足さないと動かなそう
                         code += ';'
                     }
+
                 })
+                console.log(code)
             },
             createCode(command) { //fixme obje1を自機として一旦直書きするぞ
                 //if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam))) bullet(myShape)(searchNearTarget(myShape)(enemyTeam));
                 switch (command) {
                     case 'if':
-                        code = 'if ( '
-                        break
+                        return 'if( '
                     case 'list':
-                        code = ')'
-                        break
+                        return ' )'
 
                     //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
                     case 'nearEnemy':
                         //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                        'searchNearTarget(myShape)(enemyTeam))'
-                        break
+                        return 'searchNearTarget(myShape)(enemyTeam))'
+
                     case 'farEnemy':
                         //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                        'searchFarTarget(myShape)(enemyTeam))'
-                        break
+                        return 'searchFarTarget(myShape)(enemyTeam))'
 
                     case 'justTarget':
-                        'justTarget(myShape)('
-                        break
+                        return 'justTarget(myShape)('
+
                     case 'nearTarget':
-                        'nearTarget(myShape)('
-                        break
+                        return 'nearTarget(myShape)('
+
                     case 'middleTarget':
-                        'middleTarget(myShape)('
-                        break
+                        return 'middleTarget(myShape)('
+
                     case 'farTarget':
-                        'farTarget(myShape)('
-                        break
+                        return 'farTarget(myShape)('
+
                     case 'outOfRangeTarget':
                         //こいつは別に実装後ででもいい。あとまわし
                         break
 
                     case 'approach':
-                        break
+                        return 'Approach(myShape)('
+
                     case 'retreat':
-                        break
+                        return 'retreat(myShape)('
+
                     case 'bullet':
-                        'bullet(myShape)('
-                        break
+                        return 'bullet(myShape)('
+
                 }
             },
         }
