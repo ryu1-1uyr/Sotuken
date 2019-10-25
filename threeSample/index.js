@@ -99,8 +99,8 @@ const enemyTeam = [myShape3, myShape4]
 // scene.add(myShape4)
 
 //右下
-myShape.position.z = 30 // Zのプラス方向を手前側
-myShape.position.x = 30 // Xは右側が整数の領域
+myShape.position.z = -130 // Zのプラス方向を手前側
+myShape.position.x = 100 // Xは右側が整数の領域
 
 //左上
 myShape2.position.z = -250
@@ -211,20 +211,20 @@ tick = () => {
     // Approach(myShape)(searchFarTarget(myShape)(enemyTeam))
 
     // // // shape3が5に近く実験
-    // if (hogefrag2) {
-    //     retreat(myShape3)(myShape4)
-    //     console.log(1)
-    // } else if (myShape3.position.x !== myShape4.position.x && myShape3.position.z !== myShape4.position.z && hogefrag2 === false) {
-    //     Approach(myShape3)(myShape4)
-    //     console.log(2)
-    // } else {
-    //     hogefrag2 = true
-    //     retreat(myShape3)(myShape4)
-    //     console.log(3)
-    // }
-    // if (myShape3.position.x === 301 && myShape3.position.z === -301) {
-    //     hogefrag2 = false
-    // }
+    if (hogefrag2) {
+        retreat(myShape3)(myShape4)
+        console.log(1)
+    } else if (myShape3.position.x !== myShape4.position.x && myShape3.position.z !== myShape4.position.z && hogefrag2 === false) {
+        Approach(myShape3)(myShape4)
+        console.log(2)
+    } else {
+        hogefrag2 = true
+        retreat(myShape3)(myShape4)
+        console.log(3)
+    }
+    if (myShape3.position.x === 301 && myShape3.position.z === -301) {
+        hogefrag2 = false
+    }
 
     // レンダリング
     renderer.render(scene, camera);
