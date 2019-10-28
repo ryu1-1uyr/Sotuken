@@ -1,80 +1,92 @@
 <template>
     <div id="app">
 
-        {{list2}}
         <input type="button" @click="parseCode" value="createCode"/>
-        <div class="container">
-            <div class="headButton container"
-                 v-on:mouseover="mouseoverIf(true)"
-                 v-on:mouseleave="mouseleaveIf(false)">
-                <div v-if="!isif">条件分岐</div>
-                <transition name="scale">
-                    <div v-if="isif" class="centerContainer absolute scale left up" @click="addList(newIF())(list2)">
-                        もし
-                    </div>
-                </transition>
-                <transition name="scale2">
-                    <div v-if="isif" class="centerContainer absolute scale2 right down"
-                         @click="addList(newElseIF())(list2)">それ以外の時は
-                    </div>
-                </transition>
-            </div>
+        <button v-on:click="openModal">Click</button>
 
-            <div class="headButton container"
-                 v-on:mouseover="mouseoverTarget(true)"
-                 v-on:mouseleave="mouseleaveTarget(false)">敵との位置
-                <transition name="up">
-                    <div v-if="target" class="centerContainer absolute down" @click="addList(newNearEnemy())(list2)">
-                        近い
+        <div id="overlay" v-show="showContent">
+            <div id="content">
+
+                <div class="container">
+                    <button v-on:click="closeModal">Close</button>
+                    <div class="headButton container"
+                         v-on:mouseover="mouseoverIf(true)"
+                         v-on:mouseleave="mouseleaveIf(false)">
+                        <div v-if="!isif">条件分岐</div>
+                        <transition name="scale">
+                            <div v-if="isif" class="centerContainer absolute scale left up" @click="addList(newIF())(list2)">
+                                もし
+                            </div>
+                        </transition>
+                        <transition name="scale2">
+                            <div v-if="isif" class="centerContainer absolute scale2 right down"
+                                 @click="addList(newElseIF())(list2)">それ以外の時は
+                            </div>
+                        </transition>
                     </div>
-                </transition>
-                <transition name="down">
-                    <div v-if="target" class="centerContainer absolute up" @click="addList(newFarEnemy())(list2)">遠い
+
+                    <div class="headButton container"
+                         v-on:mouseover="mouseoverTarget(true)"
+                         v-on:mouseleave="mouseleaveTarget(false)">敵との位置
+                        <transition name="up">
+                            <div v-if="target" class="centerContainer absolute down" @click="addList(newNearEnemy())(list2)">
+                                近い
+                            </div>
+                        </transition>
+                        <transition name="down">
+                            <div v-if="target" class="centerContainer absolute up" @click="addList(newFarEnemy())(list2)">遠い
+                            </div>
+                        </transition>
                     </div>
-                </transition>
-            </div>
-            <div class="headButton container"
-                 v-on:mouseover="mouseoverMove(true)"
-                 v-on:mouseleave="mouseleaveMove(false)">行動
-                <transition name="rightDown">
-                    <div v-if="move" class="centerContainer absolute left up" @click="addList(newApproach())(list2)">
-                        接近
+                    <div class="headButton container"
+                         v-on:mouseover="mouseoverMove(true)"
+                         v-on:mouseleave="mouseleaveMove(false)">行動
+                        <transition name="rightDown">
+                            <div v-if="move" class="centerContainer absolute left up" @click="addList(newApproach())(list2)">
+                                接近
+                            </div>
+                        </transition>
+                        <transition name="leftDown">
+                            <div v-if="move" class="centerContainer absolute right up" @click="addList(newRetreat())(list2)">
+                                後退
+                            </div>
+                        </transition>
+                        <transition name="up">
+                            <div v-if="move" class="centerContainer absolute down" @click="addList(newBullet())(list2)">攻撃</div>
+                        </transition>
                     </div>
-                </transition>
-                <transition name="leftDown">
-                    <div v-if="move" class="centerContainer absolute right up" @click="addList(newRetreat())(list2)">
-                        後退
+                    <div class="headButton container"
+                         v-on:mouseover="mouseoverActionRange(true)"
+                         v-on:mouseleave="mouseleaveActionRange(false)">行動範囲
+                        <transition name="rightDown">
+                            <div v-if="actionRange" class="centerContainer absolute left up"
+                                 @click="addList(newjustTarget())(list2)">零距離
+                            </div>
+                        </transition>
+                        <transition name="leftDown">
+                            <div v-if="actionRange" class="centerContainer absolute right up"
+                                 @click="addList(newNearTarget())(list2)">近距離
+                            </div>
+                        </transition>
+                        <transition name="rightUp">
+                            <div v-if="actionRange" class="centerContainer absolute left down"
+                                 @click="addList(newMiddleTarget())(list2)">中距離
+                            </div>
+                        </transition>
+                        <transition name="leftUp">
+                            <div v-if="actionRange" class="centerContainer absolute right down"
+                                 @click="addList(newFarTarget())(list2)">遠距離
+                            </div>
+                        </transition>
                     </div>
-                </transition>
-                <transition name="up">
-                    <div v-if="move" class="centerContainer absolute down" @click="addList(newBullet())(list2)">攻撃</div>
-                </transition>
-            </div>
-            <div class="headButton container"
-                 v-on:mouseover="mouseoverActionRange(true)"
-                 v-on:mouseleave="mouseleaveActionRange(false)">行動範囲
-                <transition name="rightDown">
-                    <div v-if="actionRange" class="centerContainer absolute left up"
-                         @click="addList(newjustTarget())(list2)">零距離
-                    </div>
-                </transition>
-                <transition name="leftDown">
-                    <div v-if="actionRange" class="centerContainer absolute right up"
-                         @click="addList(newNearTarget())(list2)">近距離
-                    </div>
-                </transition>
-                <transition name="rightUp">
-                    <div v-if="actionRange" class="centerContainer absolute left down"
-                         @click="addList(newMiddleTarget())(list2)">中距離
-                    </div>
-                </transition>
-                <transition name="leftUp">
-                    <div v-if="actionRange" class="centerContainer absolute right down"
-                         @click="addList(newFarTarget())(list2)">遠距離
-                    </div>
-                </transition>
+                </div>
+
             </div>
         </div>
+
+
+        {{list2}}
+
 
         <!--        <draggable class="dragArea container" :list="list1"-->
         <!--                   :group="{ name: 'people', pull: 'clone', put: false }" @change="log">-->
@@ -150,6 +162,7 @@
                 move: false,
                 target: false,
                 isif: false,
+                showContent:false,
 
                 list1: [
                     {name: "もし", id: 1, command: 'if', class: '', list: []},
@@ -405,6 +418,12 @@
                     }
                 }
             },
+            openModal: function () {
+                this.showContent = true
+            },
+            closeModal: function () {
+                this.showContent = false
+            }
         }
     }
 </script>
@@ -417,6 +436,7 @@
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+        max-width: 840px;
     }
 
     .container {
@@ -762,5 +782,31 @@
             opacity: 0;
             transform: scale(1);
         }
+    }
+
+    #overlay {
+        /*　要素を重ねた時の順番　*/
+        z-index: 1;
+
+        /*　画面全体を覆う設定　*/
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+
+        /*　画面の中央に要素を表示させる設定　*/
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    #content {
+        z-index: 2;
+        width: 50%;
+        padding: 1em;
+        background: #fff;
     }
 </style>
