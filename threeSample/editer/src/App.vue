@@ -89,9 +89,11 @@
         <draggable class="dragArea container getarea" :list="list2" group="people" @change="log">
             <div class="list-group-item yourArea" v-for="(element, idx) in list2" v-bind:class="element.class">
                 {{ element.name }}
+                <!--fixme いい加減この3行のspanあたりの仕様を固めないと厳しい-->
                 <span v-if="list2[idx -1]">{{list2[idx -1].nextWord}}</span>
-                <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">が</span>
+                <span v-if="element.id === 'range'">に</span>
                 <span v-if="Array.isArray(element)">の行動をする</span>
+
                 <i class="fa fa-times close" @click="removeAt(idx)(list2)">X</i>
             </div>
         </draggable>
@@ -196,10 +198,10 @@
             },
 
             newNearEnemy: () => {
-                return {name: "近い敵", command: 'nearEnemy', class: '', nextWord: 'にいる時', func: 'searchNearTarget'}
+                return {name: "最も近い敵", command: 'nearEnemy', class: '', func: 'searchNearTarget'}
             },
             newFarEnemy: () => {
-                return {name: "遠い敵", command: 'farEnemy', class: '', nextWord: 'にいる時', func: 'searchFarTarget'}
+                return {name: "最も遠い敵", command: 'farEnemy', class: '', func: 'searchFarTarget'}
             },
 
             newApproach: () => {
@@ -213,16 +215,16 @@
                 return {name: "攻撃する", command: 'bullet', lass: ''}
             },
             newjustTarget: () => {
-                return {name: "零距離", command: 'justTarget', class: '', id: 'range'}
+                return {name: "零距離", command: 'justTarget', class: '', id: 'range', nextWord: 'がいる時'}
             },
             newNearTarget: () => {
-                return {name: "近距離", command: 'nearTarget', class: '', id: 'range'}
+                return {name: "近距離", command: 'nearTarget', class: '', id: 'range', nextWord: 'がいる時'}
             },
             newMiddleTarget: () => {
-                return {name: "中距離", command: 'middleTarget', class: '', id: 'range'}
+                return {name: "中距離", command: 'middleTarget', class: '', id: 'range', nextWord: 'がいる時'}
             },
             newFarTarget: () => {
-                return {name: "遠距離", command: 'farTarget', class: '', id: 'range'}
+                return {name: "遠距離", command: 'farTarget', class: '', id: 'range', nextWord: 'がいる時'}
             },
             newOutOfRangeTarget: () => {
                 return {name: "射程外", command: 'outOfRangeTarget', class: ''}
@@ -287,7 +289,7 @@
 
                         if (x.list[0].command === 'approach' || x.list[0].command === 'retreat') {
                             code += this.createCode(x.list[0].command)(x.list[1].func)(x.list[2].command)
-                            console.log(x.list[1].func,x.list[2].command)
+                            console.log(x.list[1].func, x.list[2].command)
                         }
 
                         // x.list.map(y => {
