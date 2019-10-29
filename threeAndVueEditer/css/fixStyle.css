@@ -12,10 +12,19 @@
 }
 
 #app {
-    min-width: 800px;
+    min-width: 770px;
     margin: 0;
 }
 
 #myCanvas {
     align-items: center;
+}
+
+.mainElem {
+    margin: 0 20px;
+}
+
+body {
+    background: rgba(102, 102, 123, 0.48);
+
 }
