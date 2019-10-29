@@ -1,20 +1,26 @@
 <template>
     <div id="app">
 
-        <input type="button" @click="parseCode" value="createCode"/>
-        <button v-on:click="openModal">Click</button>
+        <div>
+            <a @click="parseCode" class="btn-animation-02"><span>createCode</span></a>
+            <a @click="openModal" class="btn-animation-02"><span>コマンド</span></a>
+        </div>
 
         <div id="overlay" v-show="showContent">
             <div id="content">
-
                 <div class="container">
-                    <button v-on:click="closeModal">Close</button>
+                    <div>
+                        <a @click="closeModal" class="btn-shine">Close</a>
+                    </div>
+                </div>
+                <div class="container">
                     <div class="headButton container"
                          v-on:mouseover="mouseoverIf(true)"
                          v-on:mouseleave="mouseleaveIf(false)">
                         <div v-if="!isif">条件分岐</div>
                         <transition name="scale">
-                            <div v-if="isif" class="centerContainer absolute scale left up" @click="addList(newIF())(list2)">
+                            <div v-if="isif" class="centerContainer absolute scale left up"
+                                 @click="addList(newIF())(list2)">
                                 もし
                             </div>
                         </transition>
@@ -29,12 +35,14 @@
                          v-on:mouseover="mouseoverTarget(true)"
                          v-on:mouseleave="mouseleaveTarget(false)">敵との位置
                         <transition name="up">
-                            <div v-if="target" class="centerContainer absolute down" @click="addList(newNearEnemy())(list2)">
+                            <div v-if="target" class="centerContainer absolute down"
+                                 @click="addList(newNearEnemy())(list2)">
                                 近い
                             </div>
                         </transition>
                         <transition name="down">
-                            <div v-if="target" class="centerContainer absolute up" @click="addList(newFarEnemy())(list2)">遠い
+                            <div v-if="target" class="centerContainer absolute up"
+                                 @click="addList(newFarEnemy())(list2)">遠い
                             </div>
                         </transition>
                     </div>
@@ -42,17 +50,21 @@
                          v-on:mouseover="mouseoverMove(true)"
                          v-on:mouseleave="mouseleaveMove(false)">行動
                         <transition name="rightDown">
-                            <div v-if="move" class="centerContainer absolute left up" @click="addList(newApproach())(list2)">
+                            <div v-if="move" class="centerContainer absolute left up"
+                                 @click="addList(newApproach())(list2)">
                                 接近
                             </div>
                         </transition>
                         <transition name="leftDown">
-                            <div v-if="move" class="centerContainer absolute right up" @click="addList(newRetreat())(list2)">
+                            <div v-if="move" class="centerContainer absolute right up"
+                                 @click="addList(newRetreat())(list2)">
                                 後退
                             </div>
                         </transition>
                         <transition name="up">
-                            <div v-if="move" class="centerContainer absolute down" @click="addList(newBullet())(list2)">攻撃</div>
+                            <div v-if="move" class="centerContainer absolute down" @click="addList(newBullet())(list2)">
+                                攻撃
+                            </div>
                         </transition>
                     </div>
                     <div class="headButton container"
@@ -85,7 +97,7 @@
         </div>
 
 
-        {{list2}}
+<!--        <small>{{list2}}</small>-->
 
 
         <!--        <draggable class="dragArea container" :list="list1"-->
@@ -162,7 +174,7 @@
                 move: false,
                 target: false,
                 isif: false,
-                showContent:false,
+                showContent: false,
 
                 list1: [
                     {name: "もし", id: 1, command: 'if', class: '', list: []},
@@ -437,10 +449,15 @@
         color: #2c3e50;
         margin-top: 60px;
         max-width: 840px;
+        /*height: 100%;*/
+        min-height: 900px;
+        overflow:scroll;
+        background: rgba(0,0,0,0.23);
+        color: rgba(206,206,206,0.86);
     }
 
     .container {
-        padding: 50px;
+        padding: 30px;
         display: flex;
         flex-wrap: wrap;
 
@@ -466,6 +483,7 @@
 
     .yourArea {
         background: rgba(100, 30, 200, 0.38);
+        border-radius: 20px;
         padding: 10px;
         margin: 10px;
     }
@@ -473,21 +491,25 @@
     .child {
         width: 500px;
         /*height: 500px;*/
-        background: #9effff;
+        background: rgba(71,156,186,0.56);
+        border-radius: 30px;
         /*z-index: -100;*/
         /*position: absolute;*/
     }
 
     .getarea {
         background: rgba(102, 0, 5, 0.36);
+        border-radius: 30px;
     }
 
     .BGred {
         background: rgba(133, 0, 21, 0.55);
+        border-radius: 20px 80px 40px 20px;
     }
 
     .BGblue {
         background: rgba(0, 2, 98, 0.47);
+        border-radius: 40px 20px 20px 80px;
     }
 
 
@@ -805,8 +827,92 @@
 
     #content {
         z-index: 2;
-        width: 50%;
+        width: 70%;
         padding: 1em;
-        background: #fff;
+        background: #f5f5f5;
+        overflow: scroll;
+        border-radius: 30px;
+    }
+    .uibutton{
+        width: 80px;
+        height: 10px;
+    }
+    .btn-animation-02 {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+        background-color: rgba(158,195,75,0.54);
+        border: 2px solid rgba(158,195,75,0.84);
+        font-size: 16px;
+        color: #9ec34b;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 24px;
+        border-radius: 4px;
+        position: relative;
+        margin: 0 10px;
+    }
+
+    .btn-animation-02 span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-animation-02::before,
+    .btn-animation-02::after {
+        content: "";
+        display: block;
+        background-color: rgba(240,240,240,0.99);
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition: .2s;
+    }
+    .btn-animation-02::before {
+        left: 0;
+    }
+    .btn-animation-02::after {
+        right: 0;
+    }
+
+    .btn-animation-02:hover:before,
+    .btn-animation-02:hover:after {
+        width: 0;
+        background-color: #eee;
+    }
+
+    .btn-animation-02:hover {
+        color: #eee;
+    }
+    .headButton{
+        color: #2c3e50;
+    }
+    .btn-shine {
+        color: #FFF;
+        background-color: rgba(4,27,0,0.78);
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 28px;
+        width: 80px;
+        border-radius: 30px;
+        position: relative;
+        text-decoration: none;
+        text-transform: uppercase;
+        border: 1px solid transparent;
+        outline: 1px solid;
+        outline-color: rgba(255, 255, 255, 0.5);
+        outline-offset: 0px;
+        text-shadow: none;
+        transition: all 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+    }
+
+    .btn-shine:hover {
+        border-color: #FFF;
+        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+        outline-color: transparent;
+        outline-offset: 12px;
+        text-shadow: 2px 2px 3px #000;
     }
 </style>
