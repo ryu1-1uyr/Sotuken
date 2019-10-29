@@ -99,8 +99,8 @@ const enemyTeam = [myShape3, myShape4]
 // scene.add(myShape4)
 
 //右下
-myShape.position.z = -130 // Zのプラス方向を手前側
-myShape.position.x = 100 // Xは右側が整数の領域
+myShape.position.z = 300 // Zのプラス方向を手前側
+myShape.position.x = 300 // Xは右側が整数の領域
 
 //左上
 myShape2.position.z = -250
