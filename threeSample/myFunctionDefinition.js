@@ -402,7 +402,31 @@ const outOfRangeTarget = obje => target => {
 const isdemo = (target) => {
     if (target.hp < 0) {
         alert('ターゲットを撃破しました')
+        initialize()
     }
+}
+
+const initialize = function () {
+    //右下
+    myShape.position.z = 300 // Zのプラス方向を手前側
+    myShape.position.x = 300 // Xは右側が整数の領域
+
+//左上
+    myShape2.position.z = -250
+    myShape2.position.x = -280
+
+//右上
+    myShape3.position.z = -300
+    myShape3.position.x = 300
+
+//左下
+    myShape4.position.z = 200
+    myShape4.position.x = -200
+
+    myShape.hp = 120
+    myShape2.hp = 100
+    myShape3.hp = 140
+    myShape4.hp = 100
 }
 
 //自動生成するコードは基本的にこのif elseのねすとになりそう
