@@ -301,7 +301,10 @@ const attack = obje => target => {
         // 後々引数にダメージを追記できるような設計へ
         // 持続ヒットのため、威力抑えめにすること。
         target.hp -= 1
-        // console.log(target.hp)
+        console.log(target.hp)
+        // todo でもようにターゲットを撃破した際にalertを出すようにした
+        isdemo(target)
+
     }
 }
 
@@ -396,6 +399,11 @@ const outOfRangeTarget = obje => target => {
     return distanceToSquared(obje.position)(target.position) <= 360000 && distanceToSquared(obje.position)(target.position) > 180000
 }
 
+const isdemo = (target) => {
+    if (target.hp < 0) {
+        alert('ターゲットを撃破しました')
+    }
+}
 
 //自動生成するコードは基本的にこのif elseのねすとになりそう
 
