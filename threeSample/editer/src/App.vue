@@ -330,6 +330,13 @@
                 })
                 code += 'renderer.render(scene, camera);},10)'
                 console.log(code)
+                try {
+                    eval(code)
+                }
+                catch (e) {
+                    console.error(e)
+                    console.error('実行に失敗しました。構文を確認してください')
+                }
             },
             createCode: command => insertElem => insertElem2 => { //fixme obje1を自機として一旦直書きするぞ
                 //if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam))) bullet(myShape)(searchNearTarget(myShape)(enemyTeam));
