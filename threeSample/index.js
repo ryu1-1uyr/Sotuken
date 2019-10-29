@@ -249,6 +249,7 @@ const init = () => {
             console.log('sleepnow')
             // tick()
             // eval(stringcode)
+            renderer.render(scene, camera);
         })
     } catch (e) {
         console.log(e)

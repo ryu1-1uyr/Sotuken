@@ -16,7 +16,7 @@ const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
 camera.position.set(1, 300, 850)
 camera.rotation.x = -0.3
 // カメラコントローラーを作成
-// const controls = new THREE.OrbitControls(camera);
+const controls = new THREE.OrbitControls(camera, document.querySelector('#myCanvas'));
 // これなんかJQueryまわりの変なエラー吐くからなぁ…
 
 const returnMaterial = (color) => {
@@ -249,6 +249,7 @@ const init = () => {
             console.log('sleepnow')
             // tick()
             // eval(stringcode)
+            renderer.render(scene, camera);
         })
     } catch (e) {
         console.log(e)
