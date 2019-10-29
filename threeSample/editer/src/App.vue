@@ -127,7 +127,7 @@
         <!--                {{childrenElement.name}}<i class="fa fa-times close" @click="removeAt(childrenidx)">X</i>-->
         <!--            </div>-->
         <!--        </draggable>-->
-        {{this.list2.some((x)=> x.command === 'if')}}
+<!--        {{this.list2.some((x)=> x.command === 'if')}}-->
 
         <div v-if="this.list2.some((x)=> x.command === 'if')">
             <div v-for=" (atlist2, index) in list2">
@@ -150,7 +150,7 @@
                 </div>
             </div>
         </div>
-        <div v-else>要素がない</div>
+<!--        <div v-else>要素がない</div>-->
 
 
     </div>
@@ -294,7 +294,9 @@
                 this.isif = TF
             },
             parseCode() {
-                let code = ''
+                // let code = 'let c=0;let cancel="";const myTickAnimation=()=>{ c++;console.log(c);if(c>200){console.log(cancel);cancelAnimationFrame(cancel-1)}'
+                let code = 'let c=0;let cancel=setInterval(()=>{ c++;console.log(c);if(c>2000){console.log(cancel);clearInterval(cancel)}'
+
                 this.list2.map(x => {
                     console.log(x)
                     code += this.createCode(x.command)()() // ここでcreateCodeしたいわね
@@ -326,6 +328,7 @@
                     }
 
                 })
+                code += 'renderer.render(scene, camera);},10)'
                 console.log(code)
             },
             createCode: command => insertElem => insertElem2 => { //fixme obje1を自機として一旦直書きするぞ
