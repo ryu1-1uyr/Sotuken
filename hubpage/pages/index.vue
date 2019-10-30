@@ -11,7 +11,7 @@
           Craftomy
         </h1>
         <h2 class="subtitle">
-          My grand Nuxt.js project
+          Let's fell free to make your AI !!!
         </h2>
       </div>
 
@@ -101,6 +101,7 @@
   }
 
   .medatu {
+    width: 120%;
     background: rgba(241,241,242,0.75);
     border-radius: 20px;
   }
