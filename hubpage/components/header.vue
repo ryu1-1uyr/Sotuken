@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout-header">
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand href="#">Craftomy</b-navbar-brand>
 
@@ -55,5 +55,8 @@
 </script>
 
 <style scoped>
-
+  .layout-header {
+    position: sticky;
+    top: 0;
+  }
 </style>
