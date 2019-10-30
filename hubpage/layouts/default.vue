@@ -1,18 +1,23 @@
 <template>
   <div>
-    <Header></Header>
+    <div id="contents">
+      <Header class="header"/>
 
-    <nuxt/>
+      <nuxt/>
 
+    </div>
+    <Footer class="footer"/>
   </div>
 </template>
 <script>
   import Header from '~/components/header.vue'
+  import Footer from '~/components/footer.vue'
+
 
   export default {
-    components:{
+    components: {
       Header,
-      // Logo
+      Footer
     },
   }
 </script>
@@ -28,6 +33,9 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
+
+    min-height: 900px;
+    width: auto;
   }
 
   *,
@@ -64,5 +72,24 @@
   .button--grey:hover {
     color: #fff;
     background-color: #35495e;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+  }
+
+  .footer {
+    background-color: #eee;
+    bottom: 0;
+    font-size: smaller;
+    padding: 0.1rem 1rem;
+    text-align: center;
+    position: sticky;
+  }
+
+  #contents {
+    min-height: 900px;
+    width: auto;
   }
 </style>
