@@ -27,6 +27,7 @@
 </template>
 
 <script>
+  //ここで戦闘データ含めたJSONを取ってくる。v-forで回したのちにbattleへはpropsでデータを渡す
   export default {
     name: "index",
     data() {
