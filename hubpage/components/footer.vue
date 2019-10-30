@@ -1,6 +1,6 @@
 <template>
     <div>
-      <small class="layout-footer">こぴ〜らいと</small>
+      <small class="layout-footer">copyright: Ryuichi iha</small>
     </div>
 </template>
 
