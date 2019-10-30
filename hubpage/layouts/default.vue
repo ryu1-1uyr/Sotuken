@@ -1,6 +1,23 @@
 <template>
   <div>
-    <nuxt />
+      <div>
+        <div class="line"></div>
+        <v-navbar
+          mode="horizontal"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b">
+          <b-nav-item><nuxt-link to="/">Home</nuxt-link></b-nav-item>
+          <b-nav-item><nuxt-link to="/mypage">Mypage</nuxt-link></b-nav-item>
+          <b-nav-item><nuxt-link to="/login">Login</nuxt-link></b-nav-item>
+        </v-navbar>
+        <b-card>
+          <el-container fluid fill-height>
+            <nuxt/>
+          </el-container>
+        </b-card>
+      </div>
+
   </div>
 </template>
 
