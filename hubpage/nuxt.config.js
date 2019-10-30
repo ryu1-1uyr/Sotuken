@@ -65,6 +65,9 @@ export default {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
+  router: {
+    middleware: 'auth'
+  },
 
   /*
   ** Build configuration
