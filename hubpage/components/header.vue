@@ -1,7 +1,7 @@
 <template>
   <div class="layout-header">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">Craftomy</b-navbar-brand>
+      <b-navbar-brand href="/">Craftomy</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -9,7 +9,7 @@
         <b-navbar-nav>
           <b-nav-item href="/list">contents</b-nav-item>
           <b-nav-item href="/about">about</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+          <b-nav-item href="/" disabled>Disabled</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
