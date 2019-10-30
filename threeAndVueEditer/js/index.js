@@ -233,7 +233,10 @@ tick = () => {
 }
 
 let stringcode = "const tick2=()=>{myShape2.rotation.y += 0.01;renderer.render(scene, camera);requestAnimationFrame(tick2);};tick2()"
-
+tickSee=()=>{
+    renderer.render(scene, camera);
+    requestAnimationFrame(tickSee);
+}
 const sleep = (waitSec) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -249,7 +252,8 @@ const init = () => {
             console.log('sleepnow')
             // tick()
             // eval(stringcode)
-            renderer.render(scene, camera);
+            // renderer.render(scene, camera);
+            tickSee()
         })
     } catch (e) {
         console.log(e)
