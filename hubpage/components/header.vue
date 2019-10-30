@@ -7,8 +7,8 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">contents</b-nav-item>
-          <b-nav-item href="#">about</b-nav-item>
+          <b-nav-item href="/list">contents</b-nav-item>
+          <b-nav-item href="/about">about</b-nav-item>
           <b-nav-item href="#" disabled>Disabled</b-nav-item>
         </b-navbar-nav>
 
