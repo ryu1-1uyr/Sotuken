@@ -1,7 +1,7 @@
 <template>
-  <el-container>
+  <div>
     <h1>こんにちは、{{this.$auth.$state.user.name}}さん!</h1>
-  </el-container>
+  </div>
 </template>
 
 <script>
