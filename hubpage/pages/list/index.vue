@@ -17,7 +17,7 @@
               at Craftomy .
             </b-card-text>
 
-            <b-button href="#" class="mybutton" variant="outline">Battle!!</b-button>
+            <b-button :href="'/list/'+i+'/battle'" class="mybutton" variant="outline">Battle!!</b-button>
           </b-card>
         </div>
       </div>
