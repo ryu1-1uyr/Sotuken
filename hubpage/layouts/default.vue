@@ -1,44 +1,19 @@
 <template>
   <div>
     <Header></Header>
-<!--    <div>-->
-<!--      <div class="line"></div>-->
-<!--      <v-navbar-->
-<!--        mode="horizontal"-->
-<!--        background-color="#545c64"-->
-<!--        text-color="#fff"-->
-<!--        active-text-color="#ffd04b">-->
-<!--        <b-nav-item>-->
-<!--          <nuxt-link to="/">Home</nuxt-link>-->
-<!--        </b-nav-item>-->
-<!--        <b-nav-item>-->
-<!--          <nuxt-link to="/mypage">Mypage</nuxt-link>-->
-<!--        </b-nav-item>-->
-<!--        <b-nav-item>-->
-<!--          <nuxt-link to="/login">Login</nuxt-link>-->
-<!--        </b-nav-item>-->
-<!--        <p @click="loginWithAuthZero">Login</p>-->
-<!--        <p @click="logout">Logout</p>-->
-<!--      </v-navbar>-->
-<!--      <b-card>-->
-<!--        <el-container fluid fill-height>-->
-<!--          <nuxt/>-->
-<!--        </el-container>-->
-<!--      </b-card>-->
-<!--    </div>-->
+
+    <nuxt/>
 
   </div>
 </template>
 <script>
   import Header from '~/components/header.vue'
-  // import Header from '~/components/Logo.vue'
-
 
   export default {
     components:{
       Header,
       // Logo
-    }
+    },
   }
 </script>
 
