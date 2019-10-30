@@ -1,5 +1,7 @@
 <template>
-    
+    <div>
+      <small class="layout-footer">こぴ〜らいと</small>
+    </div>
 </template>
 
 <script>
@@ -9,5 +11,12 @@
 </script>
 
 <style scoped>
-
+  .layout-footer {
+    background-color: #eee;
+    bottom: 0;
+    font-size: smaller;
+    padding: 0.1rem 1rem;
+    text-align: center;
+    position: sticky;
+  }
 </style>
