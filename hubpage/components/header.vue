@@ -1,7 +1,9 @@
 <template>
   <div class="layout-header">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="/">Craftomy</b-navbar-brand>
+      <b-navbar-brand href="/">Craftomy
+        <img src="~/assets/craftomy_white.svg" style="width: 40px;min-height: 40px"/>
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
