@@ -8,9 +8,13 @@
             <div>
                 <a @click="parseCode" class="btn-animation-02"><span>createCode</span></a>
                 <a @click="openModal" class="btn-animation-02"><span>コマンド</span></a>
+                <a v-b-modal.modal-2 class="btn-animation-02"><span>JSONを見る</span></a>
+                <b-modal id="modal-2" title="命令文のJSON">
+                    <p class="my-4">{{list2}}</p>
+                </b-modal>
             </div>
 
-            <div style="color: black">{{list2}}</div>
+<!--            <div style="color: black">{{list2}}</div>-->
 
             <div id="overlay" v-show="showContent">
                 <div id="content">
