@@ -390,8 +390,8 @@
                             return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(retreat)('${insertElem2}')`
 
                         case 'bullet':
-                            return `bullet(myShape)(${insertElem})`
-                    }
+                            return `bullet(myShape)(${insertElem})(this.scene)`
+                    }//todo sceneを足した、テストまだ
                 } else {
                     switch (command) {
                         case 'if':
