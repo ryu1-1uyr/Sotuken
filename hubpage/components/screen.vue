@@ -1,5 +1,7 @@
 <template>
-    $END$
+    <div>
+      すくりーんだよ〜ん
+    </div>
 </template>
 
 <script>
