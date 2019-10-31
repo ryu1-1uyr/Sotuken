@@ -58,6 +58,7 @@
 
 <style scoped>
   .layout-header {
+    width: 100%;
     position: sticky;
     top: 0;
   }
