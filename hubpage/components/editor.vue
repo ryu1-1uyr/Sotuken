@@ -1,173 +1,181 @@
 <template>
-    <div id="app">
-
-        <div>
-            <a @click="parseCode" class="btn-animation-02"><span>createCode</span></a>
-            <a @click="openModal" class="btn-animation-02"><span>コマンド</span></a>
+    <div class="flex_start_space">
+        <div class="screen">
+            <screen/>
         </div>
+        <div id="app">
 
-        <div style="color: black">{{list2}}</div>
-
-        <div id="overlay" v-show="showContent">
-            <div id="content">
-                <div class="container">
-                    <div>
-                        <a @click="closeModal" class="btn-shine">Close</a>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="headButton container"
-                         v-on:mouseover="mouseoverIf(true)"
-                         v-on:mouseleave="mouseleaveIf(false)">
-                        <div v-if="!isif">条件分岐</div>
-                        <transition name="scale">
-                            <div v-if="isif" class="centerContainer absolute scale left up"
-                                 @click="addList(newIF())(list2)">
-                                もし
-                            </div>
-                        </transition>
-                        <transition name="scale2">
-                            <div v-if="isif" class="centerContainer absolute scale2 right down"
-                                 @click="addList(newElseIF())(list2)">それ以外の時は
-                            </div>
-                        </transition>
-                    </div>
-
-                    <div class="headButton container"
-                         v-on:mouseover="mouseoverTarget(true)"
-                         v-on:mouseleave="mouseleaveTarget(false)">敵との位置
-                        <transition name="up">
-                            <div v-if="target" class="centerContainer absolute down"
-                                 @click="addList(newNearEnemy())(list2)">
-                                近い
-                            </div>
-                        </transition>
-                        <transition name="down">
-                            <div v-if="target" class="centerContainer absolute up"
-                                 @click="addList(newFarEnemy())(list2)">遠い
-                            </div>
-                        </transition>
-                    </div>
-                    <div class="headButton container"
-                         v-on:mouseover="mouseoverMove(true)"
-                         v-on:mouseleave="mouseleaveMove(false)">行動
-                        <transition name="rightDown">
-                            <div v-if="move" class="centerContainer absolute left up"
-                                 @click="addList(newApproach())(list2)">
-                                接近
-                            </div>
-                        </transition>
-                        <transition name="leftDown">
-                            <div v-if="move" class="centerContainer absolute right up"
-                                 @click="addList(newRetreat())(list2)">
-                                後退
-                            </div>
-                        </transition>
-                        <transition name="up">
-                            <div v-if="move" class="centerContainer absolute down" @click="addList(newBullet())(list2)">
-                                攻撃
-                            </div>
-                        </transition>
-                    </div>
-                    <div class="headButton container"
-                         v-on:mouseover="mouseoverActionRange(true)"
-                         v-on:mouseleave="mouseleaveActionRange(false)">行動範囲
-                        <transition name="rightDown">
-                            <div v-if="actionRange" class="centerContainer absolute left up"
-                                 @click="addList(newjustTarget())(list2)">零距離
-                            </div>
-                        </transition>
-                        <transition name="leftDown">
-                            <div v-if="actionRange" class="centerContainer absolute right up"
-                                 @click="addList(newNearTarget())(list2)">近距離
-                            </div>
-                        </transition>
-                        <transition name="rightUp">
-                            <div v-if="actionRange" class="centerContainer absolute left down"
-                                 @click="addList(newMiddleTarget())(list2)">中距離
-                            </div>
-                        </transition>
-                        <transition name="leftUp">
-                            <div v-if="actionRange" class="centerContainer absolute right down"
-                                 @click="addList(newFarTarget())(list2)">遠距離
-                            </div>
-                        </transition>
-                    </div>
-                </div>
-
+            <div>
+                <a @click="parseCode" class="btn-animation-02"><span>createCode</span></a>
+                <a @click="openModal" class="btn-animation-02"><span>コマンド</span></a>
             </div>
-        </div>
 
+            <div style="color: black">{{list2}}</div>
 
-        <!--        <small>{{list2}}</small>-->
-
-
-        <!--        <draggable class="dragArea container" :list="list1"-->
-        <!--                   :group="{ name: 'people', pull: 'clone', put: false }" @change="log">-->
-        <!--            <div class="list-group-item baseElement" v-for="element in list1" v-bind:class="element.class"-->
-        <!--                 @click="addList(element)(list2)">-->
-        <!--                {{ element.name }}-->
-        <!--            </div>-->
-        <!--        </draggable>-->
-
-        <br>
-
-        <draggable class="dragArea container getarea" :list="list2" group="people" @change="log">
-            <div class="list-group-item yourArea" v-for="(element, idx) in list2" v-bind:class="element.class">
-                {{ element.name }}
-                <!--fixme いい加減この3行のspanあたりの仕様を固めないと厳しい-->
-                <span v-if="list2[idx -1]">{{list2[idx -1].nextWord}}</span>
-                <span v-if="element.id === 'range'">に</span>
-                <span v-if="Array.isArray(element)">の行動をする</span>
-
-                <i class="fa fa-times close" @click="removeAt(idx)(list2)">X</i>
-            </div>
-        </draggable>
-
-        <!--        <draggable v-if="isIf" class="dragArea container child" :list="list2">-->
-        <!--            <div class="list-group-item" v-for="(childrenElement, childrenidx) in list2 ">-->
-        <!--                {{childrenElement.name}}<i class="fa fa-times close" @click="removeAt(childrenidx)">X</i>-->
-        <!--            </div>-->
-        <!--        </draggable>-->
-        <!--        {{this.list2.some((x)=> x.command === 'if')}}-->
-
-        <div v-if="this.list2.some((x)=> x.command === 'if')">
-            <div v-for=" (atlist2, index) in list2">
-                <div v-if="Array.isArray(atlist2.list)">
-                    {{index,atlist2.list}}
-                    <draggable class="dragArea child container" :list="atlist2.list" group="people" @change="log">
-                        <!--                        <div class="container">-->
-                        <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list">
-                            {{ element.name }}
-                            <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">へ</span>
-                            <span v-if="element.id === 'range' ||element.id === 'range' ">になるまで</span>
-                            <i class="fa fa-times close" @click="removeAt(idx)(atlist2.list)">X</i>
+            <div id="overlay" v-show="showContent">
+                <div id="content">
+                    <div class="container">
+                        <div>
+                            <a @click="closeModal" class="btn-shine">Close</a>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="headButton container"
+                             v-on:mouseover="mouseoverIf(true)"
+                             v-on:mouseleave="mouseleaveIf(false)">
+                            <div v-if="!isif">条件分岐</div>
+                            <transition name="scale">
+                                <div v-if="isif" class="centerContainer absolute scale left up"
+                                     @click="addList(newIF())(list2)">
+                                    もし
+                                </div>
+                            </transition>
+                            <transition name="scale2">
+                                <div v-if="isif" class="centerContainer absolute scale2 right down"
+                                     @click="addList(newElseIF())(list2)">それ以外の時は
+                                </div>
+                            </transition>
                         </div>
 
-                        <!--                        </div>-->
+                        <div class="headButton container"
+                             v-on:mouseover="mouseoverTarget(true)"
+                             v-on:mouseleave="mouseleaveTarget(false)">敵との位置
+                            <transition name="up">
+                                <div v-if="target" class="centerContainer absolute down"
+                                     @click="addList(newNearEnemy())(list2)">
+                                    近い
+                                </div>
+                            </transition>
+                            <transition name="down">
+                                <div v-if="target" class="centerContainer absolute up"
+                                     @click="addList(newFarEnemy())(list2)">遠い
+                                </div>
+                            </transition>
+                        </div>
+                        <div class="headButton container"
+                             v-on:mouseover="mouseoverMove(true)"
+                             v-on:mouseleave="mouseleaveMove(false)">行動
+                            <transition name="rightDown">
+                                <div v-if="move" class="centerContainer absolute left up"
+                                     @click="addList(newApproach())(list2)">
+                                    接近
+                                </div>
+                            </transition>
+                            <transition name="leftDown">
+                                <div v-if="move" class="centerContainer absolute right up"
+                                     @click="addList(newRetreat())(list2)">
+                                    後退
+                                </div>
+                            </transition>
+                            <transition name="up">
+                                <div v-if="move" class="centerContainer absolute down"
+                                     @click="addList(newBullet())(list2)">
+                                    攻撃
+                                </div>
+                            </transition>
+                        </div>
+                        <div class="headButton container"
+                             v-on:mouseover="mouseoverActionRange(true)"
+                             v-on:mouseleave="mouseleaveActionRange(false)">行動範囲
+                            <transition name="rightDown">
+                                <div v-if="actionRange" class="centerContainer absolute left up"
+                                     @click="addList(newjustTarget())(list2)">零距離
+                                </div>
+                            </transition>
+                            <transition name="leftDown">
+                                <div v-if="actionRange" class="centerContainer absolute right up"
+                                     @click="addList(newNearTarget())(list2)">近距離
+                                </div>
+                            </transition>
+                            <transition name="rightUp">
+                                <div v-if="actionRange" class="centerContainer absolute left down"
+                                     @click="addList(newMiddleTarget())(list2)">中距離
+                                </div>
+                            </transition>
+                            <transition name="leftUp">
+                                <div v-if="actionRange" class="centerContainer absolute right down"
+                                     @click="addList(newFarTarget())(list2)">遠距離
+                                </div>
+                            </transition>
+                        </div>
+                    </div>
 
-                        <button @click="removeAt(index)(list2)">{{index}}</button>
-
-                    </draggable>
                 </div>
             </div>
+
+
+            <!--        <small>{{list2}}</small>-->
+
+
+            <!--        <draggable class="dragArea container" :list="list1"-->
+            <!--                   :group="{ name: 'people', pull: 'clone', put: false }" @change="log">-->
+            <!--            <div class="list-group-item baseElement" v-for="element in list1" v-bind:class="element.class"-->
+            <!--                 @click="addList(element)(list2)">-->
+            <!--                {{ element.name }}-->
+            <!--            </div>-->
+            <!--        </draggable>-->
+
+            <br>
+
+            <draggable class="dragArea container getarea" :list="list2" group="people" @change="log">
+                <div class="list-group-item yourArea" v-for="(element, idx) in list2" v-bind:class="element.class">
+                    {{ element.name }}
+                    <!--fixme いい加減この3行のspanあたりの仕様を固めないと厳しい-->
+                    <span v-if="list2[idx -1]">{{list2[idx -1].nextWord}}</span>
+                    <span v-if="element.id === 'range'">に</span>
+                    <span v-if="Array.isArray(element)">の行動をする</span>
+
+                    <i class="fa fa-times close" @click="removeAt(idx)(list2)">X</i>
+                </div>
+            </draggable>
+
+            <!--        <draggable v-if="isIf" class="dragArea container child" :list="list2">-->
+            <!--            <div class="list-group-item" v-for="(childrenElement, childrenidx) in list2 ">-->
+            <!--                {{childrenElement.name}}<i class="fa fa-times close" @click="removeAt(childrenidx)">X</i>-->
+            <!--            </div>-->
+            <!--        </draggable>-->
+            <!--        {{this.list2.some((x)=> x.command === 'if')}}-->
+
+            <div v-if="this.list2.some((x)=> x.command === 'if')">
+                <div v-for=" (atlist2, index) in list2">
+                    <div v-if="Array.isArray(atlist2.list)">
+                        {{index,atlist2.list}}
+                        <draggable class="dragArea child container" :list="atlist2.list" group="people" @change="log">
+                            <!--                        <div class="container">-->
+                            <div class="list-group-item yourArea" v-for="(element, idx) in atlist2.list">
+                                {{ element.name }}
+                                <span v-if="element.command === 'nearEnemy' ||element.command === 'nearEnemy' ">へ</span>
+                                <span v-if="element.id === 'range' ||element.id === 'range' ">になるまで</span>
+                                <i class="fa fa-times close" @click="removeAt(idx)(atlist2.list)">X</i>
+                            </div>
+
+                            <!--                        </div>-->
+
+                            <button @click="removeAt(index)(list2)">{{index}}</button>
+
+                        </draggable>
+                    </div>
+                </div>
+            </div>
+            <!--        <div v-else>要素がない</div>-->
+
+
         </div>
-        <!--        <div v-else>要素がない</div>-->
-
-
     </div>
 </template>
 
 <script>
-    // import draggable from '../node_modules/vuedraggable'
     import draggable from 'vuedraggable'
+    import screen from '~/components/screen.vue'
+
 
     const cyan = '\u001b[36m'
     const reset = '\u001b[0m';
 
     export default {
         components: {
-            draggable
+            draggable,
+            screen
         },
         data() {
             return {
@@ -455,12 +463,13 @@
 
 <style>
     #app {
+        min-width: 600px;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        margin-top: 60px;
+        /*margin-top: 60px;*/
         max-width: 840px;
         /*height: 100%;*/
         min-height: 900px;
@@ -468,6 +477,9 @@
         background: rgba(0, 0, 0, 0.23);
         /*color: rgba(206,206,206,0.86);*/
         color: #fff;
+        margin-top: 30px;
+        margin-right: 10px;
+
     }
 
     .container {
@@ -941,5 +953,22 @@
     .close {
         font-size: 14px;
         color: #fff;
+    }
+
+    .flex_start_space {
+        /*padding: 30px;*/
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        /*justify-content: center;*/
+        /*align-items: center;*/
+        align-items: flex-start;
+        width: auto;
+    }
+
+    .screen {
+        margin-top: 30px;
+        margin-left: 10px;
     }
 </style>
