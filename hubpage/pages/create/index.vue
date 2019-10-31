@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="container">
-      <screen />
-      <editor />
+      <screen/>
+      <editor id="editor"/>
     </div>
   </div>
 
@@ -32,7 +32,11 @@
     /*justify-content: center;*/
     /*align-items: center;*/
     align-items: flex-start;
+  }
 
+  #editor {
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.23);
 
   }
 </style>
