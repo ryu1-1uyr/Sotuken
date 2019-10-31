@@ -6,6 +6,8 @@
             <a @click="openModal" class="btn-animation-02"><span>コマンド</span></a>
         </div>
 
+        <div style="color: black">{{list2}}</div>
+
         <div id="overlay" v-show="showContent">
             <div id="content">
                 <div class="container">
@@ -190,6 +192,7 @@
                     {name: "射程外", id: 10, command: 'outOfRangeTarget', class: ''}
                 ], // こいつらは生で今全部描画しているけど、紙にからいたUI通りアコーディオンっぽくする
                 list2: [],
+                makingCode: '',
             }
         },
         watch: {
@@ -330,6 +333,7 @@
                 })
                 code += 'renderer.render(scene, camera);},10)'
                 console.log(code)
+                this.makingCode = code
                 try {
                     eval(code)
                 }
