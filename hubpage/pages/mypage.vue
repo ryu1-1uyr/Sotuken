@@ -27,6 +27,7 @@
 </template>
 
 <script>
+  // todo ここのうぇぶぺーじ3Dっぽく影落としたりしてデコる
   export default {
     name: "mypage",
   }
