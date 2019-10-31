@@ -7,6 +7,9 @@
 
 - threeSample => three.js使って描画部分をリッチにいしていきたいねってやつ、Vueも使い始めたあびゃあ
 
+- hubpage => Nuxt製のはぶぺーじ
+
+- threeAndVueEditor => pureJS of myFramework and Vue.js 
 > 構成
 ```$xslt
 .
