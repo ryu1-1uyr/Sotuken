@@ -1,7 +1,7 @@
 <template>
     <div class="flex_start_space">
         <div class="screen">
-            <screen/>
+            <screen :code="makingCode" />
         </div>
         <div id="app">
 
@@ -207,11 +207,15 @@
             list2: {
                 handler: function (val, oldVal) {
                     let index = val.length - 1
-                    if (val[index].command === 'if') {
-                        console.log(cyan + 'ifdayo' + reset)
-                        val.push({name: 'の行動をする', command: 'list', class: 'BGblue', list: [...new Array]})
-                    } else if (val[index].command === 'else') {
-                        val.push({name: 'の行動をする', command: 'list2', class: 'BGblue', list: [...new Array]})
+                    try {
+                        if (val[index].command === 'if') {
+                            console.log(cyan + 'ifdayo' + reset)
+                            val.push({name: 'の行動をする', command: 'list', class: 'BGblue', list: [...new Array]})
+                        } else if (val[index].command === 'else') {
+                            val.push({name: 'の行動をする', command: 'list2', class: 'BGblue', list: [...new Array]})
+                        }
+                    }catch (e) {
+                        console.log(e)
                     }
                     console.log(val[index])
                 },
@@ -339,15 +343,16 @@
                     }
 
                 })
-                code += 'renderer.render(scene, camera);},10)'
+                code += '},10)'
                 console.log(code)
                 this.makingCode = code
-                try {
-                    eval(code)
-                } catch (e) {
-                    console.error(e)
-                    console.error('実行に失敗しました。構文を確認してください')
-                }
+                //ここでevalするな
+                // try {
+                //     eval(code)
+                // } catch (e) {
+                //     console.error(e)
+                //     console.error('実行に失敗しました。構文を確認してください')
+                // }
             },
             createCode: command => insertElem => insertElem2 => { //fixme obje1を自機として一旦直書きするぞ
                 //if(justTarget(myShape)(searchNearTarget(myShape)(enemyTeam))) bullet(myShape)(searchNearTarget(myShape)(enemyTeam));
@@ -369,36 +374,36 @@
                         //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
                         case 'nearEnemy':
                             //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                            return 'searchNearTarget(myShape)(enemyTeam)'
+                            return 'searchNearTarget(this.myShape)(this.enemyTeam)'
 
                         case 'farEnemy':
                             //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                            return 'searchFarTarget(myShape)(enemyTeam)'
+                            return 'searchFarTarget(this.myShape)(this.enemyTeam)'
 
                         case 'justTarget':
-                            return `justTarget(myShape)(${insertElem})`
+                            return `justTarget(this.myShape)(${insertElem})`
 
                         case 'nearTarget':
-                            return `nearTarget(myShape)(${insertElem})`
+                            return `nearTarget(this.myShape)(${insertElem})`
 
                         case 'middleTarget':
-                            return `middleTarget(myShape)(${insertElem})`
+                            return `middleTarget(this.myShape)(${insertElem})`
 
                         case 'farTarget':
-                            return `farTarget(myShape)(${insertElem})`
+                            return `farTarget(this.myShape)(${insertElem})`
 
                         case 'outOfRangeTarget':
                             //こいつは別に実装後ででもいい。あとまわし
                             break
 
                         case 'approach':
-                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(Approach)('${insertElem2}')(this.scene)`
+                            return `moveNicely(this.myShape)(${insertElem}(this.myShape)(this.enemyTeam))(Approach)('${insertElem2}')(this.scene)`
 
                         case 'retreat':
-                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(retreat)('${insertElem2}')(this.scene)`
+                            return `moveNicely(this.myShape)(${insertElem}(this.myShape)(this.enemyTeam))(retreat)('${insertElem2}')(this.scene)`
 
                         case 'bullet':
-                            return `bullet(myShape)(${insertElem})(this.scene)`
+                            return `bullet(this.myShape)(${insertElem})(this.scene)`
                     }//todo sceneを足した、テストまだ
                 } else {
                     switch (command) {
@@ -416,23 +421,23 @@
                         //この子らはobject型を返すので注意 => 引数に使うように設計しなよ？
                         case 'nearEnemy':
                             //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                            return 'searchNearTarget(myShape)(enemyTeam))'
+                            return 'searchNearTarget(this.myShape)(this.enemyTeam))'
 
                         case 'farEnemy':
                             //fixme myShapeってなってるとこ、変数展開で自機オブジェクトにできるといい
-                            return 'searchFarTarget(myShape)(enemyTeam))'
+                            return 'searchFarTarget(this.myShape)(this.enemyTeam))'
 
                         case 'justTarget':
-                            return 'justTarget(myShape)('
+                            return 'justTarget(this.myShape)('
 
                         case 'nearTarget':
-                            return 'nearTarget(myShape)('
+                            return 'nearTarget(this.myShape)('
 
                         case 'middleTarget':
-                            return 'middleTarget(myShape)('
+                            return 'middleTarget(this.myShape)('
 
                         case 'farTarget':
-                            return 'farTarget(myShape)('
+                            return 'farTarget(this.myShape)('
 
                         case 'outOfRangeTarget':
                             //こいつは別に実装後ででもいい。あとまわし
@@ -470,7 +475,7 @@
         text-align: center;
         color: #2c3e50;
         /*margin-top: 60px;*/
-        max-width: 840px;
+        max-width: 740px;
         /*height: 100%;*/
         min-height: 900px;
         overflow: scroll;
