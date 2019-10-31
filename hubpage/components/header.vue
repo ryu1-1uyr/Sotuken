@@ -7,8 +7,8 @@
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
+      <b-collapse id="nav-collapse" is-nav >
+        <b-navbar-nav v-if="this.$auth.$state.loggedIn">
           <b-nav-item href="/list">contents</b-nav-item>
           <b-nav-item href="/about">about</b-nav-item>
           <b-nav-item href="/" disabled>Disabled</b-nav-item>
@@ -32,8 +32,8 @@
             </template>
             <b-dropdown-item href="/mypage">Profile</b-dropdown-item>
 
-            <b-dropdown-item @click="loginWithAuthZero">Sign In</b-dropdown-item>
-            <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
+            <b-dropdown-item @click="loginWithAuthZero" v-if="!(this.$auth.$state.loggedIn)">Sign In</b-dropdown-item>
+            <b-dropdown-item @click="logout" v-if="this.$auth.$state.loggedIn">Sign Out</b-dropdown-item>
             <!--            認証あたりと組み合わせてlogin,logout分ける奴やる-->
           </b-nav-item-dropdown>
         </b-navbar-nav>
