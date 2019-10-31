@@ -1,11 +1,19 @@
 <template>
-    
+  <div>
+    <editor />
+  </div>
+
 </template>
 
 <script>
-    export default {
-        name: "index"
-    }
+  import editor from '~/components/editor.vue'
+
+  export default {
+    components: {
+      editor
+    },
+    name: "index"
+  }
 </script>
 
 <style scoped>
