@@ -12,6 +12,7 @@
 
 <style scoped>
   .layout-footer {
+    width: 100%;
     background-color: #eee;
     bottom: 0;
     font-size: smaller;
