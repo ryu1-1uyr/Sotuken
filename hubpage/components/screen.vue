@@ -1,18 +1,19 @@
 <template>
   <div>
     <canvas id='myCanvas'></canvas>
-<!--    <button @click="test">{{this.myShape}}</button>-->
-<!--    <p style="max-width: 570px">{{code}}</p>-->
+    <!--    <button @click="test">{{this.myShape}}</button>-->
+    <!--    <p style="max-width: 570px">{{code}}</p>-->
     <div>
       <b-button v-b-modal.modal-1>作成したコードを見る</b-button>
 
       <b-modal id="modal-1" title="出来上がったコード">
-        <p class="my-4" style="max-width: 570px">{{code}}</p>
+        <p class="my-4" style="max-width: 570px">{{returnCode()}}</p>
       </b-modal>
     </div>
     <br>
 
-    <b-button @click="evaluate">evaluate</b-button>
+    <b-button @click="evaluate" v-if="!isbattle">evaluate</b-button>
+    <b-button @click="evaluteTwoCode" v-if="isbattle">Battle!!</b-button>
 
   </div>
 </template>
@@ -519,9 +520,13 @@
 
   export default {
     props: {
-      code:{
+      code: {
         type: String,
         default: '',
+      },
+      isbattle: {
+        type: Boolean,
+        default: false
       }
     },
     name: "screen",
@@ -556,7 +561,7 @@
 
       console.log(this.code)
       this.myTeam.push(this.myShape)
-      this.myTeam.push(this.myShape2)
+      // this.myTeam.push(this.myShape2)
       this.enemyTeam.push(this.myShape3)
       // this.enemyTeam.push(this.myShape4)
 
@@ -582,16 +587,16 @@
       // これなんかJQueryまわりの変なエラー吐くからなぁ…
 
       //右下
-      this.myShape.position.z = 300 // Zのプラス方向を手前側
-      this.myShape.position.x = 300 // Xは右側が整数の領域
+      this.myShape.position.z = 250 // Zのプラス方向を手前側
+      this.myShape.position.x = 200 // Xは右側が整数の領域
 
       //左上
       this.myShape2.position.z = -250
       this.myShape2.position.x = -280
 
       //右上
-      this.myShape3.position.z = -200
-      this.myShape3.position.x = 270
+      this.myShape3.position.z = -100
+      this.myShape3.position.x = -200
 
       //左下
       this.myShape4.position.z = 200
@@ -786,36 +791,53 @@
       test() {
 
         //これうごくんだけど
-        // eval(`let c = 0;
+        eval(`
+        let c = 0;
+let cancel = setInterval(() => {
+    c++;
+    console.log(c);
+    if (c > 2000) {
+        console.log(cancel);
+        clearInterval(cancel)
+    }
+    if (nearTarget(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))) bullet(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(this.scene); else moveNicely(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(Approach)('justTarget')(this.scene);
+    if (nearTarget(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))) bullet(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(this.scene); else moveNicely(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(Approach)('nearTarget')(this.scene);
+}, 10)
+        `)
+        this.returnCode()
+        // let c = 0;
         // let cancel = setInterval(() => {
         //   c++;
         //   // console.log();
         //   if (c > 2000) {
-        //     console.log(cancel);
+        //     // console.log(cancel);
         //     clearInterval(cancel)
         //   }
-        //   if (justTarget(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))) bullet(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam)); else moveNicely(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(Approach)('justTarget');
+        //   if (nearTarget(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))) bullet(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(this.scene); else moveNicely(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(Approach)('nearTarget')(this.scene);
         //   //fixme rendererをevalで足す必要はない
-        // }, 10)`)
-        let c = 0;
-        let cancel = setInterval(() => {
-          c++;
-          // console.log();
-          if (c > 2000) {
-            // console.log(cancel);
-            clearInterval(cancel)
-          }
-          if (nearTarget(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))) bullet(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(this.scene); else moveNicely(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(Approach)('nearTarget')(this.scene);
-          //fixme rendererをevalで足す必要はない
-          //fixme bullet にシーンを引数で渡せばどうとでもなる
-        }, 10)
+        //   //fixme bullet にシーンを引数で渡せばどうとでもなる
+        // }, 10)
       },
-      evaluate(){
-       try {
-         eval(this.code)
-       }catch (e) {
-         console.log(e)
-       }
+      evaluate() {
+        try {
+          eval(this.returnCode())
+        } catch (e) {
+          console.log(e)
+        }
+      },
+      evaluteTwoCode() {
+        try {
+          eval(this.returnEnemyMoveCode())
+        } catch (e) {
+          console.log(e)
+        }
+      },
+      returnCode() {
+        return 'let c=0;let cancel=setInterval(()=>{ c++;console.log(c);if(c>2000){console.log(cancel);clearInterval(cancel)}' + this.code + '},10)'
+      },
+      returnEnemyMoveCode() {
+        return 'let c=0;let cancel=setInterval(()=>{ c++;console.log(c);if(c>2000){console.log(cancel);clearInterval(cancel)}' + this.code + 'if (nearTarget(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))) bullet(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(this.scene); else moveNicely(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(Approach)(\'justTarget\')(this.scene);' + '},10)'
+
       }
 
     }
