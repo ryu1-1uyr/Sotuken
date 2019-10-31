@@ -1,7 +1,8 @@
 <template>
-  <el-container>
+  <div>
     <p>Please Wating・・・・</p>
-  </el-container>
+<!--    ここいい感じにCSSアニメーションさせたいわね -->
+  </div>
 </template>
 
 <script>
