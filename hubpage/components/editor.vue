@@ -336,8 +336,7 @@
                 this.makingCode = code
                 try {
                     eval(code)
-                }
-                catch (e) {
+                } catch (e) {
                     console.error(e)
                     console.error('実行に失敗しました。構文を確認してください')
                 }
@@ -465,9 +464,10 @@
         max-width: 840px;
         /*height: 100%;*/
         min-height: 900px;
-        overflow:scroll;
-        background: rgba(0,0,0,0.23);
-        color: rgba(206,206,206,0.86);
+        overflow: scroll;
+        background: rgba(0, 0, 0, 0.23);
+        /*color: rgba(206,206,206,0.86);*/
+        color: #fff;
     }
 
     .container {
@@ -505,7 +505,7 @@
     .child {
         width: 500px;
         /*height: 500px;*/
-        background: rgba(71,156,186,0.56);
+        background: rgba(71, 156, 186, 0.56);
         border-radius: 30px;
         /*z-index: -100;*/
         /*position: absolute;*/
@@ -528,8 +528,8 @@
 
 
     .headButton {
-        min-width: 100px;
-        min-height: 100px;
+        width: 150px;
+        min-height: 150px;
         border-radius: 180px;
         padding: 30px;
         margin: 10px;
@@ -847,16 +847,18 @@
         overflow: scroll;
         border-radius: 30px;
     }
-    .uibutton{
+
+    .uibutton {
         width: 80px;
         height: 10px;
     }
+
     .btn-animation-02 {
         display: inline-block;
-        width: 100px;
+        /*width: 100px;*/
         text-align: center;
-        background-color: rgba(158,195,75,0.54);
-        border: 2px solid rgba(158,195,75,0.84);
+        background-color: rgba(158, 195, 75, 0.54);
+        border: 2px solid rgba(158, 195, 75, 0.84);
         font-size: 16px;
         color: #9ec34b;
         text-decoration: none;
@@ -870,22 +872,26 @@
     .btn-animation-02 span {
         position: relative;
         z-index: 1;
+        color: #222;
+
     }
 
     .btn-animation-02::before,
     .btn-animation-02::after {
         content: "";
         display: block;
-        background-color: rgba(240,240,240,0.99);
+        background-color: rgba(240, 240, 240, 0.99);
         width: 50%;
         height: 100%;
         position: absolute;
         top: 0;
         transition: .2s;
     }
+
     .btn-animation-02::before {
         left: 0;
     }
+
     .btn-animation-02::after {
         right: 0;
     }
@@ -899,12 +905,14 @@
     .btn-animation-02:hover {
         color: #eee;
     }
-    .headButton{
+
+    .headButton {
         color: #2c3e50;
     }
+
     .btn-shine {
         color: #FFF;
-        background-color: rgba(4,27,0,0.78);
+        background-color: rgba(4, 27, 0, 0.78);
         display: inline-block;
         font-size: 16px;
         font-weight: bold;
@@ -928,5 +936,10 @@
         outline-color: transparent;
         outline-offset: 12px;
         text-shadow: 2px 2px 3px #000;
+    }
+
+    .close {
+        font-size: 14px;
+        color: #fff;
     }
 </style>
