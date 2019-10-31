@@ -384,10 +384,10 @@
                             break
 
                         case 'approach':
-                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(Approach)('${insertElem2}')`
+                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(Approach)('${insertElem2}')(this.scene)`
 
                         case 'retreat':
-                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(retreat)('${insertElem2}')`
+                            return `moveNicely(myShape)(${insertElem}(myShape)(enemyTeam))(retreat)('${insertElem2}')(this.scene)`
 
                         case 'bullet':
                             return `bullet(myShape)(${insertElem})(this.scene)`
