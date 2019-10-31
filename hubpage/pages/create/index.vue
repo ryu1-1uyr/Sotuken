@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="container">
-      <screen/>
+    <div>
+<!--      <screen/>-->
       <editor id="editor"/>
     </div>
   </div>
@@ -10,13 +10,13 @@
 
 <script>
   import editor from '~/components/editor.vue'
-  import screen from '~/components/screen.vue'
+  // import screen from '~/components/screen.vue'
 
 
   export default {
     components: {
       editor,
-      screen
+      // screen
     },
     name: "index"
   }
@@ -34,9 +34,9 @@
     align-items: flex-start;
   }
 
-  #editor {
-    max-width: 600px;
-    background: rgba(0, 0, 0, 0.23);
+  /*#editor {*/
+  /*  max-width: 600px;*/
+  /*  background: rgba(0, 0, 0, 0.23);*/
 
-  }
+  /*}*/
 </style>
