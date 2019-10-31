@@ -7,7 +7,7 @@
       <b-button v-b-modal.modal-1>作成したコードを見る</b-button>
 
       <b-modal id="modal-1" title="出来上がったコード">
-        <p class="my-4">{{code}}</p>
+        <p class="my-4" style="max-width: 570px">{{code}}</p>
       </b-modal>
     </div>
     <br>
