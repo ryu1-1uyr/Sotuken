@@ -1,7 +1,7 @@
 <template>
   <div>
     <canvas id='myCanvas'></canvas>
-    <button @click="test">{{this.myShape}}</button>
+<!--    <button @click="test">{{this.myShape}}</button>-->
   </div>
 </template>
 
