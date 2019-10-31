@@ -125,18 +125,6 @@
 
   // 攻撃処理
 
-  /*
-  * たまの生成
-  * ベクトルの確定
-  * 的に当たる、カウンタが一定値を超える
-  * たまの削除
-  */
-  const showbullet = () => {
-    bullet(myShape)
-    bullet(myShape2)
-    bullet(myShape3)
-    bullet(myShape4)
-  }
 
   // bulletはたまの位置を進める + たまの表示非表示だけにする
 
@@ -307,7 +295,19 @@
       target.hp -= 1
       console.log(target.hp)
       // todo でもようにターゲットを撃破した際にalertを出すようにした
-      isdemo(target)
+      // isdemo(target)
+      if (target.hp < 0) {
+        console.log(obje)
+        obje.position.z = 300
+        obje.position.x = 300
+
+        target.hp = 100
+        target.position.x = Math.floor(Math.random() * (300 - -300) + -300)
+        target.position.z = Math.floor(Math.random() * (300 - -300) + -300)
+
+        // alert('ターゲットを撃破しました')
+        // initialize()
+      }
 
     }
   }
@@ -339,8 +339,7 @@
 
   }
 
-  const searchNearTarget = obje => enemyArr => {1
-    console.log(111111111)
+  const searchNearTarget = obje => enemyArr => {
 
     const tmp = makeDistanceArray(obje)(enemyArr)
 
@@ -349,7 +348,7 @@
   }
   // moveNicely(myShape)(searchNearTarget(myShape)(enemyTeam)))(Approach)(0)
   // fixme この関数ちょっとあほあほ構造すぎるので手直しが必要
-  const moveNicely = obje => target => func => stringTarget => {
+  const moveNicely = obje => target => func => stringTarget => scene => {
     if (obje.isAttack) {
       sleep(1000).then(() => {
         scene.remove(obje.bullet)
@@ -383,7 +382,6 @@
 
   //近くにいるとtrue
   const justTarget = obje => target => {
-    console.log(target.position)
     return distanceToSquared(obje.position)(target.position) <= 3000
   }
 
@@ -520,7 +518,7 @@
         camera: new THREE.PerspectiveCamera(45, width / height, 1, 10000),
         myShape: makeMaterial(2)('#0040FF'),
         myShape2: makeMaterial(0)('#E800A5'),
-        myShape3: makeMaterial(1)('#00E880'),
+        myShape3: makeMaterial(1)('#DD0000'),
         myShape4: makeMaterial(0)('#FFFE41'),
         light: new THREE.DirectionalLight(0xFFFFFF),
         light2: new THREE.HemisphereLight(0x888888, 0x0000FF, 1.0),
@@ -536,7 +534,7 @@
       this.myTeam.push(this.myShape)
       this.myTeam.push(this.myShape2)
       this.enemyTeam.push(this.myShape3)
-      this.enemyTeam.push(this.myShape4)
+      // this.enemyTeam.push(this.myShape4)
 
       console.log(this.myShape)
 
@@ -568,8 +566,8 @@
       this.myShape2.position.x = -280
 
       //右上
-      this.myShape3.position.z = -300
-      this.myShape3.position.x = 300
+      this.myShape3.position.z = -200
+      this.myShape3.position.x = 270
 
       //左下
       this.myShape4.position.z = 200
@@ -780,10 +778,10 @@
           c++;
           // console.log();
           if (c > 2000) {
-            console.log(cancel);
+            // console.log(cancel);
             clearInterval(cancel)
           }
-          if (justTarget(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))) bullet(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(this.scene); else moveNicely(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(Approach)('justTarget');
+          if (nearTarget(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))) bullet(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(this.scene); else moveNicely(this.myShape)(searchNearTarget(this.myShape)(this.enemyTeam))(Approach)('nearTarget')(this.scene);
           //fixme rendererをevalで足す必要はない
           //fixme bullet にシーンを引数で渡せばどうとでもなる
         }, 10)
