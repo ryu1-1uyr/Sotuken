@@ -89,7 +89,7 @@
   }
 
   #MainContents {
-    min-height: 900px;
-    width: auto;
+    /*min-height: 900px;*/
+    /*width: auto;*/
   }
 </style>
