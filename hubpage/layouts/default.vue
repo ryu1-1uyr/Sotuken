@@ -1,23 +1,23 @@
 <template>
   <div>
-    <Header class="header"/>
-    <div id="contents">
+    <MyHeader class="myheader"/>
+    <div id="MainContents">
 
       <nuxt/>
 
     </div>
-    <Footer class="footer"/>
+    <MyFooter class="myfooter"/>
   </div>
 </template>
 <script>
-  import Header from '~/components/header.vue'
-  import Footer from '~/components/footer.vue'
+  import MyHeader from '~/components/myheader.vue'
+  import MyFooter from '~/components/myfooter.vue'
 
 
   export default {
     components: {
-      Header,
-      Footer
+      MyHeader,
+      MyFooter
     },
   }
 </script>
@@ -74,12 +74,12 @@
     background-color: #35495e;
   }
 
-  .header {
+  .myheader {
     position: sticky;
     top: 0;
   }
 
-  .footer {
+  .myfooter {
     background-color: #eee;
     bottom: 0;
     font-size: smaller;
@@ -88,7 +88,7 @@
     position: sticky;
   }
 
-  #contents {
+  #MainContents {
     min-height: 900px;
     width: auto;
   }

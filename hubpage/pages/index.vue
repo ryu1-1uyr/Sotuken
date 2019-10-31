@@ -42,6 +42,9 @@
       Logo
     },
     data(){
+      return {
+        
+      }
     },
     mounted(){
 
