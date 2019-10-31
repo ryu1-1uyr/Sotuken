@@ -1,7 +1,7 @@
 <template>
     <div class="flex_start_space">
         <div class="screen">
-            <screen :code="makingCode" />
+            <screen :code="makingCode" :isbattle="isBattle" />
         </div>
         <div id="app">
 
@@ -181,6 +181,12 @@
             draggable,
             screen
         },
+        props:{
+            isBattle:{
+                type: Boolean,
+                default: false
+            }
+        },
         data() {
             return {
                 show: true,
@@ -314,7 +320,7 @@
             },
             parseCode() {
                 // let code = 'let c=0;let cancel="";const myTickAnimation=()=>{ c++;console.log(c);if(c>200){console.log(cancel);cancelAnimationFrame(cancel-1)}'
-                let code = 'let c=0;let cancel=setInterval(()=>{ c++;console.log(c);if(c>2000){console.log(cancel);clearInterval(cancel)}'
+                let code = ''
 
                 this.list2.map(x => {
                     console.log(x)
@@ -347,7 +353,7 @@
                     }
 
                 })
-                code += '},10)'
+
                 console.log(code)
                 this.makingCode = code
                 //ここでevalするな
