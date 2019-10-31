@@ -11,7 +11,7 @@
           Craftomy
         </h1>
         <h2 class="subtitle">
-          Let's fell free to make your AI !!!
+          Let's fell free to make your battle AI !!!
         </h2>
       </div>
 
@@ -28,6 +28,7 @@
           target="_blank"
           class="button--grey"
         >GitHub</a>
+
       </div>
     </div>
   </section>
@@ -39,6 +40,11 @@
   export default {
     components: {
       Logo
+    },
+    data(){
+    },
+    mounted(){
+
     }
   }
 </script>
