@@ -10,7 +10,7 @@ const scale2 = () => {
     myShape.scale.z = 1
 }
 
-const gucha =() => {
+const gucha = () => {
     myShape.rotation.x += 1;
     myShape.rotation.z += 1;
 }
