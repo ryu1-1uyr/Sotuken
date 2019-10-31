@@ -8,156 +8,164 @@
   import * as THREE from "three";
   import orbitcontrols from 'three-orbitcontrols';
 
+  const returnMaterial = (color) => {
+    return new THREE.MeshStandardMaterial({color: color, roughness: 0.5});
+  }
+
+  const makePlayers = identificationCode => {
+    switch (identificationCode) {
+      case 0:
+        return new THREE.OctahedronGeometry(20, 0)
+      case 1:
+        return new THREE.BoxGeometry(40, 40, 40) //fixme ここの値を後から調整してくれ
+      case 2:
+        return new THREE.TetrahedronGeometry(20, 0)
+    }
+  }
+  const makeMaterial = identificationCode => color => { //射程とかもセットするようにする
+    const material = new THREE.Mesh(makePlayers(identificationCode), returnMaterial(color))
+
+    switch (identificationCode) {
+      case 0:
+        material.hp = 100
+        material.fireRate = 5
+        material.baseSpeed = 0.9
+        material.isAttack = false
+        material.bullet =
+          new THREE.Mesh(
+            new THREE.BoxGeometry(15, 5, 5),
+            new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
+          )
+        material.bullet.baseSpeed = {x: 1, z: 1}
+        break
+      case 1:
+        material.hp = 140
+        material.fireRate = 3
+        material.baseSpeed = 1
+        material.isAttack = false
+        material.bullet =
+          new THREE.Mesh(
+            new THREE.BoxGeometry(15, 15, 15),
+            new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
+          )
+        // material.bullet.baseSpeed = 1
+        break
+      case 2:
+        material.hp = 120
+        material.fireRate = 2
+        material.baseSpeed = 1.1
+        material.isAttack = false
+        material.bullet =
+          new THREE.Mesh(
+            new THREE.BoxGeometry(10, 10, 10),
+            new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
+          )
+        // material.bullet.baseSpeed = 2
+        break
+    }
+    // material.geometry.boundingSphere.radius *= 0.8
+
+    return material
+
+  }
+
+  const width = 600;
+  const height = 600;
+
   export default {
     name: "screen",
     head: {
-      // script: [
-      //   {src: 'https://cdn.jsdelivr.net/npm/three@0.110.0/build/three.min.js'},
-      //   {src: 'https://cdn.jsdelivr.net/npm/three-orbitcontrols@2.108.1/OrbitControls.min.js'},
-      //   // {src: '@/assets/index.js'},
-      //   // {src: '../assets/myFunctionDefinition.js'},
-      // ],
       link: [
         {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap'}
       ],
     },
-    mounted(){
-      const width = 600;
-      const height = 600;
+    data() {
+      return {
+        scene: new THREE.Scene(),
+        camera: new THREE.PerspectiveCamera(45, width / height, 1, 10000),
+        myShape: makeMaterial(2)('#0040FF'),
+        myShape2: makeMaterial(0)('#E800A5'),
+        myShape3: makeMaterial(1)('#00E880'),
+        myShape4: makeMaterial(0)('#FFFE41'),
+        light: new THREE.DirectionalLight(0xFFFFFF),
+        light2: new THREE.HemisphereLight(0x888888, 0x0000FF, 1.0),
+        plane: new THREE.GridHelper(600, 8, 0x888888, 0x888888),
 
+        myTeam: [
+          this.myShape,
+          this.myShape2,
+        ],
+        enemyTeam: [
+          this.myShape3,
+          this.myShape4,
+        ],
+
+
+      }
+    },
+    mounted() {
+
+      //todo ここはmounded
       // レンダラーを作成
       const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector('#myCanvas')
       });
+
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(width, height);
 
-      // シーンを作成
-      const scene = new THREE.Scene();
+      //todo ここはmounded
 
-      console.log(scene)
-      // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-      camera.position.set(1, 300, 850)
-      camera.rotation.x = -0.3
+
+      this.camera.position.set(1, 300, 850)
+      this.camera.rotation.x = -0.3
       // カメラコントローラーを作成
-      const controls = new orbitcontrols(camera, document.querySelector('#myCanvas'));
+      const controls = new orbitcontrols(this.camera, document.querySelector('#myCanvas'));
       // これなんかJQueryまわりの変なエラー吐くからなぁ…
 
-      const returnMaterial = (color) => {
-        return new THREE.MeshStandardMaterial({color: color, roughness: 0.5});
-      }
-
-      const makePlayers = identificationCode => {
-        switch (identificationCode) {
-          case 0:
-            return new THREE.OctahedronGeometry(20, 0)
-          case 1:
-            return new THREE.BoxGeometry(40, 40, 40) //fixme ここの値を後から調整してくれ
-          case 2:
-            return new THREE.TetrahedronGeometry(20, 0)
-        }
-      }
-
-      const makeMaterial = identificationCode => color => { //射程とかもセットするようにする
-        const material = new THREE.Mesh(makePlayers(identificationCode), returnMaterial(color))
-
-        switch (identificationCode) {
-          case 0:
-            material.hp = 100
-            material.fireRate = 5
-            material.baseSpeed = 0.9
-            material.isAttack = false
-            material.bullet =
-              new THREE.Mesh(
-                new THREE.BoxGeometry(15, 5, 5),
-                new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
-              )
-            material.bullet.baseSpeed = {x: 1, z: 1}
-            break
-          case 1:
-            material.hp = 140
-            material.fireRate = 3
-            material.baseSpeed = 1
-            material.isAttack = false
-            material.bullet =
-              new THREE.Mesh(
-                new THREE.BoxGeometry(15, 15, 15),
-                new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
-              )
-            // material.bullet.baseSpeed = 1
-            break
-          case 2:
-            material.hp = 120
-            material.fireRate = 2
-            material.baseSpeed = 1.1
-            material.isAttack = false
-            material.bullet =
-              new THREE.Mesh(
-                new THREE.BoxGeometry(10, 10, 10),
-                new THREE.MeshStandardMaterial({color: returnMaterial('#fff'), roughness: 0.5})
-              )
-            // material.bullet.baseSpeed = 2
-            break
-        }
-        scene.add(material)
-        // material.geometry.boundingSphere.radius *= 0.8
-
-        return material
-
-      }
-
-      const myShape = makeMaterial(2)('#0040FF')
-      const myShape2 = makeMaterial(0)('#E800A5')
-
-      const myTeam = [myShape, myShape2]
-
-      const myShape3 = makeMaterial(1)('#00E880')
-      const myShape4 = makeMaterial(0)('#FFFE41')
-
-      const enemyTeam = [myShape3, myShape4]
-
-
-      // scene.add(myShape)
-      // scene.add(myShape2)
-      // scene.add(myShape3)
-      // scene.add(myShape4)
-
+      //fixme シーンにオブジェクトが追加されない可能性 add を外部関数でやっているから
       //右下
-      myShape.position.z = 300 // Zのプラス方向を手前側
-      myShape.position.x = 300 // Xは右側が整数の領域
+      this.myShape.position.z = 300 // Zのプラス方向を手前側
+      this.myShape.position.x = 300 // Xは右側が整数の領域
 
       //左上
-      myShape2.position.z = -250
-      myShape2.position.x = -280
+      this.myShape2.position.z = -250
+      this.myShape2.position.x = -280
 
       //右上
-      myShape3.position.z = -300
-      myShape3.position.x = 300
+      this.myShape3.position.z = -300
+      this.myShape3.position.x = 300
 
       //左下
-      myShape4.position.z = 200
-      myShape4.position.x = -200
+      this.myShape4.position.z = 200
+      this.myShape4.position.x = -200
+
+      this.scene.add(this.myShape)
+      this.scene.add(this.myShape2)
+      this.scene.add(this.myShape3)
+      this.scene.add(this.myShape4)
+
 
       // 平行光源
-      const light = new THREE.DirectionalLight(0xFFFFFF);
+      // const light = new THREE.DirectionalLight(0xFFFFFF);
       // const light2 = new THREE.DirectionalLight(0xFFFFFF);
-      const light2 = new THREE.HemisphereLight(0x888888, 0x0000FF, 1.0);
+      // const light2 = new THREE.HemisphereLight(0x888888, 0x0000FF, 1.0);
 
 
-      light.intensity = 1; //光度
-      light2.intensity = 1; //光度
+      this.light.intensity = 1; //光度
+      this.light2.intensity = 1; //光度
 
-      light.position.set(600, 600, 600);
-      light2.position.set(-300, -1000, 0);
+      this.light.position.set(600, 600, 600);
+      this.light2.position.set(-300, -1000, 0);
 
       // シーンに追加
-      scene.add(light);
-      scene.add(light2);
+      this.scene.add(this.light);
+      this.scene.add(this.light2);
 
-      const plane = new THREE.GridHelper(600, 8, 0x888888, 0x888888);//サイズ、1片あたりいくつ刻むか
-      plane.position.y = -40;
-      scene.add(plane);
+      // const plane = new THREE.GridHelper(600, 8, 0x888888, 0x888888);//サイズ、1片あたりいくつ刻むか
+      this.plane.position.y = -40;
+
+      this.scene.add(this.plane);
 
       // let counter = 0
       //myShape.hp = 10 // myShapeはobjectなのでこういう運用もできる可能性を感じた
@@ -258,10 +266,12 @@
       }
 
       let stringcode = "const tick2=()=>{myShape2.rotation.y += 0.01;renderer.render(scene, camera);requestAnimationFrame(tick2);};tick2()"
-      const tickSee=()=>{
-        renderer.render(scene, camera);
+
+      const tickSee = () => {
+        renderer.render(this.scene, this.camera);
         requestAnimationFrame(tickSee);
       }
+
       const sleep = (waitSec) => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -293,7 +303,6 @@
     }
 
   }
-
 
 
 </script>
