@@ -10,25 +10,42 @@
         <h1 class="title">
           Craftomy
         </h1>
-        <h2 class="subtitle">
-          Let's fell free to make your battle AI !!!
-        </h2>
+        <div class="subtitle">
+          <h2>Let's fell free to make your battle AI !!! </h2>
+          <h3>あなただけの戦闘AIをつくってみましょう！</h3>
+        </div>
+
+        <div style="margin: 20px">
+          <a v-scroll-to="'#about'" to
+            class="button--green"
+          >About me !</a>
+
+          <a v-scroll-to="'#anchor'" to
+            class="button--grey"
+          >How to Play ?</a>
+        </div>
       </div>
 
 
+      <div class="main medatu" style="margin-top: 20px">
+        <session id="about">
+          <h2 style="margin-bottom: 20px">What is Craftomy ?</h2>
+          <p>Craftomyは自分だけの戦闘AIがお手軽に作成しながら <br> プログラミングの構文が学べるゲームっぽいサービスです</p>
+          <p>ゲーム好きのあなたも、ちょっとプログラミングに興味があるあなたも</p>
+          <p>気軽にゲームがてら、戦闘AIを作成してみましょう！</p>
+        </session>
+      </div>
 
-      <div class="links medatu">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
-
+      <div class="main medatu" style="margin-top: 20px">
+        <session id="anchor">
+          <h2 style="margin-bottom: 20px">How to play Craftomy ?</h2>
+          <p>気合いでプレイしろ。以上だ。</p>
+          <p>Google認証後からあそべるようになります！！</p>
+          <div>
+            <p>まずはこちらから!!</p>
+            <b-button>こちら</b-button>
+          </div>
+        </session>
       </div>
     </div>
   </section>
@@ -43,7 +60,7 @@
     },
     data(){
       return {
-        
+
       }
     },
     mounted(){
@@ -110,8 +127,23 @@
   }
 
   .medatu {
-    width: 120%;
+    width: auto;
+    /*koitu */
     background: rgba(241,241,242,0.75);
     border-radius: 20px;
+    padding: 40px;
+    /*あとこいつが悪さしてる*/
+    margin: 20px;
+    margin-top: 40px;
+
+  }
+  /*#anchor {*/
+  /*  display: block;*/
+  /*  margin-top: 200vh;*/
+  /*  margin-bottom: 100vh;*/
+  /*}*/
+  img{
+    max-width: 300px;
+    height: auto;
   }
 </style>
