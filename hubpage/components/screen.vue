@@ -2,6 +2,18 @@
   <div>
     <canvas id='myCanvas'></canvas>
 <!--    <button @click="test">{{this.myShape}}</button>-->
+<!--    <p style="max-width: 570px">{{code}}</p>-->
+    <div>
+      <b-button v-b-modal.modal-1>作成したコードを見る</b-button>
+
+      <b-modal id="modal-1" title="出来上がったコード">
+        <p class="my-4">{{code}}</p>
+      </b-modal>
+    </div>
+    <br>
+
+    <b-button @click="evaluate">evaluate</b-button>
+
   </div>
 </template>
 
@@ -506,6 +518,12 @@
   const height = 600;
 
   export default {
+    props: {
+      code:{
+        type: String,
+        default: '',
+      }
+    },
     name: "screen",
     head: {
       link: [
@@ -527,10 +545,16 @@
         myTeam: [],
         enemyTeam: [],
 
+        givenCode: '',
+
 
       }
     },
     mounted() {
+
+      this.givenCode = this.code
+
+      console.log(this.code)
       this.myTeam.push(this.myShape)
       this.myTeam.push(this.myShape2)
       this.enemyTeam.push(this.myShape3)
@@ -785,6 +809,13 @@
           //fixme rendererをevalで足す必要はない
           //fixme bullet にシーンを引数で渡せばどうとでもなる
         }, 10)
+      },
+      evaluate(){
+       try {
+         eval(this.code)
+       }catch (e) {
+         console.log(e)
+       }
       }
 
     }
