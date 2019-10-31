@@ -18,6 +18,8 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "cross-env": "^5.2.0",
     "nuxt": "^2.4.0",
+    "three": "^0.110.0",
+    "three-orbitcontrols": "^2.108.1",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
