@@ -17,11 +17,11 @@
 
         <div style="margin: 20px">
           <a v-scroll-to="'#about'" to
-            class="button--green"
+             class="button--green"
           >About me !</a>
 
           <a v-scroll-to="'#anchor'" to
-            class="button--grey"
+             class="button--grey"
           >How to Play ?</a>
         </div>
       </div>
@@ -58,12 +58,10 @@
     components: {
       Logo
     },
-    data(){
-      return {
-
-      }
+    data() {
+      return {}
     },
-    mounted(){
+    mounted() {
 
     }
   }
@@ -77,24 +75,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-  }
-
-  .title {
-    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    display: block;
-    font-weight: 300;
-    font-size: 100px;
-    color: #35495e;
-    letter-spacing: 1px;
-  }
-
-  .subtitle {
-    font-weight: 300;
-    font-size: 42px;
-    color: #526488;
-    word-spacing: 5px;
-    padding-bottom: 15px;
   }
 
   .links {
@@ -127,23 +107,85 @@
   }
 
   .medatu {
-    width: auto;
-    /*koitu */
-    background: rgba(241,241,242,0.75);
+    background: rgba(241, 241, 242, 0.75);
     border-radius: 20px;
-    padding: 40px;
+    /*koitu */
+    padding: 1px;
     /*あとこいつが悪さしてる*/
-    margin: 20px;
-    margin-top: 40px;
+    width: auto;
+    margin: 1px;
+    margin-top: 10px;
 
   }
+
+  @media (min-width: 760px) {
+    .title {
+      font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+      'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      display: block;
+      font-weight: 300;
+      font-size: 100px;
+      color: #35495e;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-weight: 300;
+      font-size: 42px;
+      color: #526488;
+      word-spacing: 5px;
+      padding-bottom: 15px;
+    }
+
+    .medatu {
+      /*koitu */
+      background: rgba(241, 241, 242, 0.75);
+      border-radius: 20px;
+      padding: 40px;
+      /*あとこいつが悪さしてる*/
+      width: auto;
+      margin: 20px;
+      margin-top: 40px;
+
+    }
+    img {
+      max-width: 300px;
+      height: auto;
+    }
+  }
+
+  img {
+    max-width: 100px;
+    height: auto;
+  }
+  .title {
+    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    display: block;
+    font-weight: 300;
+    font-size: 60px;
+    color: #35495e;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    font-weight: 300;
+    font-size: 14px;
+    color: #526488;
+    word-spacing: 5px;
+    padding-bottom: 15px;
+  }
+  .subtitle h2 {
+    font-size: 24px;
+  }
+
+  .subtitle h3 {
+    font-size: 20px;
+  }
+
   /*#anchor {*/
   /*  display: block;*/
   /*  margin-top: 200vh;*/
   /*  margin-bottom: 100vh;*/
   /*}*/
-  img{
-    max-width: 300px;
-    height: auto;
-  }
 </style>
