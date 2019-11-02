@@ -140,15 +140,20 @@
 
 
   // bulletはたまの位置を進める + たまの表示非表示だけにする
-
-  const gcd = (a, b) => {
-    if (b === 0) {
-      return a
+let cnt=0
+  const gcdBase = (a, b) => {
+    cnt++
+    if (a%b === 0) {
+      return b
     }
-    return gcd(b, a % b)
+    return gcdBase(b, a % b)
   }
+  const gcd = (a,b) => {cnt=0;let tmp = gcdBase(a,b);console.log(['gcd',a,b,tmp, cnt]);return tmp}
+  //fixme 0を返すパターンでバグおきが
 
+  // const bulletSpeed = num => gcd => num / gcd
   const bulletSpeed = num => gcd => num / gcd
+
 
   const bullet = obje => target => scene => { // 1関数に役割が多くなりすぎてる => キャラのマテリアル生成時にはたまオブジェクト持たせておく => bulletが呼ばれたらscene.addするみたいな感じで良さそう
     if (obje.isAttack) {
@@ -205,7 +210,7 @@
 
       attack(obje.bullet)(target)
 
-    } else {
+    } else { // フロートのポジネガフラグなくすするとよさそう
 
       //たまの打ち出し 初期座標
       obje.bullet.position.x = (obje.position.x + 0)
@@ -225,23 +230,48 @@
       obje.bullet.positiveOrNegative = {x: '', z: ''}
       obje.bullet.baseSpeed = {x: '', z: ''}
 
-      const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x, target.position.z - obje.bullet.position.z)
-      const x = bulletSpeed(target.position.x - obje.bullet.position.x)(GreatestCommonDivisor)
-      const y = bulletSpeed(target.position.z - obje.bullet.position.z)(GreatestCommonDivisor)
+      /*fixme -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
 
-      const a = obje.fireRate
+      const targetとの差X = target.position.x - obje.bullet.position.x
+      const targetとの差Z = target.position.z - obje.bullet.position.z
 
-      if (x > y) { // 弾速を遅くする
-        obje.bullet.baseSpeed = {
-          x: Math.abs(x / x * a) > 6 ? Math.abs(x / x * a) / 10 : Math.abs(x / x * a),
-          z: Math.abs(y / x * a) > 6 ? Math.abs(y / x * a) / 10 : Math.abs(y / x * a),
-        }
-      } else {
-        obje.bullet.baseSpeed = {
-          x: Math.abs(x / y * a) > 6 ? Math.abs(x / y * a) / 10 : Math.abs(x / y * a),
-          z: Math.abs(y / y * a) > 6 ? Math.abs(y / y * a) / 10 : Math.abs(y / y * a),
-        }
+      console.log(['差分',targetとの差X,targetとの差Z])
+
+      //正確には自身(この場合は弾)とターゲットとの距離
+      const 距離V = Math.sqrt(targetとの差X ** 2 , targetとの差Z ** 2)
+
+      // fixme なんかいい感じの関数を作ると幸せになれるかもしれない
+      const 距離に応じた速度補正 = 5 // 速度補正の値を返す関数(距離V)
+
+      // fixme　これは正の方向にしか球が飛ばない,なぜかというと -+ の実装があるから 球の距離を加算する処理に
+      obje.bullet.baseSpeed = {
+        x: targetとの差X / 距離V * 距離に応じた速度補正,
+        z: targetとの差Z / 距離V * 距離に応じた速度補正,
       }
+
+      /*fixme -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
+
+
+      // const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x, target.position.z - obje.bullet.position.z)
+
+      // const x = bulletSpeed(target.position.x - obje.bullet.position.x)(GreatestCommonDivisor)
+      // const y = bulletSpeed(target.position.z - obje.bullet.position.z)(GreatestCommonDivisor)
+      //
+      // const a = obje.fireRate
+
+
+
+      // if (x > y) { // 弾速を遅くする
+      //   obje.bullet.baseSpeed = {
+      //     x: Math.abs(x / x * a) > 6 ? Math.abs(x / x * a) / 10 : Math.abs(x / x * a),
+      //     z: Math.abs(y / x * a) > 6 ? Math.abs(y / x * a) / 10 : Math.abs(y / x * a),
+      //   } // fixme * aをしているのが、x,y独立して動かしているのがよくない
+      // } else {
+      //   obje.bullet.baseSpeed = {
+      //     x: Math.abs(x / y * a) > 6 ? Math.abs(x / y * a) / 10 : Math.abs(x / y * a),
+      //     z: Math.abs(y / y * a) > 6 ? Math.abs(y / y * a) / 10 : Math.abs(y / y * a),
+      //   }
+      // }
 
       console.log(obje.bullet.baseSpeed)
 
@@ -839,7 +869,7 @@ let cancel = setInterval(() => {
         return 'let c=0;let cancel=setInterval(()=>{ c++;console.log(c);if(c>2000){console.log(cancel);clearInterval(cancel)}' + this.code + '},10)'
       },
       returnEnemyMoveCode() {
-        return 'let c=0;let cancel=setInterval(()=>{ c++;console.log(c);if(c>2000){console.log(cancel);clearInterval(cancel)}' + this.code + 'if (nearTarget(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))) bullet(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(this.scene); else moveNicely(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(Approach)(\'justTarget\')(this.scene);' + '},10)'
+        return 'let c=0;let cancel=setInterval(()=>{ c++;if(c>2000){;clearInterval(cancel)}' + this.code + 'if (nearTarget(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))) bullet(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(this.scene); else moveNicely(this.myShape3)(searchNearTarget(this.myShape3)(this.myTeam))(Approach)(\'justTarget\')(this.scene);' + '},10)'
 
       }
 
