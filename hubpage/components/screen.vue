@@ -232,22 +232,22 @@ let cnt=0
 
       /*fixme -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
 
-      const targetとの差X = target.position.x - obje.bullet.position.x
-      const targetとの差Z = target.position.z - obje.bullet.position.z
+      const differenceAtTarget_X = target.position.x - obje.bullet.position.x
+      const differenceAtTarget_Z = target.position.z - obje.bullet.position.z
 
-      console.log(['差分',targetとの差X,targetとの差Z])
+      console.log(['差分',differenceAtTarget_X,differenceAtTarget_Z])
 
       //正確には自身(この場合は弾)とターゲットとの距離
-      const 距離V = Math.sqrt(targetとの差X ** 2 , targetとの差Z ** 2)
+      const distanceAtTarget = Math.sqrt(differenceAtTarget_X ** 2 , differenceAtTarget_Z ** 2)
 
-      console.log([距離V,'これは距離V'])
+      console.log([distanceAtTarget,'これは距離V'])
 
       // fixme なんかいい感じの関数を作ると幸せになれるかもしれない
-      const 距離に応じた速度補正 = 5 // 速度補正の値を返す関数(距離V)
+      const 距離に応じた速度補正 = 5 // 速度補正の値を返す関数(distanceAtTarget)
 
       obje.bullet.baseSpeed = {
-        x: targetとの差X / 距離V * 距離に応じた速度補正,
-        z: targetとの差Z / 距離V * 距離に応じた速度補正,
+        x: differenceAtTarget_X / distanceAtTarget * 距離に応じた速度補正,
+        z: differenceAtTarget_Z / distanceAtTarget * 距離に応じた速度補正,
       }
 
       /*fixme -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
