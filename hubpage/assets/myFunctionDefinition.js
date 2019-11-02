@@ -211,10 +211,11 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
         targetAngleV.copy(obje.position);
         targetAngleV.sub(target.position);
         targetAngleV.normalize();
+        //fixme ここでtargetAngleVした意味合いが薄くなってる
 
         // console.log(targetAngleV, Math.atan2(targetAngleV.x, targetAngleV.z))
 
-        obje.bullet.rotation.y = Math.atan2(targetAngleV.x, targetAngleV.z)
+        obje.bullet.rotation.y = Math.atan2(targetAngleV.x, targetAngleV.z)// fixme x z が逆の可能性
 
         obje.bullet.targetCoordinat = target.position
         obje.bullet.positiveOrNegative = {x: '', z: ''}
@@ -223,10 +224,10 @@ const bullet = obje => target => { // 1関数に役割が多くなりすぎて�
         const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x, target.position.z - obje.bullet.position.z)
         const x = bulletSpeed(target.position.x - obje.bullet.position.x)(GreatestCommonDivisor)
         const y = bulletSpeed(target.position.z - obje.bullet.position.z)(GreatestCommonDivisor)
-
+// fixme bulletSpeedのあやしさ
         const a = obje.fireRate
 
-        if (x > y) { // 弾速を遅くする
+        if (x > y) { // 弾速を遅くする // fixme 1回計算した値を保持しておいてそいつを使いまわした方が良さそう
             obje.bullet.baseSpeed = {
                 x: Math.abs(x / x * a) > 6 ? Math.abs(x / x * a) / 10 : Math.abs(x / x * a),
                 z: Math.abs(y / x * a) > 6 ? Math.abs(y / x * a) / 10 : Math.abs(y / x * a),
