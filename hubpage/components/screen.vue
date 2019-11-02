@@ -140,15 +140,20 @@
 
 
   // bulletはたまの位置を進める + たまの表示非表示だけにする
-let cnt=0
+  let cnt = 0
   const gcdBase = (a, b) => {
     cnt++
-    if (a%b === 0) {
+    if (a % b === 0) {
       return b
     }
     return gcdBase(b, a % b)
   }
-  const gcd = (a,b) => {cnt=0;let tmp = gcdBase(a,b);console.log(['gcd',a,b,tmp, cnt]);return tmp}
+  const gcd = (a, b) => {
+    cnt = 0;
+    let tmp = gcdBase(a, b);
+    console.log(['gcd', a, b, tmp, cnt]);
+    return tmp
+  }
   //fixme 0を返すパターンでバグおきが
 
   // const bulletSpeed = num => gcd => num / gcd
@@ -166,8 +171,8 @@ let cnt=0
           break
         case 0:
           //fixme この行今動いてない
-          scene.remove(obje.bullet)
-          obje.isAttack = false
+          // scene.remove(obje.bullet)
+          // obje.isAttack = false
           break
         case 'negative':
           //マイナス方向に進んでクレメンス
@@ -183,8 +188,8 @@ let cnt=0
           break
         case 0:
           //fixme この行今動いてない
-          scene.remove(obje.bullet)
-          obje.isAttack = false
+          // scene.remove(obje.bullet)
+          // obje.isAttack = false
           break
         case 'negative':
           //マイナス方向に進んでクレメンス
@@ -230,27 +235,33 @@ let cnt=0
       obje.bullet.positiveOrNegative = {x: '', z: ''}
       obje.bullet.baseSpeed = {x: '', z: ''}
 
-      /*fixme -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
+      /* -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
 
       const differenceAtTarget_X = target.position.x - obje.bullet.position.x
       const differenceAtTarget_Z = target.position.z - obje.bullet.position.z
 
-      console.log(['差分',differenceAtTarget_X,differenceAtTarget_Z])
+      console.log(['差分', differenceAtTarget_X, differenceAtTarget_Z])
 
       //正確には自身(この場合は弾)とターゲットとの距離
-      const distanceAtTarget = Math.sqrt(differenceAtTarget_X ** 2 , differenceAtTarget_Z ** 2)
+      const distanceAtTarget = Math.sqrt(differenceAtTarget_X ** 2 + differenceAtTarget_Z ** 2) // fixme ,から+へ変更
+      // fixme Math.sqrt(-1); // NaN　このケースが起きる場合がある
+      // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt
 
-      console.log([distanceAtTarget,'これは距離V'])
+      console.log([distanceAtTarget, 'これは距離V'])
 
-      // fixme なんかいい感じの関数を作ると幸せになれるかもしれない
+      //  なんかいい感じの関数を作ると幸せになれるかもしれない
       const 距離に応じた速度補正 = 5 // 速度補正の値を返す関数(distanceAtTarget)
 
       obje.bullet.baseSpeed = {
         x: differenceAtTarget_X / distanceAtTarget * 距離に応じた速度補正,
         z: differenceAtTarget_Z / distanceAtTarget * 距離に応じた速度補正,
       }
+      //fixme differenceAtTarget_ / distanceAtTarget　が
+      //fixme Number / ( NaN || Infinity ) となって
+      //fixme NaNやInfinityがでうる
 
-      /*fixme -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
+
+      /* -----------この辺に奴らにいい感じの名前を与えるとそれっぽくなる----------- */
 
 
       // const GreatestCommonDivisor = gcd(target.position.x - obje.bullet.position.x, target.position.z - obje.bullet.position.z)
@@ -259,7 +270,6 @@ let cnt=0
       // const y = bulletSpeed(target.position.z - obje.bullet.position.z)(GreatestCommonDivisor)
       //
       // const a = obje.fireRate
-
 
 
       // if (x > y) { // 弾速を遅くする
