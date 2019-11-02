@@ -300,6 +300,7 @@
       // fixme 151~183までの挙動を毎フレーム行なっているので、弾道ができを追尾する動きをしている
       // 初期に位置特定、政府の判定をしてそれを保持すればいいんじゃね
 
+      // fixme ここでポジネガの判定をする必要がないので、処理自体を簡素にすることができるとおもう
       switch (whereMove(obje.bullet.position.x)(obje.bullet.targetCoordinat.x)) {
         case -1:
           //プラス方向にすすんでくれ〜
