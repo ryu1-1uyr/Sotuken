@@ -646,10 +646,10 @@
       this.scene.add(this.myShape)
       this.scene.add(this.myShape3)
 
-      if (!this.isbattle) {
-        this.scene.add(this.myShape2)
-        this.scene.add(this.myShape4)
-      }
+      // if (!this.isbattle) {
+      //   this.scene.add(this.myShape2)
+      //   this.scene.add(this.myShape4)
+      // }
 
 
       // 平行光源
