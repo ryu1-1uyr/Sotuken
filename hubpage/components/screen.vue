@@ -162,7 +162,7 @@ let cnt=0
       switch (obje.bullet.positiveOrNegative.x) {
         case 'positive':
           //プラス方向にすすんでくれ〜
-          obje.bullet.position.x -= obje.bullet.baseSpeed.x
+          obje.bullet.position.x += obje.bullet.baseSpeed.x // todo -= から += に変更
           break
         case 0:
           //fixme この行今動いてない
@@ -179,7 +179,7 @@ let cnt=0
       switch (obje.bullet.positiveOrNegative.z) {
         case 'positive':
           //プラス方向にすすんでくれ〜
-          obje.bullet.position.z -= obje.bullet.baseSpeed.z
+          obje.bullet.position.z += obje.bullet.baseSpeed.z // todo -= から += に変更
           break
         case 0:
           //fixme この行今動いてない
@@ -239,6 +239,8 @@ let cnt=0
 
       //正確には自身(この場合は弾)とターゲットとの距離
       const 距離V = Math.sqrt(targetとの差X ** 2 , targetとの差Z ** 2)
+
+      console.log([距離V,'これは距離V'])
 
       // fixme なんかいい感じの関数を作ると幸せになれるかもしれない
       const 距離に応じた速度補正 = 5 // 速度補正の値を返す関数(距離V)
