@@ -170,7 +170,7 @@
           obje.bullet.position.x += obje.bullet.baseSpeed.x // todo -= から += に変更
           break
         case 0:
-          //fixme この行今動いてない
+          //todo ここバグの元だったのでコメントアウト
           // scene.remove(obje.bullet)
           // obje.isAttack = false
           break
@@ -187,7 +187,7 @@
           obje.bullet.position.z += obje.bullet.baseSpeed.z // todo -= から += に変更
           break
         case 0:
-          //fixme この行今動いてない
+          //todo ここバグの元だったのでコメントアウト => x,zいずれかがターゲットと一緒になっている際の処理 => 球が出なくなっている理由
           // scene.remove(obje.bullet)
           // obje.isAttack = false
           break
@@ -243,7 +243,7 @@
       console.log(['差分', differenceAtTarget_X, differenceAtTarget_Z])
 
       //正確には自身(この場合は弾)とターゲットとの距離
-      const distanceAtTarget = Math.sqrt(differenceAtTarget_X ** 2 + differenceAtTarget_Z ** 2) // fixme ,から+へ変更
+      const distanceAtTarget = Math.sqrt(differenceAtTarget_X ** 2 + differenceAtTarget_Z ** 2) // todo ,から+へ変更 => そもそもの実装がミスっていた。なんやねん1,1って足してよ！
       // fixme Math.sqrt(-1); // NaN　このケースが起きる場合がある
       // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt
 
