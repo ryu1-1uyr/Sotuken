@@ -334,7 +334,6 @@
           break
       }
       // console.log(obje.bullet.positiveOrNegative)
-      // fixme
 
       obje.isAttack = true
     }
