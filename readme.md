@@ -1,5 +1,7 @@
 # 卒業制作のためのあれこれ
 
+メイン開発環境はhubpageにまとめられてます
+ドキュメントはgoogle drive参照
 
 - blocklysample => blockly周りを試してみたサンプル
 

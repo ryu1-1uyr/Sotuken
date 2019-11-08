@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div class="layout-header">
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg">
       <b-navbar-brand href="/">Craftomy
         <img src="~/assets/craftomy_white.svg" style="width: 40px;min-height: 40px" alt="logo"/>
       </b-navbar-brand>
@@ -58,6 +58,8 @@
 
 <style scoped>
   .layout-header {
+    background: #2f98c3;
+    color: #fff;
     width: 100%;
     position: sticky;
     top: 0;

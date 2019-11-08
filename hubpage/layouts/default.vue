@@ -19,6 +19,11 @@
       MyHeader,
       MyFooter
     },
+    head: {
+      link: [
+        {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Patrick+Hand|Supermercado+One&display=swap'}
+      ],
+    },
   }
 </script>
 
@@ -77,6 +82,7 @@
   .myheader {
     position: sticky;
     top: 0;
+    background: red;
   }
 
   .myfooter {
@@ -89,6 +95,10 @@
   }
 
   #MainContents {
+    font-family: 'Patrick Hand', cursive;
+
+    /*font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',*/
+    /*Roboto, 'Helvetica Neue', Arial, sans-serif 'Kosugi Maru', sans-serif;*/
     /*min-height: 900px;*/
     /*width: auto;*/
   }
