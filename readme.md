@@ -57,3 +57,12 @@ IE8 とそれ以下のバージョンをサポートしていません
 - https://github.com/SortableJS/Sortable
 - Three.js
 - Vue.js
+
+## 使っているやつ
+
+- Nuxt(Vue)
+- Auth0
+- firebase 
+- javascript
+- three.js
+- three-vue 
