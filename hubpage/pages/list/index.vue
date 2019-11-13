@@ -17,7 +17,7 @@
               at Craftomy .
             </b-card-text>
 
-            <b-button :href="'/list/'+i+'/battle'" class="mybutton" variant="outline">Battle!!</b-button>
+            <nuxt-link :to="'/list/'+i+'/battle'"><b-button class="mybutton" variant="outline">Battle!!</b-button></nuxt-link>
           </b-card>
         </div>
       </div>
