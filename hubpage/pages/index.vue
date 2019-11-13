@@ -53,6 +53,8 @@
 
 <script>
   import Logo from '~/components/Logo.vue'
+  import firebase from '~/plugins/firebase'
+
 
   export default {
     components: {
@@ -62,7 +64,13 @@
       return {}
     },
     mounted() {
-
+      // これでとりあえずデータを呼び出せる
+      // const db =  firebase.firestore()
+      // db.collection("craftomy").get().then((querySnapshot) => {
+      //   querySnapshot.forEach((doc) => {
+      //     console.log(doc.data())
+      //   });
+      // })
     }
   }
 </script>
