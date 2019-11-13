@@ -1,17 +1,15 @@
 import firebase from 'firebase'
 
-const {apiKey, authDomain, databaseURL, projectId, storageBucket, messagingSenderId, appId} = process.env;
-
 if (!firebase.apps.length) {
   firebase.initializeApp(
     {
-      apiKey: apiKey,
-      authDomain: authDomain,
-      databaseURL: databaseURL,
-      projectId: projectId,
-      storageBucket: storageBucket,
-      messagingSenderId: messagingSenderId,
-      appId: appId
+      apiKey: process.env.apiKey,
+      authDomain: process.env.authDomain,
+      databaseURL: process.env.databaseURL,
+      projectId: process.env.projectId,
+      storageBucket: process.env.storageBucket,
+      messagingSenderId: process.env.messagingSenderId,
+      appId: process.env.appId
     }
   )
 }
