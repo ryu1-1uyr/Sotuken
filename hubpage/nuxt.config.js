@@ -46,6 +46,7 @@ export default {
   */
   plugins: [
     '~/plugins/vue-scrollto',
+    '~/plugins/firebase.js'
   ],
 
   /*

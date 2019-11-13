@@ -1,19 +1,42 @@
 <template>
   <div>
+
+    <div class="loadContent" v-if="uploadFrag">
+      <div class="loader">Loading...</div>
+    </div>
+
     <canvas id='myCanvas'></canvas>
     <!--    <button @click="test">{{this.myShape}}</button>-->
     <!--    <p style="max-width: 570px">{{code}}</p>-->
-    <div>
+
+    <div class="row">
       <b-button v-b-modal.modal-1>作成したコードを見る</b-button>
+      <b-button v-b-modal="'sendCode'">出来上がったコードを登録する</b-button>
+    </div>
+    <div class="row">
+      <b-button @click="evaluate" v-if="!isbattle">evaluate</b-button>
+      <b-button @click="evaluteTwoCode" v-if="isbattle">Battle!!</b-button>
+    </div>
+    <div>
 
       <b-modal id="modal-1" title="出来上がったコード">
         <p class="my-4" style="max-width: 570px">{{returnCode()}}</p>
       </b-modal>
+
+
+      <b-modal id="sendCode" title="以下の内容でコードを投稿します" @ok="sendFirebase">
+        <div>
+          <p>名前:</p>
+          <p>{{this.$auth.$state.user.name}}</p>
+          <p>出来上がったコード:</p>
+          <p>{{this.code}}</p>
+          <p>作ったものにコメントを一言おねがいします！</p>
+          <b-form-input v-model="comment" placeholder="please type your comment :) "></b-form-input>
+        </div>
+      </b-modal>
     </div>
     <br>
 
-    <b-button @click="evaluate" v-if="!isbattle">evaluate</b-button>
-    <b-button @click="evaluteTwoCode" v-if="isbattle">Battle!!</b-button>
 
   </div>
 </template>
@@ -21,7 +44,7 @@
 <script>
   import * as THREE from "three";
   import orbitcontrols from 'three-orbitcontrols';
-
+  import firebase from '~/plugins/firebase'
 
   //移動補助関数
   const whereMove = num => num2 => {
@@ -592,6 +615,9 @@
         enemyTeam: [],
 
         givenCode: '',
+        comment: '',
+
+        uploadFrag: false,
 
 
       }
@@ -801,6 +827,27 @@
 
     },
     methods: {
+      sendFirebase() {
+        const db = firebase.firestore()
+        console.log(this.$auth)
+        db.collection("craftomy").add({
+          username: this.$auth.$state.user.name,
+          icon: this.$auth.$state.user.picture,
+          battle: this.code,
+          comment: this.comment,
+        })
+
+        this.uploadFrag = true
+
+        let a = 0
+        const time = setInterval(_ => {
+          console.log(a++);
+          if (a === 300) {
+            this.uploadFrag = false
+            clearInterval(time)
+          }
+        });
+      },
       Approach: obje1 => obje2 => {
 
 
@@ -875,7 +922,7 @@ let cancel = setInterval(() => {
         } catch (e) {
           console.log(e)
         }
-      },
+      },//fixme コードを送る場合は、自分と敵を反転させる必要がある => つまり this.myShape => this.myShape3 , this.myTeam => this.enemyTeam
       returnCode() {
         return 'let c=0;let cancel=setInterval(()=>{ c++;console.log(c);if(c>2000){console.log(cancel);clearInterval(cancel)}' + this.code + '},10)'
       },
@@ -895,5 +942,110 @@ let cancel = setInterval(() => {
 <!--<script src="~/assets/index.js"></script>-->
 
 <style scoped>
+  .row {
+    margin: 3px;
+  }
+
+  .row * {
+    margin: 2px;
+  }
+
+  .loader {
+    top: 50%;
+
+    color: #2f98c3;
+    font-size: 90px;
+    text-indent: -9999em;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 72px auto;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+    animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+  }
+
+  @-webkit-keyframes load6 {
+    0% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    5%,
+    95% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    10%,
+    59% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+    }
+    20% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+    }
+    38% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+    }
+    100% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+  }
+
+  @keyframes load6 {
+    0% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    5%,
+    95% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    10%,
+    59% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+    }
+    20% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+    }
+    38% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+    }
+    100% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+  }
+
+  @-webkit-keyframes round {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes round {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  .loadContent{
+    position: absolute;
+    z-index: 10;
+
+    /*top: 50%;*/
+    /*left: 50%;*/
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(150,150,150,0.36);
+  }
 
 </style>
