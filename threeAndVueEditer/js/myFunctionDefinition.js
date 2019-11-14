@@ -120,13 +120,6 @@ const move_z = obje => moving_num => {
 }
 
 // 攻撃処理
-
-/*
-* たまの生成
-* ベクトルの確定
-* 的に当たる、カウンタが一定値を超える
-* たまの削除
-*/
 const showbullet = () => {
     bullet(myShape)
     bullet(myShape2)
