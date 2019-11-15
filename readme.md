@@ -1,6 +1,7 @@
 # 卒業制作のためのあれこれ
 
 メイン開発環境はhubpageにまとめられてます
+
 ドキュメントはgoogle drive参照
 
 - blocklysample => blockly周りを試してみたサンプル
@@ -62,7 +63,7 @@ IE8 とそれ以下のバージョンをサポートしていません
 
 - Nuxt(Vue)
 - Auth0
-- firebase 
+- firebase
 - javascript
 - three.js
-- three-vue 
+- three-vue
