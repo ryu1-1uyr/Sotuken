@@ -65,6 +65,7 @@
     },
     mounted() {
       // これでとりあえずデータを呼び出せる
+      // fixme これをstoreで行ってvueからはgetterを使って呼べるといいわね
       // const db =  firebase.firestore()
       // db.collection("craftomy").get().then((querySnapshot) => {
       //   querySnapshot.forEach((doc) => {
